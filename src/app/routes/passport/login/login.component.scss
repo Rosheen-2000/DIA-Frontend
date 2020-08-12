@@ -1,0 +1,50 @@
+.outer {
+    height: 100%;
+    padding-left: 50px;
+    padding-right: 60px;
+}
+
+.login_form {
+    height: auto;
+    width: 100%;
+    position:relative;
+    top:150px;
+}
+
+.form_head {
+    height: auto;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+input {
+    // height: 30px;
+    // width: 100%;
+    margin-bottom: 0;
+    height: 40px;
+    width: 250px;
+}
+
+// TODO 按钮居中与位置调整
+.form_bottom {
+    height: auto;
+    width: 100%;
+    text-align: center;
+}
+
+button {
+    margin-bottom: 0;
+    margin-left: 30px;
+    margin-right: 0px;
+    height: 40px;
+    width: 80px;
+    font-size: 16px;
+}
+
+.a {
+    width: 250px;
+}
