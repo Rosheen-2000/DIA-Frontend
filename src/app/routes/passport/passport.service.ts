@@ -20,16 +20,16 @@ export class PassportService {
   public checkUsernameValid(uname: string): Observable<{ res: string }> {
     return this.http.post<{
       res: string
-    }>(this.baseUrl + 'passport/check', {uname});
+    }>(this.baseUrl + 'passport/check/', {uname});
   }
 
   public login(uname: string, pwd: string): Observable<{ msg: string, token: string }> {
+    const form = new FormData();
+    form.set('uname', uname);
+    form.set('pwd', pwd);
     return this.http.post<{
       msg: string, token: string
-    }>(this.baseUrl + 'passport/login', {
-      uname,
-      pwd
-    });
+    }>(this.baseUrl + 'passport/login/', form);
   }
 
   public logout(): void {
@@ -39,7 +39,7 @@ export class PassportService {
   public register(uname: string, pwd: string): Observable<{ msg: string, token: string }> {
     return this.http.post<{
       msg: string, token: string
-    }>(this.baseUrl + 'passport/register', {
+    }>(this.baseUrl + 'passport/register/', {
       uname,
       pwd
     });
