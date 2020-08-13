@@ -28,7 +28,7 @@ export class DocService {
 
   public newDocument(uid: string, title: string, content: string): Observable<{ msg: string }> {
     return this.http.post<{ msg: string }> (
-      this.baseUrl + 'doc/newdoc', {
+      this.baseUrl + 'doc/newdoc/', {
         uid,
         title,
         content
@@ -37,7 +37,7 @@ export class DocService {
 
   public modifyTitle(uid: string, docid: string, title: string): Observable<{ msg: string }> {
     return this.http.post<{ msg: string }> (
-      this.baseUrl + 'doc/modifydoctitle', {
+      this.baseUrl + 'doc/modifydoctitle/', {
         uid,
         docid,
         title
@@ -46,7 +46,7 @@ export class DocService {
 
   public modifyContent(uid: string, docid: string, content: string): Observable<{ msg: string }> {
     return this.http.post<{ msg: string }> (
-      this.baseUrl + 'doc/modifydoccontent', {
+      this.baseUrl + 'doc/modifydoccontent/', {
         uid,
         docid,
         content
@@ -55,7 +55,7 @@ export class DocService {
 
   public deleteDoc(uid: string, docid: string): Observable<{ msg: string }> {
     return this.http.post<{ msg: string }> (
-      this.baseUrl + 'doc/deletedoc', {
+      this.baseUrl + 'doc/deletedoc/', {
         uid,
         docid
       }
