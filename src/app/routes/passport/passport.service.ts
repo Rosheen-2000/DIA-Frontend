@@ -26,7 +26,7 @@ export class PassportService {
   public login(uname: string, pwd: string): Observable<{ msg: string, token: string }> {
     return this.http.post<{
       msg: string, token: string
-    }>(this.baseUrl + 'passport/login', {
+    }>(this.baseUrl + 'passport/login/', {
       uname,
       pwd
     });
