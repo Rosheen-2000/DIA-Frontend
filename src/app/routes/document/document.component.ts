@@ -224,6 +224,10 @@ export class DocumentComponent implements OnInit, OnDestroy {
     );
   }
 
+  clickBack(): void {
+    history.go(-1);
+  }
+
   onChanges(values: any): void {
     console.log(values, this.values);
   }
