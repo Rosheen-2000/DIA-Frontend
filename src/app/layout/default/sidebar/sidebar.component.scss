@@ -1,0 +1,28 @@
+.siderItem {
+    height: 45px;
+    font-size: 15px;
+}
+
+.addButton {
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    margin: 20px 60px;
+    //box-shadow: -5px 5px 3px #909090;
+    //border-radius: 50%;
+    //background-color: #707070;
+}
+
+[nz-button] {
+    width: 50px;
+    height: 50px;
+    background-color: #707070;
+    border-color: #707070;
+  }
+
+[nz-icon] {
+    margin-top: 2px;
+    font-size: 40px;
+    color: #ffffff;
+    //margin-left: 8px;
+}
