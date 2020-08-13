@@ -81,11 +81,24 @@ export class DocumentComponent implements OnInit {
 
   saveContent(): void {
     this.updateContent.next(this.form.value.Content);
-    // TODO ?
+    // TODO 同步问题?
     this.updateResult.subscribe(
       res => {
         if (res.msg === 'true') {
           this.message.create('success', '自动保存成功');
+        }
+      }
+    )
+  }
+
+  clickSave(): void {
+    this.docService.modifyContent(this.docId, this.form.value.Content).subscribe(
+      res => {
+        if (res.msg === 'true') {
+          this.message.create('success', '保存成功');
+        }
+        else {
+          this.message.create('error', '保存失败，请稍后重试');
         }
       }
     )

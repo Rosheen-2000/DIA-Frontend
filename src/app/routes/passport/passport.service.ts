@@ -18,9 +18,11 @@ export class PassportService {
   }
 
   public checkUsernameValid(uname: string): Observable<{ res: string }> {
+    const form = new FormData();
+    form.set('uname', uname);
     return this.http.post<{
       res: string
-    }>(this.baseUrl + 'passport/check/', {uname});
+    }>(this.baseUrl + 'passport/check/', form);
   }
 
   public login(uname: string, pwd: string): Observable<{ msg: string, token: string }> {
