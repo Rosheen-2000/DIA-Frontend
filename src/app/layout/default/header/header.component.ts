@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
     );
     
     // 临时
-    localStorage.setItem('avatar', 'https://c-ssl.duitang.com/uploads/item/202006/21/20200621110632_xyicf.thumb.700_0.jpg');
+    localStorage.setItem('avatar', '../../../../assets/default-avatar.jpeg');
     localStorage.setItem('username', '接头霸王');
 
     if (localStorage.getItem('username')===null) {
