@@ -3,3 +3,22 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.change-options {
+  display: inline-block;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+form > table {
+  margin: 20px 131.667px;
+  font-size: 16px;
+}
+
+[nz-input] {
+  font-size: 16px;
+}
+
+[nz-select] {
+  font-size: 16px;
+}
