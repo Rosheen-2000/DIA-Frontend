@@ -8,6 +8,6 @@ export class AuthService {
   constructor() { }
 
   public getAuthorizationToken(): string {
-    return 'not set';
+    return localStorage.getItem('token');
   }
 }
