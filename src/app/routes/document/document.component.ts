@@ -3,10 +3,10 @@ import {Form, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {DocService} from './doc.service';
 import {ActivatedRoute, Params, Routes} from '@angular/router';
 import {Subject, Observable} from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzCascaderOption } from 'ng-zorro-antd/cascader';
-import { DialogService } from '../../core/services/dialog.service'
+import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {NzCascaderOption} from 'ng-zorro-antd/cascader';
+import {DialogService} from '../../core/services/dialog.service'
 
 declare const tinymce: any;
 
@@ -121,6 +121,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
   nzBelongOptions: any[] | null = null;
   values: any[] | null = null;
 
+  private timer;
+
   // 防抖 保存文本内容
   // updateResult = new Observable<{ msg: string }>();
   // private updateContent = new Subject<string>();
@@ -136,9 +138,19 @@ export class DocumentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.docId = params.id;
+      console.log(this.docId);
       this.docService.getDocument(this.docId).subscribe(
         res => {
-          tinymce.activeEditor.setContent(res.Content);
+          console.log(res);
+          this.timer = setInterval(() => {
+            console.log('time');
+            if (tinymce.activeEditor) {
+              tinymce.activeEditor.setContent(res.Content);
+              tinymce.activeEditor.setMode('readonly');
+              tinymce.activeEditor.setMode('design');
+              clearInterval(this.timer);
+            }
+          }, 500);
         }
       );
     });
@@ -155,19 +167,6 @@ export class DocumentComponent implements OnInit, OnDestroy {
       theme: 'silver',
       toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
       image_advtab: true,
-
-      init_instance_callback(editor) {
-        // 根据权限可以关闭文档的编辑权限
-        tinymce.activeEditor.setMode('readonly');
-        tinymce.activeEditor.setMode('design');
-      },
-
-      setup: function(editor) {
-        editor.on('keyup', function(e) {
-          console.log('KeyUp! But nothing happened...');
-          localStorage.setItem('modify', 'true');
-        });
-      }
     });
 
     //cascader的init
@@ -213,10 +212,9 @@ export class DocumentComponent implements OnInit, OnDestroy {
     this.docService.modifyContent(this.docId, tinymce.activeEditor.getContent()).subscribe(
       res => {
         if (res.msg === 'true') {
-          localStorage.removeItem('modify');
+
           this.message.create('success', '保存成功');
-        }
-        else {
+        } else {
           this.message.create('error', '保存失败，请稍后重试');
         }
       },
