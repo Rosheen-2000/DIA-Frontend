@@ -1,11 +1,21 @@
 
 <nz-header>
-  <div class="logo">
-    <img class="logoimg" src="/assets/logo-pure.png"/>
+  <div class="logo" style="background-color: #404040;">
+    <img class="logoimg" src="/assets/logo-white.png"/>
   </div>
-  <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
-    <li nz-menu-item nzSelected>nav 1</li>
-    <li nz-menu-item>nav 2</li>
-    <li nz-menu-item>nav 3</li>
+  <div class="avatar" style="background-color: #404040;">
+    <a>
+      <nz-badge [nzCount]="5" style="margin:0 24px 0 10px;">
+        <nz-avatar nzIcon="user" [nzShape]="'square'" [nzSize]="45"></nz-avatar>
+      </nz-badge>
+    </a>
+  </div>
+  <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu" style="background-color: #404040;">
+    <li nz-submenu nzTitle="Username" nzIcon="caret-down" style="font-size: 16px;">
+      <ul>
+        <li nz-menu-item >个人信息</li>
+        <li nz-menu-item >退出登录</li>
+      </ul>
+    </li>
   </ul>
 </nz-header>

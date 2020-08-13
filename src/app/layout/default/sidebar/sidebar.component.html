@@ -12,7 +12,7 @@
   <li nz-menu-item nzMatchRouter class="siderItem"><a routerLink="/trash">回收站</a></li>
   <li nz-submenu nzTitle="团队空间" class="siderItem">
     <ul>
-      <li nz-menu-item nzMatchRouter *ngFor="let i of spacesService.spaces" class="siderItem">
+      <li nz-menu-item nzMatchRouter *ngFor="let i of spacesService.spaces">
         <a [routerLink]="'/space/' + i.spaceId">{{i.spaceName}}</a>
       </li>
     </ul>
