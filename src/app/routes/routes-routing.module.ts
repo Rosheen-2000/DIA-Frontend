@@ -14,6 +14,7 @@ import {OwnComponent} from "./dashboard/own/own.component";
 import {FavoritesComponent} from "./dashboard/favorites/favorites.component";
 import {UsedComponent} from "./dashboard/used/used.component";
 import {FeedbackComponent} from "./feedback/feedback.component";
+import { UnsaveGuard } from '../core/guards/unsave.guard'
 
 const routes: Routes = [
   {
@@ -38,7 +39,7 @@ const routes: Routes = [
   },
   {
     path: '', component: EditorComponent, children: [
-      {path: 'docs/:id', component: DocumentComponent}
+      {path: 'docs/:id', component: DocumentComponent, canDeactivate: [UnsaveGuard]}
     ]
   },
   {

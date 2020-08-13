@@ -6,6 +6,7 @@ import {Subject, Observable} from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
+import { DialogService } from '../../core/services/dialog.service'
 
 declare const tinymce: any;
 
@@ -72,16 +73,11 @@ export class DocumentComponent implements OnInit, OnDestroy {
   // updateResult = new Observable<{ msg: string }>();
   // private updateContent = new Subject<string>();
 
-  @HostListener("window:beforeunload", ["$event"]) unloadHandler(event: Event) {
-    if (localStorage.getItem('modify')==='true') {
-      event.returnValue = false;
-    }
-  }
-
   constructor(
     private docService: DocService,
     private route: ActivatedRoute,
     private message: NzMessageService,
+    public dialogService: DialogService,
   ) {
   }
 
@@ -160,7 +156,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
     this.docService.modifyContent(this.docId, tinymce.activeEditor.getContent()).subscribe(
       res => {
         if (res.msg === 'true') {
-          
+          localStorage.removeItem('modify');
           this.message.create('success', '保存成功');
         }
         else {
