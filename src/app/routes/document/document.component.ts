@@ -18,8 +18,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
   docId: string;
 
   // 防抖 保存文本内容
-  updateResult = new Observable<{ msg: string }>();
-  private updateContent = new Subject<string>();
+  // updateResult = new Observable<{ msg: string }>();
+  // private updateContent = new Subject<string>();
 
   constructor(
     private fb: FormBuilder,
@@ -49,7 +49,13 @@ export class DocumentComponent implements OnInit, OnDestroy {
         tinymce.activeEditor.setMode('readonly');
         tinymce.activeEditor.setMode('design');
         tinymce.activeEditor.setContent('<h1>模版</h1>');
-      }
+      },
+
+      // setup: function(editor) {
+      //   editor.on('keyup', function(e) {
+      //     console.log('KeyUp! But nothing happened...');
+      //   });
+      // }
     });
     // 初始化表单
     this.form = this.fb.group({
@@ -61,13 +67,13 @@ export class DocumentComponent implements OnInit, OnDestroy {
     });
 
     // 防抖 保存文本内容
-    this.updateResult = this.updateContent.pipe(
-      debounceTime(5000),
-      distinctUntilChanged(),
-      switchMap(
-        newcontent => this.docService.modifyContent(this.docId, newcontent)
-      )
-    );
+    // this.updateResult = this.updateContent.pipe(
+    //   debounceTime(5000),
+    //   distinctUntilChanged(),
+    //   switchMap(
+    //     newcontent => this.docService.modifyContent(this.docId, newcontent)
+    //   )
+    // );
   }
 
   ngOnDestroy() {
@@ -79,22 +85,17 @@ export class DocumentComponent implements OnInit, OnDestroy {
     alert("111");
   }
 
-
+  // * tinymce监听keyup有困难，不提供实时保存
   // saveContent(): void {
-  //   this.docService.modifyContent(this.docId, )
+  //   this.updateContent.next(this.form.value.Content);
+  //   this.updateResult.subscribe(
+  //     res => {
+  //       if (res.msg === 'true') {
+  //         this.message.create('success', '自动保存成功');
+  //       }
+  //     }
+  //   )
   // }
-
-  saveContent(): void {
-    this.updateContent.next(this.form.value.Content);
-    // TODO 同步问题?
-    this.updateResult.subscribe(
-      res => {
-        if (res.msg === 'true') {
-          this.message.create('success', '自动保存成功');
-        }
-      }
-    )
-  }
 
   clickSave(): void {
     this.docService.modifyContent(this.docId, this.form.value.Content).subscribe(
