@@ -26,44 +26,35 @@ export class DocService {
     // };
   }
 
-  public newDocument(uid: string, title: string, content: string): Observable<{ msg: string }> {
-    return this.http.post<{ msg: string }> (
-      this.baseUrl + 'doc/newdoc/', {
-        uid,
-        title,
-        content
-      });
+  public newDocument(title: string, templateid: string): Observable<{ msg: string, docid: string }> {
+    const form = new FormData();
+    form.set('title', title);
+    form.set('template', templateid);
+    return this.http.post<{ msg: string, docid: string }> (
+      this.baseUrl + 'doc/newdoc/', form);
   }
 
-  public modifyTitle(uid: string, docid: string, title: string): Observable<{ msg: string }> {
+  public modifyTitle(docid: string, title: string): Observable<{ msg: string }> {
+    const form = new FormData();
+    form.set('docid', docid);
+    form.set('title', title);
     return this.http.post<{ msg: string }> (
-      this.baseUrl + 'doc/modifydoctitle/', {
-        uid,
-        docid,
-        title
-      });
+      this.baseUrl + 'doc/modifydoctitle/', form);
   }
 
-  public modifyContent(uid: string, docid: string, content: string): Observable<{ msg: string }> {
+  public modifyContent(docid: string, content: string): Observable<{ msg: string }> {
+    const form = new FormData();
+    form.set('did', docid);
+    form.set('content', content);
     return this.http.post<{ msg: string }> (
-      this.baseUrl + 'doc/modifydoccontent/', {
-        uid,
-        docid,
-        content
-      });
+      this.baseUrl + 'doc/modifydoccontent/', form);
   }
 
-  public deleteDoc(uid: string, docid: string): Observable<{ msg: string }> {
+  public deleteDoc(docid: string): Observable<{ msg: string }> {
+    const form = new FormData();
+    form.set('did', docid);
     return this.http.post<{ msg: string }> (
-      this.baseUrl + 'doc/deletedoc/', {
-        uid,
-        docid
-      }
-    );
+      this.baseUrl + 'doc/deletedoc/', form);
   }
-
-  public
-
-
 
 }

@@ -10,6 +10,9 @@ import {SpaceComponent} from './space/space.component';
 import {TrashComponent} from './trash/trash.component';
 import {DesktopComponent} from './desktop/desktop.component';
 import {FolderComponent} from './folder/folder.component';
+import {OwnComponent} from "./dashboard/own/own.component";
+import {FavoritesComponent} from "./dashboard/favorites/favorites.component";
+import {UsedComponent} from "./dashboard/used/used.component";
 
 const routes: Routes = [
   {
@@ -20,7 +23,11 @@ const routes: Routes = [
   },
   {
     path: '', component: DefaultComponent, children: [
-      {path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)},
+      {path: 'dashboard', children: [
+          {path: 'own', component: OwnComponent},
+          {path: 'favorites', component: FavoritesComponent},
+          {path: 'used', component: UsedComponent},
+        ]},
       {path: 'trash', component: TrashComponent},
       {path: 'space/:id', component: SpaceComponent},
       {path: 'desktop', component: DesktopComponent},

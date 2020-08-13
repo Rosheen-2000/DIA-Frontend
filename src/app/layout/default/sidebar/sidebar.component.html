@@ -24,7 +24,8 @@
 </ul>
 
 <div class="addButton">
-  <button nz-button nzType="primary" nzShape="circle">
+  <button nzTooltipTitle="新建文档" nzTooltipPlacement="right" nz-button nz-tooltip 
+          nzType="primary" nzShape="circle" (click)="chooseTemplate()">
       <i nz-icon nzType="plus" nzRotate="90"></i>
   </button>
 </div>

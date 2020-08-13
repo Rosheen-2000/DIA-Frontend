@@ -6,12 +6,17 @@ import {FileSystemComponent} from './file-system/file-system.component';
 import {NgZorroAntdModule, NzButtonModule, NzIconModule} from 'ng-zorro-antd';
 import {RouterModule} from '@angular/router';
 import { FolderItemComponent } from './folder-item/folder-item.component';
+import { TemplateModalComponent } from './template-modal/template-modal.component';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { FormsModule } from '@angular/forms';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 
 const Components = [
   LogoComponent,
   DocItemComponent,
   FileSystemComponent,
-  FolderItemComponent
+  FolderItemComponent,
+  TemplateModalComponent
 ];
 
 @NgModule({
@@ -22,7 +27,10 @@ const Components = [
     imports: [
         RouterModule,
         NzIconModule,
-        NgZorroAntdModule
+        NgZorroAntdModule,
+        NzInputModule,
+        FormsModule,
+        NzGridModule,
     ]
 })
 export class SharedModule {

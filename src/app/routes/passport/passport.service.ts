@@ -18,9 +18,11 @@ export class PassportService {
   }
 
   public checkUsernameValid(uname: string): Observable<{ res: string }> {
+    const form = new FormData();
+    form.set('uname', uname);
     return this.http.post<{
       res: string
-    }>(this.baseUrl + 'passport/check/', {uname});
+    }>(this.baseUrl + 'passport/check/', form);
   }
 
   public login(uname: string, pwd: string): Observable<{ msg: string, token: string }> {
@@ -37,12 +39,12 @@ export class PassportService {
   }
 
   public register(uname: string, pwd: string): Observable<{ msg: string, token: string }> {
+    const form = new FormData();
+    form.set('uname', uname);
+    form.set('pwd', pwd);
     return this.http.post<{
       msg: string, token: string
-    }>(this.baseUrl + 'passport/register/', {
-      uname,
-      pwd
-    });
+    }>(this.baseUrl + 'passport/register/', form);
   }
 
   // 暂不从token中获取数据

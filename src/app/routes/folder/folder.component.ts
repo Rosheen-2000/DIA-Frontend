@@ -8,8 +8,13 @@ import {FolderService} from './folder.service';
   styleUrls: ['./folder.component.scss']
 })
 export class FolderComponent implements OnInit {
-  @Input() isRoot: boolean;
+  @Input() type: string;
+  // user space folder
+
   @Input() rootName: string;
+  @Input() rootType: string;
+
+  @Input() spaceId: string;
 
   private folderId: string;
   public subFolders: {Id: string, Name: string}[];
@@ -23,10 +28,14 @@ export class FolderComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.folderId = params.id;
-      this.subFolders = this.folderService.getSubFolders();
-      this.subFiles = this.folderService.getFiles();
-      this.path = this.folderService.getFolderPath();
+      if (this.folderId) {
+      }
     });
+    if (this.type === 'user'){
+      // this.subFolders = this.folderService.getSubFolders();
+      this.subFiles = this.folderService.getFiles(this.rootType);
+      // this.path = this.folderService.getFolderPath();
+    }
   }
 
 }

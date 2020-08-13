@@ -20,10 +20,10 @@ export class FolderService {
     ];
   }
 
-  public getFiles(): { Id: string, Name: string }[] {
+  public getFiles(rootType: string): { Id: string, Name: string }[] {
     return [
-      {Id: 'File1', Name: 'File1'},
-      {Id: 'File2', Name: 'File2'}
+      {Id: rootType + 'File1', Name: rootType + 'File1'},
+      {Id: rootType + 'File2', Name: rootType + 'File2'}
     ];
   }
 

@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Form, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {DocService} from './doc.service';
 import {ActivatedRoute, Params, Routes} from '@angular/router';
+import {Subject, Observable} from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 declare const tinymce: any;
 
@@ -14,10 +17,15 @@ export class DocumentComponent implements OnInit {
   form: FormGroup;
   docId: string;
 
+  // 防抖 保存文本内容
+  updateResult = new Observable<{ msg: string }>();
+  private updateContent = new Subject<string>();
+
   constructor(
     private fb: FormBuilder,
     private docService: DocService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private message: NzMessageService,
   ) {
   }
 
@@ -50,5 +58,50 @@ export class DocumentComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.docId = params.id;
     });
+
+    // 防抖 保存文本内容
+    this.updateResult = this.updateContent.pipe(
+      debounceTime(5000),
+      distinctUntilChanged(),
+      switchMap(
+        newcontent => this.docService.modifyContent(this.docId, newcontent)
+      )
+    );
   }
+
+  testKeyUp(event: any): void {
+    console.log(event);
+    alert("111");
+  }
+
+
+  // saveContent(): void {
+  //   this.docService.modifyContent(this.docId, )
+  // }
+
+  saveContent(): void {
+    this.updateContent.next(this.form.value.Content);
+    // TODO 同步问题?
+    this.updateResult.subscribe(
+      res => {
+        if (res.msg === 'true') {
+          this.message.create('success', '自动保存成功');
+        }
+      }
+    )
+  }
+
+  clickSave(): void {
+    this.docService.modifyContent(this.docId, this.form.value.Content).subscribe(
+      res => {
+        if (res.msg === 'true') {
+          this.message.create('success', '保存成功');
+        }
+        else {
+          this.message.create('error', '保存失败，请稍后重试');
+        }
+      }
+    )
+  }
+
 }
