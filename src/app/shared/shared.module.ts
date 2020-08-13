@@ -6,12 +6,14 @@ import {FileSystemComponent} from './file-system/file-system.component';
 import {NgZorroAntdModule, NzButtonModule, NzIconModule} from 'ng-zorro-antd';
 import {RouterModule} from '@angular/router';
 import { FolderItemComponent } from './folder-item/folder-item.component';
+import { TemplateModalComponent } from './template-modal/template-modal.component';
 
 const Components = [
   LogoComponent,
   DocItemComponent,
   FileSystemComponent,
-  FolderItemComponent
+  FolderItemComponent,
+  TemplateModalComponent
 ];
 
 @NgModule({
