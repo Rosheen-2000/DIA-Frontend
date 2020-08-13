@@ -8,9 +8,12 @@ import {environment} from '../../../environments/environment';
 })
 export class FolderService {
 
+  private readonly baseUrl: string;
+
   constructor(
     private http: HttpClient
   ) {
+    this.baseUrl = environment.baseUrl;
   }
 
   public getSubFolders(): { Id: string, Name: string }[] {
@@ -25,6 +28,9 @@ export class FolderService {
       {Id: rootType + 'File1', Name: rootType + 'File1'},
       {Id: rootType + 'File2', Name: rootType + 'File2'}
     ];
+    // return this.http.get<{ docname: string, docid: string }[]> (
+    //   this.baseUrl + 'doc' + rootType + 'file'
+    // );
   }
 
   public getFolderPath(): { Id: string, Name: string }[] {

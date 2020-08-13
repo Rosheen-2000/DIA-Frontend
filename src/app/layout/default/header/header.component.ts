@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import { UserinfoService } from '../../../core/services/userinfo.service'
+import { PassportService } from '../../../routes/passport/passport.service'
 
 @Component({
   selector: 'app-header',
@@ -11,11 +12,13 @@ export class HeaderComponent implements OnInit {
   value = '';
   public username: string;
   public avatar: string;
+  public isVisible: boolean = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private userinfo_ser: UserinfoService,
+    private passport: PassportService,
   ) {
   }
 
@@ -50,5 +53,18 @@ export class HeaderComponent implements OnInit {
 
   onChanged(event: any): void {
     this.router.navigate(['/space/' + event]).then();
+  }
+
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
+  logout(): void {
+    this.passport.logout();
+    location.reload();
   }
 }
