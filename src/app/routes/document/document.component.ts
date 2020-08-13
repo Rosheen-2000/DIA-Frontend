@@ -105,6 +105,9 @@ export class DocumentComponent implements OnInit, OnDestroy {
         else {
           this.message.create('error', '保存失败，请稍后重试');
         }
+      },
+      error => {
+        this.message.create('error', '奇怪的错误增加了，请稍后重试');
       }
     );
   }
