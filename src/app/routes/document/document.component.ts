@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, HostListener} from '@angular/core';
 import {Form, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {DocService} from './doc.service';
 import {ActivatedRoute, Params, Routes} from '@angular/router';
@@ -19,6 +19,12 @@ export class DocumentComponent implements OnInit, OnDestroy {
   // 防抖 保存文本内容
   // updateResult = new Observable<{ msg: string }>();
   // private updateContent = new Subject<string>();
+
+  @HostListener("window:beforeunload", ["$event"]) unloadHandler(event: Event) {
+    if (localStorage.getItem('modify')==='true') {
+      event.returnValue = false;
+    }
+  }
 
   constructor(
     private docService: DocService,
@@ -56,11 +62,12 @@ export class DocumentComponent implements OnInit, OnDestroy {
         tinymce.activeEditor.setMode('design');
       },
 
-      // setup: function(editor) {
-      //   editor.on('keyup', function(e) {
-      //     console.log('KeyUp! But nothing happened...');
-      //   });
-      // }
+      setup: function(editor) {
+        editor.on('keyup', function(e) {
+          console.log('KeyUp! But nothing happened...');
+          localStorage.setItem('modify', 'true');
+        });
+      }
     });
 
 
@@ -75,6 +82,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    localStorage.removeItem('modify');
     tinymce.remove();
   }
 
@@ -100,6 +108,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
     this.docService.modifyContent(this.docId, tinymce.activeEditor.getContent()).subscribe(
       res => {
         if (res.msg === 'true') {
+          
           this.message.create('success', '保存成功');
         }
         else {
