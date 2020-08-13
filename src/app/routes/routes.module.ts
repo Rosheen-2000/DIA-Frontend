@@ -13,7 +13,10 @@ import { FolderComponent } from './folder/folder.component';
 import {SharedModule} from '../shared/shared.module';
 import { FindbackComponent } from './passport/findback/findback.component';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
+import {OwnComponent} from "./dashboard/own/own.component";
+import {UsedComponent} from "./dashboard/used/used.component";
+import {FavoritesComponent} from "./dashboard/favorites/favorites.component";
 
 
 const Components = [
@@ -23,24 +26,30 @@ const Components = [
   SpaceComponent,
   TrashComponent,
   DesktopComponent,
-  FolderComponent
+  FolderComponent,
+  OwnComponent,
+  UsedComponent,
+  FavoritesComponent
 ];
 
 @NgModule({
-  declarations: [...Components, FindbackComponent],
-  imports: [
-    RoutesRoutingModule,
-    FormsModule,
-    EditorModule,
-    ReactiveFormsModule,
-    NgZorroAntdModule,
-    SharedModule,
-    NzAlertModule,
-    CommonModule,
-  ],
-  providers: [
-    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
-  ]
+    declarations: [...Components, FindbackComponent],
+    imports: [
+        RoutesRoutingModule,
+        FormsModule,
+        EditorModule,
+        ReactiveFormsModule,
+        NgZorroAntdModule,
+        SharedModule,
+        NzAlertModule,
+        CommonModule
+    ],
+    exports: [
+        FolderComponent
+    ],
+    providers: [
+        {provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js'}
+    ]
 })
 export class RoutesModule {
 }

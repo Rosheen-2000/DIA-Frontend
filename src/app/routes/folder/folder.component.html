@@ -1,11 +1,11 @@
-<div *ngIf="isRoot">
+<div *ngIf="type=='user'">
   <nz-breadcrumb>
     <nz-breadcrumb-item>
       {{rootName}}
     </nz-breadcrumb-item>
   </nz-breadcrumb>
 </div>
-<div *ngIf="!isRoot">
+<div *ngIf="type==''">
   <nz-breadcrumb>
     <nz-breadcrumb-item *ngFor="let p of path">
       {{p.Name}}
