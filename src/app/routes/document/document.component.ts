@@ -120,5 +120,5 @@ export class DocumentComponent implements OnInit, OnDestroy {
       }
     );
   }
-
 }
+
