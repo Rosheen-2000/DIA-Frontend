@@ -36,6 +36,8 @@ export class PassportService {
 
   public logout(): void {
     localStorage.removeItem("token");
+    localStorage.removeItem('username');
+    localStorage.removeItem('avatar');
   }
 
   public register(uname: string, pwd: string): Observable<{ msg: string, token: string }> {
