@@ -33,7 +33,7 @@ export class FolderComponent implements OnInit {
       }
     });
     if (this.type === 'user'){
-      this.subFolders = this.folderService.getSubFolders();
+      // this.subFolders = this.folderService.getSubFolders();
       this.folderService.getFiles(this.rootType).subscribe(
         res => this.subFiles = res
       );
