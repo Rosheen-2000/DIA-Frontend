@@ -1,6 +1,6 @@
 export interface TeamInfo {
     teamid: string;
-    // teamname: string;
+    teamname: string;
     creatorid: string;
     creatorname: string;
     createdate: string;

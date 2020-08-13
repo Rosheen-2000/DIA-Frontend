@@ -10,6 +10,7 @@ import { TemplateModalComponent } from './template-modal/template-modal.componen
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import {CommonModule} from "@angular/common";
 
 const Components = [
   LogoComponent,
@@ -31,6 +32,7 @@ const Components = [
         NzInputModule,
         FormsModule,
         NzGridModule,
+        CommonModule,
     ]
 })
 export class SharedModule {

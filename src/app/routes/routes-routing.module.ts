@@ -13,6 +13,7 @@ import {FolderComponent} from './folder/folder.component';
 import {OwnComponent} from "./dashboard/own/own.component";
 import {FavoritesComponent} from "./dashboard/favorites/favorites.component";
 import {UsedComponent} from "./dashboard/used/used.component";
+import {FeedbackComponent} from "./feedback/feedback.component";
 
 const routes: Routes = [
   {
@@ -31,7 +32,8 @@ const routes: Routes = [
       {path: 'trash', component: TrashComponent},
       {path: 'space/:id', component: SpaceComponent},
       {path: 'desktop', component: DesktopComponent},
-      {path: 'folder/:id', component: FolderComponent}
+      {path: 'folder/:id', component: FolderComponent},
+      {path: 'feedback', component: FeedbackComponent}
     ]
   },
   {

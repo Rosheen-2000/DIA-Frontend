@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Form, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {DocService} from './doc.service';
 import {ActivatedRoute, Params, Routes} from '@angular/router';
@@ -13,16 +13,14 @@ declare const tinymce: any;
   templateUrl: './document.component.html',
   styleUrls: ['./document.component.scss']
 })
-export class DocumentComponent implements OnInit {
-  form: FormGroup;
+export class DocumentComponent implements OnInit, OnDestroy {
   docId: string;
 
   // 防抖 保存文本内容
-  updateResult = new Observable<{ msg: string }>();
-  private updateContent = new Subject<string>();
+  // updateResult = new Observable<{ msg: string }>();
+  // private updateContent = new Subject<string>();
 
   constructor(
-    private fb: FormBuilder,
     private docService: DocService,
     private route: ActivatedRoute,
     private message: NzMessageService,
@@ -30,6 +28,14 @@ export class DocumentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.params.subscribe((params: Params) => {
+      this.docId = params.id;
+      this.docService.getDocument(this.docId).subscribe(
+        res => {
+          tinymce.activeEditor.setContent(res.Content);
+        }
+      );
+    });
     // tinyMCE配置
     tinymce.init({
       base_url: '/tinymce/',
@@ -48,51 +54,50 @@ export class DocumentComponent implements OnInit {
         // 根据权限可以关闭文档的编辑权限
         tinymce.activeEditor.setMode('readonly');
         tinymce.activeEditor.setMode('design');
-      }
-    });
-    // 初始化表单
-    this.form = this.fb.group({
-      Title: 'title',
-      Content: '由模版新建文档'
-    });
-    this.route.params.subscribe((params: Params) => {
-      this.docId = params.id;
+      },
+
+      // setup: function(editor) {
+      //   editor.on('keyup', function(e) {
+      //     console.log('KeyUp! But nothing happened...');
+      //   });
+      // }
     });
 
+
     // 防抖 保存文本内容
-    this.updateResult = this.updateContent.pipe(
-      debounceTime(5000),
-      distinctUntilChanged(),
-      switchMap(
-        newcontent => this.docService.modifyContent(this.docId, newcontent)
-      )
-    );
+    // this.updateResult = this.updateContent.pipe(
+    //   debounceTime(5000),
+    //   distinctUntilChanged(),
+    //   switchMap(
+    //     newcontent => this.docService.modifyContent(this.docId, newcontent)
+    //   )
+    // );
+  }
+
+  ngOnDestroy() {
+    tinymce.remove();
   }
 
   testKeyUp(event: any): void {
     console.log(event);
-    alert("111");
+    alert('111');
   }
 
-
+  // * tinymce监听keyup有困难，不提供实时保存
   // saveContent(): void {
-  //   this.docService.modifyContent(this.docId, )
+  //   this.updateContent.next(this.form.value.Content);
+  //   this.updateResult.subscribe(
+  //     res => {
+  //       if (res.msg === 'true') {
+  //         this.message.create('success', '自动保存成功');
+  //       }
+  //     }
+  //   )
   // }
 
-  saveContent(): void {
-    this.updateContent.next(this.form.value.Content);
-    // TODO 同步问题?
-    this.updateResult.subscribe(
-      res => {
-        if (res.msg === 'true') {
-          this.message.create('success', '自动保存成功');
-        }
-      }
-    )
-  }
-
   clickSave(): void {
-    this.docService.modifyContent(this.docId, this.form.value.Content).subscribe(
+    console.log(tinymce.activeEditor.getContent());
+    this.docService.modifyContent(this.docId, tinymce.activeEditor.getContent()).subscribe(
       res => {
         if (res.msg === 'true') {
           this.message.create('success', '保存成功');
@@ -101,7 +106,7 @@ export class DocumentComponent implements OnInit {
           this.message.create('error', '保存失败，请稍后重试');
         }
       }
-    )
+    );
   }
 }
 

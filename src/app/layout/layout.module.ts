@@ -10,6 +10,7 @@ import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
 import {CommonModule} from '@angular/common';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 const Components = [
   DefaultComponent,
@@ -30,6 +31,7 @@ const DefaultComponents = [
       SharedModule, 
       CommonModule, 
       NzToolTipModule,
+      NzPopconfirmModule,
     ],
   declarations: [...Components, ...DefaultComponents]
 })

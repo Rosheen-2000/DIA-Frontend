@@ -26,14 +26,6 @@ export class DocService {
     // };
   }
 
-  public newDocument(title: string, templateid: string): Observable<{ msg: string, docid: string }> {
-    const form = new FormData();
-    form.set('title', title);
-    form.set('template', templateid);
-    return this.http.post<{ msg: string, docid: string }> (
-      this.baseUrl + 'doc/newdoc/', form);
-  }
-
   public modifyTitle(docid: string, title: string): Observable<{ msg: string }> {
     const form = new FormData();
     form.set('docid', docid);
