@@ -9,6 +9,7 @@ import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
 import {CommonModule} from '@angular/common';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 const Components = [
   DefaultComponent,
@@ -22,7 +23,14 @@ const DefaultComponents = [
 ];
 
 @NgModule({
-    imports: [RouterModule, NgZorroAntdModule, FormsModule, SharedModule, CommonModule],
+    imports: [
+      RouterModule, 
+      NgZorroAntdModule, 
+      FormsModule, 
+      SharedModule, 
+      CommonModule, 
+      NzToolTipModule,
+    ],
   declarations: [...Components, ...DefaultComponents]
 })
 export class LayoutModule {}
