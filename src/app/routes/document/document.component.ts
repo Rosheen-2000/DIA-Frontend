@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Form, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {DocService} from './doc.service';
 import {ActivatedRoute, Params, Routes} from '@angular/router';
+import {Subject, Observable} from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 declare const tinymce: any;
 
@@ -13,6 +15,11 @@ declare const tinymce: any;
 export class DocumentComponent implements OnInit {
   form: FormGroup;
   docId: string;
+
+  // 防抖 保存文本内容
+  withRefresh = false;
+  updateResult = new Observable<{ msg: string }>();
+  private updateContent = new Subject<string>();
 
   constructor(
     private fb: FormBuilder,
@@ -50,5 +57,34 @@ export class DocumentComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.docId = params.id;
     });
+
+    // TODO 如何显示保存结果？
+    // 防抖 保存文本内容
+    this.updateResult = this.updateContent.pipe(
+      debounceTime(5000),
+      distinctUntilChanged(),
+      switchMap(
+        newcontent => this.docService.modifyContent(this.docId, newcontent)
+      )
+    );
   }
+
+  testKeyUp(event: any): void {
+    console.log(event);
+    alert("111");
+  }
+
+
+  // saveContent(): void {
+  //   this.docService.modifyContent(this.docId, )
+  // }
+
+  saveContent(): void {
+    this.updateContent.next(this.form.value.Content);
+  }
+
+  showUpdateRes(): void {
+
+  }
+
 }

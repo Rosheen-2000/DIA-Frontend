@@ -23,7 +23,7 @@ export class TemplateModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  newDoc() {
+  newDoc(): void {
     this.docservice.newDocument(this.title, this.templateid).subscribe(
       (res) => {
         if (res.msg === 'true') {

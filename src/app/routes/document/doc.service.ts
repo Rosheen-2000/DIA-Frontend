@@ -34,19 +34,17 @@ export class DocService {
       });
   }
 
-  public modifyTitle(uid: string, docid: string, title: string): Observable<{ msg: string }> {
+  public modifyTitle(docid: string, title: string): Observable<{ msg: string }> {
     return this.http.post<{ msg: string }> (
       this.baseUrl + 'doc/modifydoctitle/', {
-        uid,
         docid,
         title
       });
   }
 
-  public modifyContent(uid: string, docid: string, content: string): Observable<{ msg: string }> {
+  public modifyContent(docid: string, content: string): Observable<{ msg: string }> {
     return this.http.post<{ msg: string }> (
       this.baseUrl + 'doc/modifydoccontent/', {
-        uid,
         docid,
         content
       });
