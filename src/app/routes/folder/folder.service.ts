@@ -23,14 +23,8 @@ export class FolderService {
     ];
   }
 
-  public getFiles(rootType: string): { Id: string, Name: string }[] {
-    return [
-      {Id: rootType + 'File1', Name: rootType + 'File1'},
-      {Id: rootType + 'File2', Name: rootType + 'File2'}
-    ];
-    // return this.http.get<{ docname: string, docid: string }[]> (
-    //   this.baseUrl + 'doc' + rootType + 'file'
-    // );
+  public getFiles(rootType: string): Observable<{ id: string, name: string }[]> {
+    return this.http.get<{ id: string, name: string }[]>(environment.baseUrl + 'doc/' + rootType + '/file');
   }
 
   public getFolderPath(): { Id: string, Name: string }[] {

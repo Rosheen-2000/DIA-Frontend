@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 import {OwnComponent} from "./dashboard/own/own.component";
 import {UsedComponent} from "./dashboard/used/used.component";
 import {FavoritesComponent} from "./dashboard/favorites/favorites.component";
+import { FeedbackComponent } from './feedback/feedback.component';
 
 
 const Components = [
@@ -29,11 +30,13 @@ const Components = [
   FolderComponent,
   OwnComponent,
   UsedComponent,
-  FavoritesComponent
+  FavoritesComponent,
+  FindbackComponent,
+  FeedbackComponent
 ];
 
 @NgModule({
-    declarations: [...Components, FindbackComponent],
+    declarations: [...Components],
     imports: [
         RoutesRoutingModule,
         FormsModule,
