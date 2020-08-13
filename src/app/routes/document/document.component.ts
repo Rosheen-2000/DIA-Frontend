@@ -4,6 +4,7 @@ import {DocService} from './doc.service';
 import {ActivatedRoute, Params, Routes} from '@angular/router';
 import {Subject, Observable} from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 declare const tinymce: any;
 
@@ -17,14 +18,14 @@ export class DocumentComponent implements OnInit {
   docId: string;
 
   // 防抖 保存文本内容
-  withRefresh = false;
   updateResult = new Observable<{ msg: string }>();
   private updateContent = new Subject<string>();
 
   constructor(
     private fb: FormBuilder,
     private docService: DocService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private message: NzMessageService,
   ) {
   }
 
@@ -58,7 +59,6 @@ export class DocumentComponent implements OnInit {
       this.docId = params.id;
     });
 
-    // TODO 如何显示保存结果？
     // 防抖 保存文本内容
     this.updateResult = this.updateContent.pipe(
       debounceTime(5000),
@@ -81,10 +81,14 @@ export class DocumentComponent implements OnInit {
 
   saveContent(): void {
     this.updateContent.next(this.form.value.Content);
-  }
-
-  showUpdateRes(): void {
-
+    // TODO ?
+    this.updateResult.subscribe(
+      res => {
+        if (res.msg === 'true') {
+          this.message.create('success', '自动保存成功');
+        }
+      }
+    )
   }
 
 }
