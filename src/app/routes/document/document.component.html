@@ -3,7 +3,7 @@
   <textarea id="tiny"></textarea>
 </div>
 
-<form [formGroup]="form">
+<!-- <form [formGroup]="form">
   <table>
     <tr>
       <td>文档名称：</td>
@@ -31,4 +31,6 @@
   <div class="editor">
     <textarea id="tiny" formControlName="Content"></textarea>
   </div>
-</form>
+</form> -->
+
+<nz-cascader [(ngModel)]="values" [nzLoadData]="loadData" (ngModelChange)="onChanges($event)"> </nz-cascader>

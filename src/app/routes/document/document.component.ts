@@ -5,8 +5,57 @@ import {ActivatedRoute, Params, Routes} from '@angular/router';
 import {Subject, Observable} from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 
 declare const tinymce: any;
+
+const provinces = [
+  {
+    value: 'zhejiang',
+    label: 'Zhejiang'
+  },
+  {
+    value: 'jiangsu',
+    label: 'Jiangsu'
+  }
+];
+
+const cities: { [key: string]: Array<{ value: string; label: string; isLeaf?: boolean }> } = {
+  zhejiang: [
+    {
+      value: 'hangzhou',
+      label: 'Hangzhou'
+    },
+    {
+      value: 'ningbo',
+      label: 'Ningbo',
+      isLeaf: true
+    }
+  ],
+  jiangsu: [
+    {
+      value: 'nanjing',
+      label: 'Nanjing'
+    }
+  ]
+};
+
+const scenicspots: { [key: string]: Array<{ value: string; label: string; isLeaf?: boolean }> } = {
+  hangzhou: [
+    {
+      value: 'xihu',
+      label: 'West Lake',
+      isLeaf: true
+    }
+  ],
+  nanjing: [
+    {
+      value: 'zhonghuamen',
+      label: 'Zhong Hua Men',
+      isLeaf: true
+    }
+  ]
+};
 
 @Component({
   selector: 'app-document',
@@ -14,7 +63,10 @@ declare const tinymce: any;
   styleUrls: ['./document.component.scss']
 })
 export class DocumentComponent implements OnInit, OnDestroy {
+
   docId: string;
+
+  values: string[] | null = null;
 
   // 防抖 保存文本内容
   // updateResult = new Observable<{ msg: string }>();
@@ -119,6 +171,27 @@ export class DocumentComponent implements OnInit, OnDestroy {
         this.message.create('error', '奇怪的错误增加了，请稍后重试');
       }
     );
+  }
+
+  onChanges(values: string[]): void {
+    console.log(values);
+  }
+
+  /** load data async execute by `nzLoadData` method */
+  loadData(node: NzCascaderOption, index: number): PromiseLike<void> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        if (index < 0) {
+          // if index less than 0 it is root node
+          node.children = provinces;
+        } else if (index === 0) {
+          node.children = cities[node.value];
+        } else {
+          node.children = scenicspots[node.value];
+        }
+        resolve();
+      }, 1000);
+    });
   }
 }
 
