@@ -23,13 +23,10 @@ export class SidebarComponent implements OnInit {
     const modal = this.modal.create({
       nzTitle: '从模版新建文档',
       nzContent: TemplateModalComponent,
-      // nzViewContainerRef: this.viewContainerRef,
       nzGetContainer: () => document.body,
       nzComponentParams: {
-        // title: 'title in component',
-        // subtitle: 'component sub title，will be changed after 2 sec'
+        // modal: modal
       },
-      nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000)),
       nzFooter: [
         // {
         //   label: '取消',
