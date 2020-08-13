@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
     console.log(this.form.value);
     this.passwordService.login(this.form.value.username, this.form.value.password).subscribe(
       (res) => {
+        console.log(res);
         if (res.msg === 'true') {
           console.log(res.token);
           localStorage.setItem("token", res.token);

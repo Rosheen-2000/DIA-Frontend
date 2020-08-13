@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'nginx/api/'
+  baseUrl: 'http://nginx/api/'
 };
