@@ -14,7 +14,6 @@ declare const tinymce: any;
   styleUrls: ['./document.component.scss']
 })
 export class DocumentComponent implements OnInit, OnDestroy {
-  form: FormGroup;
   docId: string;
 
   // 防抖 保存文本内容
@@ -22,7 +21,6 @@ export class DocumentComponent implements OnInit, OnDestroy {
   // private updateContent = new Subject<string>();
 
   constructor(
-    private fb: FormBuilder,
     private docService: DocService,
     private route: ActivatedRoute,
     private message: NzMessageService,
@@ -30,6 +28,14 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.route.params.subscribe((params: Params) => {
+      this.docId = params.id;
+      this.docService.getDocument(this.docId).subscribe(
+        res => {
+          tinymce.activeEditor.setContent(res.Content);
+        }
+      );
+    });
     // tinyMCE配置
     tinymce.init({
       base_url: '/tinymce/',
@@ -48,7 +54,6 @@ export class DocumentComponent implements OnInit, OnDestroy {
         // 根据权限可以关闭文档的编辑权限
         tinymce.activeEditor.setMode('readonly');
         tinymce.activeEditor.setMode('design');
-        tinymce.activeEditor.setContent('<h1>模版</h1>');
       },
 
       // setup: function(editor) {
@@ -57,14 +62,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
       //   });
       // }
     });
-    // 初始化表单
-    this.form = this.fb.group({
-      Title: 'title',
-      Content: 'form content'
-    });
-    this.route.params.subscribe((params: Params) => {
-      this.docId = params.id;
-    });
+
 
     // 防抖 保存文本内容
     // this.updateResult = this.updateContent.pipe(
@@ -82,7 +80,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
   testKeyUp(event: any): void {
     console.log(event);
-    alert("111");
+    alert('111');
   }
 
   // * tinymce监听keyup有困难，不提供实时保存
@@ -98,7 +96,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
   // }
 
   clickSave(): void {
-    this.docService.modifyContent(this.docId, this.form.value.Content).subscribe(
+    console.log(tinymce.activeEditor.getContent());
+    this.docService.modifyContent(this.docId, tinymce.activeEditor.getContent()).subscribe(
       res => {
         if (res.msg === 'true') {
           this.message.create('success', '保存成功');
@@ -107,7 +106,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
           this.message.create('error', '保存失败，请稍后重试');
         }
       }
-    )
+    );
   }
 
 }
