@@ -18,7 +18,7 @@ export class FolderComponent implements OnInit {
 
   private folderId: string;
   public subFolders: {Id: string, Name: string}[];
-  public subFiles: {id: string, name: string}[];
+  public subFiles: {id: string, name: string}[] = [];
   public path: {Id: string, Name: string}[];
   constructor(
     private route: ActivatedRoute,
@@ -33,14 +33,14 @@ export class FolderComponent implements OnInit {
       }
     });
     if (this.type === 'user'){
-      // this.subFolders = this.folderService.getSubFolders();
-      // this.folderService.getFiles(this.rootType).subscribe(
-      //   res => this.subFiles = res
-      // );
-      this.subFiles = [
-        {id: this.rootType + 'File1', name: this.rootType + 'File1'},
-        {id: this.rootType + 'File2', name: this.rootType + 'File2'}
-      ];
+      this.subFolders = this.folderService.getSubFolders();
+      this.folderService.getFiles(this.rootType).subscribe(
+        res => this.subFiles = res
+      );
+      // this.subFiles = [
+      //   {id: this.rootType + 'File1', name: this.rootType + 'File1'},
+      //   {id: this.rootType + 'File2', name: this.rootType + 'File2'}
+      // ];
       // this.path = this.folderService.getFolderPath();
     }
   }
