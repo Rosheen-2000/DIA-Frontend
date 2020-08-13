@@ -24,12 +24,12 @@ export class PassportService {
   }
 
   public login(uname: string, pwd: string): Observable<{ msg: string, token: string }> {
+    const form = new FormData();
+    form.set('uname', uname);
+    form.set('pwd', pwd);
     return this.http.post<{
       msg: string, token: string
-    }>(this.baseUrl + 'passport/login/', {
-      uname,
-      pwd
-    });
+    }>(this.baseUrl + 'passport/login/', form);
   }
 
   public logout(): void {
