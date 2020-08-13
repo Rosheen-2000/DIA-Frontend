@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Form, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {DocService} from './doc.service';
 import {ActivatedRoute, Params, Routes} from '@angular/router';
@@ -13,7 +13,7 @@ declare const tinymce: any;
   templateUrl: './document.component.html',
   styleUrls: ['./document.component.scss']
 })
-export class DocumentComponent implements OnInit {
+export class DocumentComponent implements OnInit, OnDestroy {
   form: FormGroup;
   docId: string;
 
@@ -48,12 +48,13 @@ export class DocumentComponent implements OnInit {
         // 根据权限可以关闭文档的编辑权限
         tinymce.activeEditor.setMode('readonly');
         tinymce.activeEditor.setMode('design');
+        tinymce.activeEditor.setContent('<h1>模版</h1>');
       }
     });
     // 初始化表单
     this.form = this.fb.group({
       Title: 'title',
-      Content: '由模版新建文档'
+      Content: 'form content'
     });
     this.route.params.subscribe((params: Params) => {
       this.docId = params.id;
@@ -67,6 +68,10 @@ export class DocumentComponent implements OnInit {
         newcontent => this.docService.modifyContent(this.docId, newcontent)
       )
     );
+  }
+
+  ngOnDestroy() {
+    tinymce.remove();
   }
 
   testKeyUp(event: any): void {
