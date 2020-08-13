@@ -1,1 +1,20 @@
-<p>template-modal works!</p>
+<div class="outer">
+    <div class="modifytitle">
+        <input nz-input placeholder="请输入文档标题" [(ngModel)]="title" />
+    </div>
+    <div class="selectmodule">
+        <div nz-row [nzGutter]="[16, 24]">
+            <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
+            <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
+            <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
+            <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
+            <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
+            <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
+            <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
+            <div nz-col class="gutter-row" [nzSpan]="6"><div class="inner-box">col-6</div></div>
+        </div>
+    </div>
+    <div class="footer">
+        <button nz-button nzType="primary" (click)="newDoc()">创建</button>
+    </div>
+</div>

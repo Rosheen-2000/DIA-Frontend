@@ -26,12 +26,11 @@ export class DocService {
     // };
   }
 
-  public newDocument(uid: string, title: string, content: string): Observable<{ msg: string, docid: string }> {
+  public newDocument(title: string, templateid: string): Observable<{ msg: string, docid: string }> {
     return this.http.post<{ msg: string, docid: string }> (
       this.baseUrl + 'doc/newdoc/', {
-        uid,
         title,
-        content
+        templateid
       });
   }
 

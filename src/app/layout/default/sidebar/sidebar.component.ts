@@ -31,12 +31,12 @@ export class SidebarComponent implements OnInit {
       },
       nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000)),
       nzFooter: [
-        {
-          label: '取消',
-          onClick: () => {
-            modal.destroy();
-          }
-        }
+        // {
+        //   label: '取消',
+        //   onClick: () => {
+        //     modal.destroy();
+        //   }
+        // }
       ]
     });
   }

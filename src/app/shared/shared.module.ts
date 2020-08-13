@@ -7,6 +7,9 @@ import {NgZorroAntdModule, NzButtonModule, NzIconModule} from 'ng-zorro-antd';
 import {RouterModule} from '@angular/router';
 import { FolderItemComponent } from './folder-item/folder-item.component';
 import { TemplateModalComponent } from './template-modal/template-modal.component';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { FormsModule } from '@angular/forms';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 
 const Components = [
   LogoComponent,
@@ -24,7 +27,10 @@ const Components = [
     imports: [
         RouterModule,
         NzIconModule,
-        NgZorroAntdModule
+        NgZorroAntdModule,
+        NzInputModule,
+        FormsModule,
+        NzGridModule,
     ]
 })
 export class SharedModule {
