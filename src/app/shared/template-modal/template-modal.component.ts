@@ -26,14 +26,9 @@ export class TemplateModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.templateService.getAllTemplate().subscribe(
-    //   res => this.templates = res
-    // );
-    this.templates = [
-      {name: '模版1', id: 'template1'},
-      {name: '模版2', id: 'template2'},
-      {name: '模版3', id: 'template3'},
-    ];
+    this.templateService.getAllTemplate().subscribe(
+      res => { console.log(res); this.templates = res.templates;}
+    );
   }
 
   chooseTemplate(i: number): void{
@@ -42,13 +37,14 @@ export class TemplateModalComponent implements OnInit {
   }
 
   create(): void {
-    // this.templateService.newDoc(this.title, this.templates[this.templateIndex].id).subscribe(
-    //   res => {
-    //     if (res.msg === 'true') {
-    //       this.router.navigate(['/docs/' + res.docid]).then();
-    //       this.modal.closeAll();
-    //     }
-    //   }
-    // );
+    this.templateService.newDoc(this.title, this.templates[this.templateIndex].id).subscribe(
+      res => {
+        console.log(res);
+        if (res.msg === 'true') {
+          this.router.navigate(['/docs/' + res.docid]).then();
+          this.modal.closeAll();
+        }
+      }
+    );
   }
 }

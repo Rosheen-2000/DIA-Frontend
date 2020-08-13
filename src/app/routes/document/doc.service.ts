@@ -17,9 +17,11 @@ export class DocService {
   }
 
   public getDocument(docId: string): Observable<{ Title: string, Content: string }> {
-    const params = new HttpParams().set('_docid', docId);
-    return this.http.get<{ Title: string, Content: string }> (
-      this.baseUrl + 'doc/getdoccontent', { params });
+    const form = new FormData();
+    form.set('_docid', docId);
+    // const params = new HttpParams().set('_docid', docId);
+    return this.http.post<{ Title: string, Content: string }> (
+      this.baseUrl + 'doc/getdoccontent/', form);
     // return {
     //   Title: docId + 'Title',
     //   Content: '<h1>标题一</h1>'

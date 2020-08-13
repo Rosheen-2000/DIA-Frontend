@@ -11,8 +11,8 @@ export class TemplateService {
   constructor(private http: HttpClient) {
   }
 
-  public getAllTemplate(): Observable<{ name: string, id: string }[]> {
-    return this.http.get<{ name: string, id: string }[]>(environment.baseUrl + 'template/getall');
+  public getAllTemplate(): Observable<{templates: { name: string, id: string }[]}> {
+    return this.http.get<any>(environment.baseUrl + 'template/getall');
   }
 
   public newDoc(title: string, template: string): Observable<{ msg: string, docid: string }> {
