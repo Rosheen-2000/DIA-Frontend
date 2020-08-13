@@ -1,36 +1,30 @@
-<button nz-button nzType="primary" (click)="clickSave()">保存</button>
-<div class="editor">
-  <textarea id="tiny"></textarea>
-</div>
-
-<!-- <form [formGroup]="form">
-  <table>
-    <tr>
-      <td>文档名称：</td>
-      <td><input nz-input placeholder="Basic usage" ngModel="value" /></td>
-    </tr>
-    <tr>
-      <td>所属：</td>
-      <td>
-        <nz-select ngModel="personal">
-          <nz-option nzValue="personal" nzLabel="个人"></nz-option>
-          <nz-option nzValue="team" nzLabel="团队"></nz-option>
-        </nz-select>
-      </td>
-    </tr>
-    <tr>
-      <td>权限设置：</td>
-      <td>
-        <nz-select ngModel="readonly">
-          <nz-option nzValue="readonly" nzLabel="可读"></nz-option>
-          <nz-option nzValue="readwrite" nzLabel="读写"></nz-option>
-        </nz-select>
-      </td>
-    </tr>
-  </table>
+<form>
+  <div class="table">
+    <button nz-button nzType="primary" (click)="clickSave()" style="float: right;">保存</button>
+    <table>
+      <!-- <tr>
+        <td>文档名称：</td>
+        <td><input nz-input placeholder="Basic usage" ngModel="value" /></td>
+      </tr> -->
+      <tr>
+        <td>所属：</td>
+        <td>
+          <nz-cascader [nzOptions]="nzBelongOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)"></nz-cascader>
+        </td>
+      </tr>
+      <tr>
+        <td>权限设置：</td>
+        <td>
+          <nz-select ngModel="readonly">
+            <nz-option nzValue="readonly" nzLabel="可读"></nz-option>
+            <nz-option nzValue="readwrite" nzLabel="读写"></nz-option>
+          </nz-select>
+        </td>
+      </tr>
+    </table>
+  </div>
   <div class="editor">
     <textarea id="tiny" formControlName="Content"></textarea>
   </div>
-</form> -->
+</form>
 
-<nz-cascader [(ngModel)]="values" [nzLoadData]="loadData" (ngModelChange)="onChanges($event)"> </nz-cascader>

@@ -9,53 +9,104 @@ import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 
 declare const tinymce: any;
 
-const provinces = [
+const belongOptions = [
   {
-    value: 'zhejiang',
-    label: 'Zhejiang'
+    value: 'personal',
+    label: '个人',
+    isLeaf: true
   },
   {
-    value: 'jiangsu',
-    label: 'Jiangsu'
+    value: 'team',
+    label: '团队',
+    children: [
+      {
+        value: '1',
+        label: '团队1',
+        isLeaf: true
+      },
+      {
+        value: '2',
+        label: '团队2',
+        isLeaf: true
+      },
+      {
+        value: '3',
+        label: '团队3',
+        isLeaf: true
+      }
+    ]
   }
 ];
 
-const cities: { [key: string]: Array<{ value: string; label: string; isLeaf?: boolean }> } = {
-  zhejiang: [
-    {
-      value: 'hangzhou',
-      label: 'Hangzhou'
-    },
-    {
-      value: 'ningbo',
-      label: 'Ningbo',
-      isLeaf: true
-    }
-  ],
-  jiangsu: [
-    {
-      value: 'nanjing',
-      label: 'Nanjing'
-    }
-  ]
-};
+const PerSonalPowerOptions = [
+  {
+    value: 'self',
+    label: '我',
+    children: [
+      {
+        value: 'readonly',
+        label: '可读',
+        isLeaf: true
+      },
+      {
+        value: 'readwrite',
+        label: '读写',
+        isLeaf: true
+      },
+    ]
+  },
+  {
+    value: 'others',
+    label: '其它人',
+    children: [
+      {
+        value: 'readonly',
+        label: '可读',
+        isLeaf: true
+      },
+      {
+        value: 'readwrite',
+        label: '读写',
+        isLeaf: true
+      },
+    ]
+  }
+];
 
-const scenicspots: { [key: string]: Array<{ value: string; label: string; isLeaf?: boolean }> } = {
-  hangzhou: [
-    {
-      value: 'xihu',
-      label: 'West Lake',
-      isLeaf: true
-    }
-  ],
-  nanjing: [
-    {
-      value: 'zhonghuamen',
-      label: 'Zhong Hua Men',
-      isLeaf: true
-    }
-  ]
-};
+const TeamPowerOptions = [
+  {
+    value: '1',
+    label: '成员1',
+    children: [
+      {
+        value: 'readonly',
+        label: '可读',
+        isLeaf: true
+      },
+      {
+        value: 'readwrite',
+        label: '读写',
+        isLeaf: true
+      },
+    ]
+  },
+  {
+    value: '2',
+    label: '成员2',
+    children: [
+      {
+        value: 'readonly',
+        label: '可读',
+        isLeaf: true
+      },
+      {
+        value: 'readwrite',
+        label: '读写',
+        isLeaf: true
+      },
+    ]
+  }
+];
 
 @Component({
   selector: 'app-document',
@@ -66,7 +117,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
   docId: string;
 
-  values: string[] | null = null;
+  nzBelongOptions: any[] | null = null;
+  values: any[] | null = null;
 
   // 防抖 保存文本内容
   // updateResult = new Observable<{ msg: string }>();
@@ -122,6 +174,11 @@ export class DocumentComponent implements OnInit, OnDestroy {
       }
     });
 
+    //cascader的init
+    setTimeout(() => {
+      this.nzBelongOptions = belongOptions;
+    }, 100);
+
 
     // 防抖 保存文本内容
     // this.updateResult = this.updateContent.pipe(
@@ -173,25 +230,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
     );
   }
 
-  onChanges(values: string[]): void {
-    console.log(values);
-  }
-
-  /** load data async execute by `nzLoadData` method */
-  loadData(node: NzCascaderOption, index: number): PromiseLike<void> {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        if (index < 0) {
-          // if index less than 0 it is root node
-          node.children = provinces;
-        } else if (index === 0) {
-          node.children = cities[node.value];
-        } else {
-          node.children = scenicspots[node.value];
-        }
-        resolve();
-      }, 1000);
-    });
+  onChanges(values: any): void {
+    console.log(values, this.values);
   }
 }
 
