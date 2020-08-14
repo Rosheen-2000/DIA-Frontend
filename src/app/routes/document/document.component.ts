@@ -1,7 +1,7 @@
-import {Component, OnDestroy, OnInit, HostListener} from '@angular/core';
+import {Component, OnDestroy, OnInit, HostListener, NgZone} from '@angular/core';
 import {Form, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {DocService} from './doc.service';
-import {ActivatedRoute, Params, Routes} from '@angular/router';
+import {ActivatedRoute, Params, Router, Routes} from '@angular/router';
 import {Subject, Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {NzMessageService} from 'ng-zorro-antd/message';
@@ -9,6 +9,7 @@ import {NzCascaderOption} from 'ng-zorro-antd/cascader';
 import {DialogService} from '../../core/services/dialog.service'
 
 declare const tinymce: any;
+declare const window: any;
 
 const belongOptions = [
   {
@@ -132,28 +133,27 @@ export class DocumentComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private message: NzMessageService,
     public dialogService: DialogService,
+    private formBuilder: FormBuilder,
+    private router: Router,
   ) {
   }
 
   ngOnInit(): void {
+    window.MyEditor = {component: this};
+
     this.route.params.subscribe((params: Params) => {
       this.docId = params.id;
       console.log(this.docId);
-      this.docService.getDocument(this.docId).subscribe(
-        res => {
-          console.log(res);
-          this.timer = setInterval(() => {
-            console.log('time');
-            if (tinymce.activeEditor) {
-              tinymce.activeEditor.setContent(res.Content);
-              // tinymce.activeEditor.setMode('readonly');
-              tinymce.activeEditor.setMode('design');
-              clearInterval(this.timer);
-            }
-          }, 500);
-        }
-      );
     });
+
+    this.initEditor();
+  }
+
+  ngOnDestroy() {
+    tinymce.remove();
+  }
+
+  initEditor() {
     // tinyMCE配置
     tinymce.init({
       base_url: '/tinymce/',
@@ -165,47 +165,27 @@ export class DocumentComponent implements OnInit, OnDestroy {
       statusbar: false,
       toolbar_sticky: true,
       theme: 'silver',
-      toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+      plugins: 'save',
+      toolbar1: 'save | formatselect || bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
       image_advtab: true,
+
+      init_instance_callback(editor) {
+        console.log('editor initialized');
+        window.MyEditor.component.initData();
+      }
     });
-
-    //cascader的init
-    setTimeout(() => {
-      this.nzBelongOptions = belongOptions;
-    }, 100);
-
-
-    // 防抖 保存文本内容
-    // this.updateResult = this.updateContent.pipe(
-    //   debounceTime(5000),
-    //   distinctUntilChanged(),
-    //   switchMap(
-    //     newcontent => this.docService.modifyContent(this.docId, newcontent)
-    //   )
-    // );
   }
 
-  ngOnDestroy() {
-    // localStorage.removeItem('modify');
-    tinymce.remove();
+  initData() {
+    console.log('fetch data');
+    this.docService.getDocument(this.docId).subscribe(
+      res => {
+        console.log(res);
+        console.log('set data');
+        tinymce.activeEditor.setContent(res.Content);
+      }
+    );
   }
-
-  testKeyUp(event: any): void {
-    console.log(event);
-    alert('111');
-  }
-
-  // * tinymce监听keyup有困难，不提供实时保存
-  // saveContent(): void {
-  //   this.updateContent.next(this.form.value.Content);
-  //   this.updateResult.subscribe(
-  //     res => {
-  //       if (res.msg === 'true') {
-  //         this.message.create('success', '自动保存成功');
-  //       }
-  //     }
-  //   )
-  // }
 
   clickSave(): void {
     console.log(tinymce.activeEditor.getContent());
@@ -225,8 +205,10 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   clickBack(): void {
-    history.go(-1);
+    // history.go(-1);
+    this.router.navigate(['/dashboard/own']);
   }
+
 
   onChanges(values: any): void {
     console.log(values, this.values);
