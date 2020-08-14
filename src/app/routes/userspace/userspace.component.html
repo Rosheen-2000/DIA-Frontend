@@ -5,13 +5,12 @@
             <a href="">修改头像</a>
         </p>
         <nz-table #basicTable [nzData]="listOfData" [nzFrontPagination]=false>
-            <!-- TODO 绑定对应的方法 -->
             <tbody>
             <tr *ngFor="let data of basicTable.data">
                 <td>{{ data.infoHead }}</td>
                 <td>{{ data.infoBody }}</td>
                 <td>
-                <a >{{ data.action }}</a>
+                <a (click)="doAction(data)">{{ data.action }}</a>
                 </td>
             </tr>
             </tbody>
@@ -30,7 +29,6 @@
       <input nz-input (ngModel)="confirmpwd" placeholder="请输入当前密码">
     </nz-modal>
 
-    <!-- TODO 具体表单的设计 -->
     <nz-modal
       [(nzVisible)]="changeMailVisible"
       nzTitle="Modal Title"
@@ -38,7 +36,7 @@
       (nzOnOk)="changeMail()"
       [nzOkLoading]="isOkLoading"
     >
-      <p>Modal Content</p>
+      <input nz-input (ngModel)="newmail" placeholder="请输入新的邮箱地址">
     </nz-modal>
 
     <nz-modal
@@ -48,6 +46,7 @@
       (nzOnOk)="changePhoneNo()"
       [nzOkLoading]="isOkLoading"
     >
-      <p>Modal Content</p>
+      <input nz-input (ngModel)="newphone" placeholder="请输入新的手机号码">
     </nz-modal>
+    
 </div>
