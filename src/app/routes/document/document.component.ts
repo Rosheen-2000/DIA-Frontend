@@ -146,7 +146,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
             console.log('time');
             if (tinymce.activeEditor) {
               tinymce.activeEditor.setContent(res.Content);
-              tinymce.activeEditor.setMode('readonly');
+              // tinymce.activeEditor.setMode('readonly');
               tinymce.activeEditor.setMode('design');
               clearInterval(this.timer);
             }
