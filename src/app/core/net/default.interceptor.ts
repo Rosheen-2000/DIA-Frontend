@@ -49,12 +49,10 @@ export class DefaultInterceptor implements HttpInterceptor {
     // ErrorResponse处理
     return next.handle(authReq).pipe(
       catchError((err: HttpResponseBase) => {
-        console.log(1);
         switch (err.status) {
           case 401:
             this.router.navigate(['/passport/login']).then();
         }
-        console.log(2);
         throw(err);
       })
     );
