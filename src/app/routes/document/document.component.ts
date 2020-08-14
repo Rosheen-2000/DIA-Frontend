@@ -186,7 +186,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    localStorage.removeItem('modify');
+    // localStorage.removeItem('modify');
     tinymce.remove();
   }
 

@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {PassportService} from '../passport.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router } from '@angular/router';
+import { StorageService } from '../../../core/services/storage.service'
 
 @Component({
   selector: 'app-register',
@@ -20,6 +21,7 @@ export class RegisterComponent implements OnInit {
     private passwordService: PassportService,
     private message: NzMessageService,
     private router: Router,
+    private storage: StorageService,
   ) { }
 
   ngOnInit(): void {
@@ -36,7 +38,7 @@ export class RegisterComponent implements OnInit {
       (res) => {
         if (res.msg === 'true') {
           console.log(res.token);
-          localStorage.setItem("token", res.token);
+          this.storage.set('token', res.token);
           this.message.create('success', "欢迎，"+this.form.value.username);
           this.router.navigateByUrl("");
         }

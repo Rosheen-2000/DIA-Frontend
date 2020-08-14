@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
+import { StorageService } from '../../core/services/storage.service'
 // import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
@@ -12,6 +13,7 @@ export class PassportService {
 
   constructor(
     private http: HttpClient,
+    private storage: StorageService,
     // private jwtHelperService: JwtHelperService,
   ) {
     this.baseUrl = environment.baseUrl;
@@ -35,9 +37,9 @@ export class PassportService {
   }
 
   public logout(): void {
-    localStorage.removeItem("token");
-    localStorage.removeItem('username');
-    localStorage.removeItem('avatar');
+    this.storage.remove("token");
+    this.storage.remove('username');
+    this.storage.remove('avatar');
   }
 
   public register(uname: string, pwd: string): Observable<{ msg: string, token: string }> {

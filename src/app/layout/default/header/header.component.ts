@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import { UserinfoService } from '../../../core/services/userinfo.service'
 import { PassportService } from '../../../routes/passport/passport.service'
+import { StorageService } from '../../../core/services/storage.service'
 
 @Component({
   selector: 'app-header',
@@ -19,6 +20,7 @@ export class HeaderComponent implements OnInit {
     private route: ActivatedRoute,
     private userinfo_ser: UserinfoService,
     private passport: PassportService,
+    private storage: StorageService,
   ) {
   }
 
@@ -30,24 +32,24 @@ export class HeaderComponent implements OnInit {
     );
     
     // 临时
-    localStorage.setItem('avatar', '../../../../assets/default-avatar.jpeg');
-    localStorage.setItem('username', '接头霸王');
+    this.storage.set('avatar', '../../../../assets/default-avatar.jpeg');
+    this.storage.set('username', '接头霸王');
 
-    if (localStorage.getItem('username')===null) {
+    if (this.storage.get('username')===null) {
       this.userinfo_ser.getBasicInfo('').subscribe (
         res => {
           if (res.msg === 'true') {
             this.username = res.uname;
             this.avatar = res.avatar;
-            localStorage.setItem('username', res.uname);
-            localStorage.setItem('avatar', res.avatar);
+            this.storage.set('username', res.uname);
+            this.storage.set('avatar', res.avatar);
           }
         }
       );
     }
     else {
-      this.username = localStorage.getItem('username');
-      this.avatar = localStorage.getItem('avatar');
+      this.username = this.storage.get('username');
+      this.avatar = this.storage.get('avatar');
     }
   }
 

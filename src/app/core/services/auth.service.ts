@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
+import { StorageService } from '../../core/services/storage.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(
+    private storage: StorageService;
+  ) { }
 
   public getAuthorizationToken(): string {
-    return localStorage.getItem('token');
+    return this.storage.get('token');
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import { StorageService } from '../../core/services/storage.service'
 
 @Component({
   selector: 'app-default',
@@ -10,10 +11,11 @@ export class DefaultComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private storage: StorageService,
   ) { }
 
   ngOnInit(): void {
-    if (localStorage.getItem('token')===null) {
+    if (this.storage.get('token')===null) {
       this.router.navigateByUrl("passport/login");
     }
   }
