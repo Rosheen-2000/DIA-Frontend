@@ -37,14 +37,19 @@ export class TemplateModalComponent implements OnInit {
   }
 
   create(): void {
-    this.templateService.newDoc(this.title, this.templates[this.templateIndex].id).subscribe(
-      res => {
-        console.log(res);
-        if (res.msg === 'true') {
-          this.router.navigate(['/docs/' + res.docid]).then();
-          this.modal.closeAll();
+    if (this.title.length===0) {
+      this.message.create('warning', '请设置文档名');
+    }
+    else {
+      this.templateService.newDoc(this.title, this.templates[this.templateIndex].id).subscribe(
+        res => {
+          console.log(res);
+          if (res.msg === 'true') {
+            this.router.navigate(['/docs/' + res.docid]).then();
+            this.modal.closeAll();
+          }
         }
-      }
-    );
+      );
+    }
   }
 }

@@ -9,6 +9,7 @@ import { DocumentComponent } from '../../routes/document/document.component'
 export class UnsaveGuard implements CanDeactivate<unknown> {
   canDeactivate(component: DocumentComponent) {
     return (localStorage.getItem('modify')==='true')? component.dialogService.confirm('Discard changes?'): true;
+    // return component.dialogService.confirm('Discard changes?');
   }
   
 }
