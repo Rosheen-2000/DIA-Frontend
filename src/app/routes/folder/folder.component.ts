@@ -48,4 +48,7 @@ export class FolderComponent implements OnInit {
     }
   }
 
+  onNotify(): void {
+    this.ngOnInit();
+  }
 }
