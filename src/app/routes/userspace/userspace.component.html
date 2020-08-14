@@ -31,7 +31,8 @@
       (nzOnOk)="changeAvatar()"
       [nzOkLoading]="isOkLoading"
     >
-      <nz-upload
+      <div style="text-align: center;">
+        <nz-upload
         class="avatar-uploader"
         nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         nzName="avatar"
@@ -39,6 +40,7 @@
         [nzShowUploadList]="false"
         [nzBeforeUpload]="beforeUpload"
         (nzChange)="handleChange($event)"
+        style="margin: 0 auto;"
       >
         <ng-container *ngIf="!avatarUrl">
           <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
@@ -46,6 +48,7 @@
         </ng-container>
         <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" />
       </nz-upload>
+      </div>
     </nz-modal>
 
     <nz-modal
@@ -55,9 +58,9 @@
       (nzOnOk)="changePwd()"
       [nzOkLoading]="isOkLoading"
     >
-      <input nz-input (ngModel)="currentpwd" placeholder="请输入当前密码">
-      <input nz-input (ngModel)="newpwd" placeholder="请输入当前密码">
-      <input nz-input (ngModel)="confirmpwd" placeholder="请输入当前密码">
+      <input nz-input (ngModel)="currentpwd" placeholder="请输入当前密码" style="margin: 5px auto;">
+      <input nz-input (ngModel)="newpwd" placeholder="请输入新密码密码" style="margin: 5px auto;">
+      <input nz-input (ngModel)="confirmpwd" placeholder="请确认新密码" style="margin: 5px auto;">
     </nz-modal>
 
     <nz-modal
