@@ -19,6 +19,7 @@ export class DocItemComponent implements OnInit {
 
   isVisible = false;
   isOkLoading = false;
+  public newfilename: string = this.fileName;
 
   constructor(
     private router: Router,
@@ -46,11 +47,12 @@ export class DocItemComponent implements OnInit {
     }
     else {
       this.isOkLoading = true;
-      this.docItemService.rename(this.fileId, this.fileName).subscribe(
+      this.docItemService.rename(this.fileId, this.newfilename).subscribe(
         // TODO 错误信息处理
         res => {
           console.log(res);
           this.isOkLoading = false;
+          this.fileName = this.newfilename;
           this.message.create('success', '修改成功');
           this.isVisible = false;
           this.notify.emit();
@@ -92,5 +94,6 @@ export class DocItemComponent implements OnInit {
 
   handleCancel(): void {
     this.isVisible = false;
+    this.newfilename = this.fileName;
   }
 }
