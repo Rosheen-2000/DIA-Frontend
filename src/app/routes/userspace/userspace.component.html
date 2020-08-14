@@ -58,9 +58,9 @@
       (nzOnOk)="changePwd()"
       [nzOkLoading]="isOkLoading"
     >
-      <input nz-input (ngModel)="currentpwd" placeholder="请输入当前密码" style="margin: 5px auto;">
-      <input nz-input (ngModel)="newpwd" placeholder="请输入新密码密码" style="margin: 5px auto;">
-      <input nz-input (ngModel)="confirmpwd" placeholder="请确认新密码" style="margin: 5px auto;">
+      <input nz-input [(ngModel)]="currentpwd" placeholder="请输入当前密码" style="margin: 5px auto;">
+      <input nz-input [(ngModel)]="newpwd" placeholder="请输入新密码密码" style="margin: 5px auto;">
+      <input nz-input [(ngModel)]="confirmpwd" placeholder="请确认新密码" style="margin: 5px auto;">
     </nz-modal>
 
     <nz-modal
@@ -70,7 +70,7 @@
       (nzOnOk)="changeMail()"
       [nzOkLoading]="isOkLoading"
     >
-      <input nz-input (ngModel)="newmail" placeholder="请输入新的邮箱地址">
+      <input nz-input [(ngModel)]="newmail" placeholder="请输入新的邮箱地址">
     </nz-modal>
 
     <nz-modal
@@ -80,7 +80,7 @@
       (nzOnOk)="changePhoneNo()"
       [nzOkLoading]="isOkLoading"
     >
-      <input nz-input (ngModel)="newphone" placeholder="请输入新的手机号码">
+      <input nz-input [(ngModel)]="newphone" placeholder="请输入新的手机号码">
     </nz-modal>
 
 </div>

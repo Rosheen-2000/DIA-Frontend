@@ -12,7 +12,7 @@ export class UserinfoService {
 
   constructor(
     private http: HttpClient,
-  ) { 
+  ) {
     this.baseUrl = environment.baseUrl;
   }
 
@@ -24,7 +24,7 @@ export class UserinfoService {
     }>(this.baseUrl + 'checkuserinfo/basic/', form);
   }
 
-  public getUserInfo(uid: string): Observable<{ 
+  public getUserInfo(uid: string): Observable<{
     msg: string; uname: string, avatar: string; mail: string; phoneno: string
   }> {
     const form = new FormData();
@@ -45,11 +45,11 @@ export class UserinfoService {
   //   return this.
   // }
 
-  public changePwd(currentpwd: string, newpwd: string): Observable<{ msg: string }> {
+  public changePwd(currentpwd: string, newpwd: string): Observable<{ res: string }> {
     const form = new FormData();
     form.set('currentpwd', currentpwd);
     form.set('newpwd', newpwd);
-    return this.http.post<{ msg: string }> (this.baseUrl + 'userinfo/changepwd/', form);
+    return this.http.post<{ res: string }> (this.baseUrl + 'userinfo/changepwd/', form);
   }
 
   public changeAvatar(newavatar: string): Observable<{ msg:string }> {
@@ -66,6 +66,7 @@ export class UserinfoService {
 
   public changePhoneNo(newphoneno: string): Observable<{ msg: string }> {
     const form = new FormData();
+    console.log(newphoneno);
     form.set('newphoneno', newphoneno);
     return this.http.post<{ msg: string }> (this.baseUrl + 'userinfo/changephoneno/', form);
   }

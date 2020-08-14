@@ -21,7 +21,13 @@ interface information {
 export class UserspaceComponent implements OnInit {
 
   // public userid: string;
-  public currentuser: UserInfo;
+  public currentuser: UserInfo = {
+    uid: '',
+    uname: '',
+    avatar: '',
+    mail: '',
+    phoneno: '',
+  };
   public loading: boolean = true;
   // 标记是否是在访问自己的空间，以控制敏感信息的展示
   // public selfcheck: boolean = false;
@@ -65,22 +71,6 @@ export class UserspaceComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // 获取uid
-    // this.actroute.params.subscribe((params: Params) => {
-    //   this.userid = params.id;
-    //   console.log(this.userid);
-    // });
-    // 检查是否在访问自己的主页
-    // this.userservice.checkOwn(this.userid).subscribe(
-    //   res => {
-    //     if (res.msg === 'true') {
-    //       this.selfcheck = true;
-    //     }
-    //     else if (res.msg === 'false') {
-    //       this.selfcheck = false;
-    //     }
-    //   }
-    // );
     // * 获取用户基本信息
     this.userservice.getUserInfo('').subscribe(
       res => {
@@ -91,25 +81,14 @@ export class UserspaceComponent implements OnInit {
             avatar = res.avatar;
             mail = res.mail;
             phoneno = res.phoneno;
-          };
-          // this.currentuser.uid = this.userid;
-          // this.loading = false;  // ! 测试中 临时关闭
+          }();
+          this.listOfData[0].infoBody = this.currentuser.uname;
+          this.listOfData[1].infoBody = this.currentuser.phoneno;
+          this.listOfData[2].infoBody = this.currentuser.mail;
+          this.loading = false;
         }
       }
     );
-
-    // ! 测试用
-    this.currentuser = new class implements UserInfo {
-      uid = '111';
-      uname = '接头霸王';
-      avatar = '../../../assets/default-avatar.jpeg';
-      mail = 'debug@cheating.com';
-      phoneno = '114514';
-    };
-    this.listOfData[0].infoBody = this.currentuser.uname;
-    this.listOfData[1].infoBody = this.currentuser.phoneno;
-    this.listOfData[2].infoBody = this.currentuser.mail;
-    this.loading = false;
   }
 
   public changePwd(): void {
@@ -120,17 +99,20 @@ export class UserspaceComponent implements OnInit {
       this.isOkLoading = true;
       this.userservice.changePwd(this.currentpwd, this.newpwd).subscribe(
         res => {
-          if (res.msg === 'true') {
+          console.log(res);
+          if (res.res === 'true') {
             this.message.create('success', '修改成功！');
             this.isOkLoading = false;
             this.changePwdVisible = false;
+            this.ngOnInit();
           }
-          else if (res.msg === 'notmatch') {
+          else {
             this.message.create('error', '密码输入错误，请核对后再提交');
             this.isOkLoading = false;
+            this.changePwdVisible = false;
           }
         }
-      )
+      );
     }
   }
 
@@ -142,10 +124,11 @@ export class UserspaceComponent implements OnInit {
           this.currentuser.mail = this.newmail;
           this.message.create('success', '修改成功！');
           this.isOkLoading = false;
-          this.changePwdVisible = false;
+          this.changeMailVisible = false;
+          this.ngOnInit();
         }
       }
-    )
+    );
   }
 
   public changePhoneNo() {
@@ -156,10 +139,11 @@ export class UserspaceComponent implements OnInit {
           this.currentuser.phoneno = this.newphone;
           this.message.create('success', '修改成功！');
           this.isOkLoading = false;
-          this.changePwdVisible = false;
+          this.changePhoneNoVisible = false;
+          this.ngOnInit();
         }
       }
-    )
+    );
   }
 
   beforeUpload = (file: NzUploadFile, _fileList: NzUploadFile[]) => {
@@ -235,9 +219,7 @@ export class UserspaceComponent implements OnInit {
   }
 
   public doAction(data: any): void {
-    console.log('111');
-    
-    switch(data.infoHead) {
+    switch (data.infoHead) {
       case '用户名':
         this.showChangePwd();
         break;
