@@ -2,6 +2,9 @@
     <nz-row>
       <nz-col nzSpan="16" style="height: 100px">
         文档标题： <input [(ngModel)]="title"/>
+        <div class="alert" style="width: 240px;">
+          <nz-alert nzType="error" nzMessage="文档标题不能为空" *ngIf="title==''"></nz-alert>
+        </div>
         <!-- <nz-list nzBordered nzHeader="所有模版" style="width: 280px; height: 200px">
           <nz-list-item *ngFor="let t of templates;let i = index">
             <a nz-typography (click)="chooseTemplate(i)">{{t.name}}</a>
