@@ -158,6 +158,7 @@ export class UserspaceComponent implements OnInit {
   }
 
   public showChangePwd(): void {
+    console.log('change pwd');
     this.changePwdVisible = true;
   }
 
@@ -173,6 +174,22 @@ export class UserspaceComponent implements OnInit {
     this.changePwdVisible = false;
     this.changeMailVisible = false;
     this.changePhoneNoVisible = false;
+  }
+
+  public doAction(data: any): void {
+    console.log('111');
+    
+    switch(data.infoHead) {
+      case '用户名':
+        this.showChangePwd();
+        break;
+      case '手机':
+        this.showChangePhoneNo();
+        break;
+      case '邮箱':
+        this.showChangeMail();
+        break;
+    }
   }
 
 }
