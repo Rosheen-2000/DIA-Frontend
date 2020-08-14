@@ -1,22 +1,53 @@
 <div class="showinfo">
     <div class="wordinfo">
-        <nz-avatar nzIcon="user" [nzShape]="'square'" [nzSize]="50"></nz-avatar>
+        <nz-avatar nzIcon="user" [nzShape]="'square'" [nzSize]="45" [nzSrc]="currentuser.avatar"></nz-avatar>
         <p style="margin-top: 5px; margin-bottom: 1em; ">
             <a href="">修改头像</a>
         </p>
         <nz-table #basicTable [nzData]="listOfData" [nzFrontPagination]=false>
+            <!-- TODO 绑定对应的方法 -->
             <tbody>
             <tr *ngFor="let data of basicTable.data">
                 <td>{{ data.infoHead }}</td>
                 <td>{{ data.infoBody }}</td>
                 <td>
-                <a>{{ data.action }}</a>
+                <a >{{ data.action }}</a>
                 </td>
             </tr>
             </tbody>
         </nz-table>
-        <div class="info">
-            {{ currentuser }}
-        </div>
     </div>
+
+    <nz-modal
+      [(nzVisible)]="changePwdVisible"
+      nzTitle="修改密码"
+      (nzOnCancel)="handleCancel()"
+      (nzOnOk)="changePwd()"
+      [nzOkLoading]="isOkLoading"
+    >
+      <input nz-input (ngModel)="currentpwd" placeholder="请输入当前密码">
+      <input nz-input (ngModel)="newpwd" placeholder="请输入当前密码">
+      <input nz-input (ngModel)="confirmpwd" placeholder="请输入当前密码">
+    </nz-modal>
+
+    <!-- TODO 具体表单的设计 -->
+    <nz-modal
+      [(nzVisible)]="changeMailVisible"
+      nzTitle="Modal Title"
+      (nzOnCancel)="handleCancel()"
+      (nzOnOk)="changeMail()"
+      [nzOkLoading]="isOkLoading"
+    >
+      <p>Modal Content</p>
+    </nz-modal>
+
+    <nz-modal
+      [(nzVisible)]="changePhoneNoVisible"
+      nzTitle="Modal Title"
+      (nzOnCancel)="handleCancel()"
+      (nzOnOk)="changePhoneNo()"
+      [nzOkLoading]="isOkLoading"
+    >
+      <p>Modal Content</p>
+    </nz-modal>
 </div>

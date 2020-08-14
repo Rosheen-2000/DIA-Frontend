@@ -57,6 +57,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/space/' + event]).then();
   }
 
+  toMySpace(): void {
+    this.router.navigateByUrl('userspace');
+  }
+
   showModal(): void {
     this.isVisible = true;
   }

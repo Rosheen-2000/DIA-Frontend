@@ -35,16 +35,14 @@ const routes: Routes = [
       {path: 'space/:id', component: SpaceComponent},
       {path: 'desktop', component: DesktopComponent},
       {path: 'folder/:id', component: FolderComponent},
-      {path: 'feedback', component: FeedbackComponent}
+      {path: 'feedback', component: FeedbackComponent},
+      {path: 'userspace', component: UserspaceComponent}
     ]
   },
   {
     path: '', component: EditorComponent, children: [
       {path: 'docs/:id', component: DocumentComponent, canDeactivate: [UnsaveGuard]}
     ]
-  },
-  {
-    path: 'userspace/:id', component: UserspaceComponent
   },
   {
     path: '**', redirectTo: 'dashboard/own'
