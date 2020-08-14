@@ -1,7 +1,22 @@
-<p>userspace works!</p>
 <div class="showinfo">
-    <nz-spin nzSimple *ngIf="loading"></nz-spin>
-    <div class="info">
-        {{ currentuser }}
+    <div class="wordinfo">
+        <nz-avatar nzIcon="user" [nzShape]="'square'" [nzSize]="50"></nz-avatar>
+        <p style="margin-top: 5px; margin-bottom: 1em; ">
+            <a href="">修改头像</a>
+        </p>
+        <nz-table #basicTable [nzData]="listOfData" [nzFrontPagination]=false>
+            <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td>{{ data.infoHead }}</td>
+                <td>{{ data.infoBody }}</td>
+                <td>
+                <a>{{ data.action }}</a>
+                </td>
+            </tr>
+            </tbody>
+        </nz-table>
+        <div class="info">
+            {{ currentuser }}
+        </div>
     </div>
 </div>
