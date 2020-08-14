@@ -1,7 +1,7 @@
 <div class="showinfo">
     <div class="wordinfo">
-        
-        <nz-table #basicTable [nzData]="listOfData" [nzFrontPagination]=false [nzShowPagination]=false style="box-shadow: -5px 5px 3px #707070; width: 600px;">
+
+        <nz-table #basicTable [nzData]="listOfData" [nzHideOnSinglePage]=true [nzFrontPagination]=false style="box-shadow: -5px 5px 3px #707070; width: 600px;">
             <tbody>
             <tr style="font-size: 15px;">
                 <td></td>
@@ -30,6 +30,7 @@
       (nzOnCancel)="handleCancel()"
       (nzOnOk)="changeAvatar()"
       [nzOkLoading]="isOkLoading"
+      [nzStyle]="{width: '300px'}"
     >
       <div style="text-align: center;">
         <nz-upload
@@ -40,7 +41,7 @@
         [nzShowUploadList]="false"
         [nzBeforeUpload]="beforeUpload"
         (nzChange)="handleChange($event)"
-        style="margin: 0 auto;"
+        style="margin: 0 auto;width: auto"
       >
         <ng-container *ngIf="!avatarUrl">
           <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
@@ -82,5 +83,5 @@
     >
       <input nz-input (ngModel)="newphone" placeholder="请输入新的手机号码">
     </nz-modal>
-    
+
 </div>

@@ -151,6 +151,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     tinymce.remove();
+    window.MyEditor = null;
   }
 
   initEditor() {
@@ -165,8 +166,11 @@ export class DocumentComponent implements OnInit, OnDestroy {
       statusbar: false,
       toolbar_sticky: true,
       theme: 'silver',
-      plugins: 'save',
-      toolbar1: 'save | formatselect || bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+      plugins: 'save tinycomments image',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Author',
+      toolbar1: 'image save | formatselect || bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+      toolbar2: 'image',
       image_advtab: true,
 
       init_instance_callback(editor) {
