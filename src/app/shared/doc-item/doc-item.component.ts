@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {NzContextMenuService, NzDropdownMenuComponent} from "ng-zorro-antd";
 import {DocItemService} from "./doc-item.service";
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-doc-item',
@@ -16,10 +17,14 @@ export class DocItemComponent implements OnInit {
 
   @Output() notify = new EventEmitter();
 
+  isVisible = false;
+  isOkLoading = false;
+
   constructor(
     private router: Router,
     private nzContextMenuService: NzContextMenuService,
     private docItemService: DocItemService,
+    private message: NzMessageService,
   ) { }
 
   ngOnInit(): void {
@@ -35,12 +40,23 @@ export class DocItemComponent implements OnInit {
 
   rename(): void {
     console.log(this.fileId);
-    this.docItemService.rename('??', '??').subscribe(
-      res => {
-        console.log(res);
-        this.notify.emit();
-      }
-    );
+    console.log(this.fileName);
+    if (this.fileName.length===0) {
+      this.message.create('warning', '请输入非空的文件名');
+    }
+    else {
+      this.isOkLoading = true;
+      this.docItemService.rename(this.fileId, this.fileName).subscribe(
+        // TODO 错误信息处理
+        res => {
+          console.log(res);
+          this.isOkLoading = false;
+          this.message.create('success', '修改成功');
+          this.isVisible = false;
+          this.notify.emit();
+        }
+      );
+    }
   }
 
   delete(): void {
@@ -68,5 +84,13 @@ export class DocItemComponent implements OnInit {
         this.notify.emit();
       }
     );
+  }
+
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
   }
 }
