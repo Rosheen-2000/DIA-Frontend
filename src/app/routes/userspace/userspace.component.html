@@ -2,7 +2,7 @@
     <div class="wordinfo">
         <nz-avatar nzIcon="user" [nzShape]="'square'" [nzSize]="45" [nzSrc]="currentuser.avatar"></nz-avatar>
         <p style="margin-top: 5px; margin-bottom: 1em; ">
-            <a href="">修改头像</a>
+            <a (click)="showChangeAvatar()">修改头像</a>
         </p>
         <nz-table #basicTable [nzData]="listOfData" [nzFrontPagination]=false>
             <tbody>
@@ -16,6 +16,30 @@
             </tbody>
         </nz-table>
     </div>
+
+    <nz-modal
+      [(nzVisible)]="changeAvatarVisible"
+      nzTitle="修改头像"
+      (nzOnCancel)="handleCancel()"
+      (nzOnOk)="changeAvatar()"
+      [nzOkLoading]="isOkLoading"
+    >
+      <nz-upload
+        class="avatar-uploader"
+        nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        nzName="avatar"
+        nzListType="picture-card"
+        [nzShowUploadList]="false"
+        [nzBeforeUpload]="beforeUpload"
+        (nzChange)="handleChange($event)"
+      >
+        <ng-container *ngIf="!avatarUrl">
+          <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+          <div class="ant-upload-text">Upload</div>
+        </ng-container>
+        <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" />
+      </nz-upload>
+    </nz-modal>
 
     <nz-modal
       [(nzVisible)]="changePwdVisible"

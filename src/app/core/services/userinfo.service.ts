@@ -52,7 +52,7 @@ export class UserinfoService {
     return this.http.post<{ msg: string }> (this.baseUrl + 'userinfo/changepwd/', form);
   }
 
-  public changeAvatar(newavatar: File): Observable<{ msg:string }> {
+  public changeAvatar(newavatar: string): Observable<{ msg:string }> {
     const form = new FormData();
     form.set('newavatar', newavatar);
     return this.http.post<{ msg: string }> (this.baseUrl + 'userinfo/changeavatar/', form);

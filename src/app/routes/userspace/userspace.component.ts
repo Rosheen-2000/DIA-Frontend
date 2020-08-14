@@ -3,6 +3,8 @@ import {ActivatedRoute, Params, Routes} from '@angular/router';
 import { UserinfoService } from '../../core/services/userinfo.service'
 import { UserInfo } from '../../entity/userinfo'
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
+import { Observable, Observer } from 'rxjs';
 
 /*********table里的内容***********/
 interface information {
@@ -23,10 +25,13 @@ export class UserspaceComponent implements OnInit {
   public loading: boolean = true;
   // 标记是否是在访问自己的空间，以控制敏感信息的展示
   // public selfcheck: boolean = false;
+  public changeAvatarVisible: boolean = false;
   public changePwdVisible: boolean = false;
   public changeMailVisible: boolean = false;
   public changePhoneNoVisible: boolean = false;
   public isOkLoading: boolean = false;
+  public avatarloading = false;
+  public avatarUrl?: string;
 
   public currentpwd: string;
   public newpwd: string;
@@ -157,8 +162,60 @@ export class UserspaceComponent implements OnInit {
     )
   }
 
+  beforeUpload = (file: NzUploadFile, _fileList: NzUploadFile[]) => {
+    return new Observable((observer: Observer<boolean>) => {
+      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+      if (!isJpgOrPng) {
+        this.message.error('You can only upload JPG file!');
+        observer.complete();
+        return;
+      }
+      const isLt2M = file.size! / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.message.error('Image must smaller than 2MB!');
+        observer.complete();
+        return;
+      }
+      observer.next(isJpgOrPng && isLt2M);
+      observer.complete();
+    });
+  };
+
+  handleChange(info: { file: NzUploadFile }): void {
+    switch (info.file.status) {
+      case 'uploading':
+        this.loading = true;
+        break;
+      case 'done':
+        // Get this url from response in real world.
+        this.getBase64(info.file!.originFileObj!, (img: string) => {
+          this.loading = false;
+          this.avatarUrl = img;
+        });
+        break;
+      case 'error':
+        this.message.error('Network error');
+        this.loading = false;
+        break;
+    }
+  }
+
+  private getBase64(img: File, callback: (img: string) => void): void {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result!.toString()));
+    reader.readAsDataURL(img);
+  }
+
+  public changeAvatar(): void {
+    this.isOkLoading = true;
+    this.userservice.changeAvatar(this.avatarUrl);
+  }
+
+  public showChangeAvatar(): void {
+    this.changeAvatarVisible = true;
+  }
+
   public showChangePwd(): void {
-    console.log('change pwd');
     this.changePwdVisible = true;
   }
 
@@ -171,6 +228,7 @@ export class UserspaceComponent implements OnInit {
   }
 
   public handleCancel(): void {
+    this.changeAvatarVisible = false;
     this.changePwdVisible = false;
     this.changeMailVisible = false;
     this.changePhoneNoVisible = false;
