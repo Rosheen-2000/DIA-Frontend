@@ -13,8 +13,8 @@
   <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu" style="background-color: #404040;">
     <li nz-submenu [nzTitle]="username" nzIcon="caret-down" style="font-size: 16px;">
       <ul>
-        <li nz-menu-item (click)="toMySpace()">个人信息</li>
-        <li nz-menu-item (click)="showModal()">退出登录</li>
+        <li nz-menu-item nzMatchRouter><a routerLink="/userspace">个人信息</a></li>
+        <li nz-menu-item nzMatchRouter (click)="showModal()">退出登录</li>
       </ul>
     </li>
   </ul>

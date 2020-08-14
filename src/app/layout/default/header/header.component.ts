@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
         console.log(this.value);
       }
     );
-    
+
     // 临时
     this.storage.set('avatar', '../../../../assets/default-avatar.jpeg');
     this.storage.set('username', '接头霸王');
@@ -55,10 +55,6 @@ export class HeaderComponent implements OnInit {
 
   onChanged(event: any): void {
     this.router.navigate(['/space/' + event]).then();
-  }
-
-  toMySpace(): void {
-    this.router.navigateByUrl('userspace');
   }
 
   showModal(): void {
