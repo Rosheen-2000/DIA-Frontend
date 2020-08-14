@@ -20,5 +20,5 @@
 
 <div>
   <app-doc-item *ngFor="let file of subFiles"
-                [fileId]="file.id" [fileName]="file.name"></app-doc-item>
+                [fileId]="file.id" [fileName]="file.name" [isTrash]="rootType==='trash'"></app-doc-item>
 </div>

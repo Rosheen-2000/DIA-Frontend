@@ -35,7 +35,10 @@ export class FolderComponent implements OnInit {
     if (this.type === 'user'){
       // this.subFolders = this.folderService.getSubFolders();
       this.folderService.getFiles(this.rootType).subscribe(
-        res => this.subFiles = res
+        res => {
+          this.subFiles = res;
+          console.log(res);
+        }
       );
       // this.subFiles = [
       //   {id: this.rootType + 'File1', name: this.rootType + 'File1'},

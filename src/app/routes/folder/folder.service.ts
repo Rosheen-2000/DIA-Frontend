@@ -24,7 +24,7 @@ export class FolderService {
   }
 
   public getFiles(rootType: string): Observable<{ id: string, name: string }[]> {
-    return this.http.get<{ id: string, name: string }[]>(environment.baseUrl + 'doc/' + rootType + '/file');
+    return this.http.get<{ id: string, name: string }[]>(environment.baseUrl + 'doc/' + rootType + '/file/');
   }
 
   public getFolderPath(): { Id: string, Name: string }[] {
