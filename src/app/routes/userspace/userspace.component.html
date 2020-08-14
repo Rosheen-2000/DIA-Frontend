@@ -1,13 +1,19 @@
 <div class="showinfo">
-    <div class="wordinfo">
-        <nz-avatar nzIcon="user" [nzShape]="'square'" [nzSize]="45" [nzSrc]="currentuser.avatar"></nz-avatar>
-        <p style="margin-top: 5px; margin-bottom: 1em; ">
-            <a href="">修改头像</a>
-        </p>
-        <nz-table #basicTable [nzData]="listOfData" [nzFrontPagination]=false>
+    <div class="wordinfo">        
+        <nz-table #basicTable [nzData]="listOfData" [nzFrontPagination]=false style="box-shadow: -5px 5px 3px #707070; width: 600px;">
             <!-- TODO 绑定对应的方法 -->
             <tbody>
-            <tr *ngFor="let data of basicTable.data">
+            <tr style="font-size: 15px;">
+                <td></td>
+                <td style="text-align: center;">
+                    <nz-avatar nzIcon="user" [nzShape]="'square'" [nzSize]="55" [nzSrc]="currentuser.avatar" style="margin-top: 10px;"></nz-avatar>
+                    <p style="margin-top: 5px; margin-bottom: 1em; ">
+                        <a href="">修改头像</a>
+                    </p>
+                </td>
+                <td></td>
+            </tr>
+            <tr *ngFor="let data of basicTable.data" style="font-size: 15px;">
                 <td>{{ data.infoHead }}</td>
                 <td>{{ data.infoBody }}</td>
                 <td>
