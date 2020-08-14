@@ -7,7 +7,7 @@ import { StorageService } from '../../core/services/storage.service'
 export class AuthService {
 
   constructor(
-    private storage: StorageService;
+    private storage: StorageService,
   ) { }
 
   public getAuthorizationToken(): string {

@@ -18,6 +18,7 @@ import {OwnComponent} from "./dashboard/own/own.component";
 import {UsedComponent} from "./dashboard/used/used.component";
 import {FavoritesComponent} from "./dashboard/favorites/favorites.component";
 import { FeedbackComponent } from './feedback/feedback.component';
+import { UserspaceComponent } from './userspace/userspace.component';
 
 
 const Components = [
@@ -36,7 +37,7 @@ const Components = [
 ];
 
 @NgModule({
-    declarations: [...Components],
+    declarations: [...Components, UserspaceComponent],
     imports: [
         RoutesRoutingModule,
         FormsModule,
