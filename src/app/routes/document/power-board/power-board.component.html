@@ -1,0 +1,7 @@
+<button nzTooltipTitle="协作面板" nzTooltipPlacement="left" nz-button nz-tooltip class="powButton" nzType="default" (click)="openPowerDrawer()" nzShape="circle" nzSize="large">
+  <i nz-icon nzType="setting"></i>
+</button>
+<nz-drawer [nzClosable]="false" [nzVisible]="powerBoardVisible" (nzOnClose)="closePowerDrawer()">
+  <p>查看设置协作者</p>
+  <p>查看设置文档分享权限</p>
+</nz-drawer>

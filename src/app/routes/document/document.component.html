@@ -8,6 +8,7 @@
     <button nzTooltipTitle="评论列表" nzTooltipPlacement="left" nz-button nz-tooltip class="comButton" nzType="default" (click)="open()" nzShape="circle" nzSize="large">
       <i nz-icon nzType="comment"></i>
     </button>
+    <app-power-board></app-power-board>
     <nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" nzTitle="评论列表" nzWidth="400px" (nzOnClose)="close()">
       <nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
         <ng-template #item let-item>

@@ -14,12 +14,14 @@ import {SharedModule} from '../shared/shared.module';
 import { FindbackComponent } from './passport/findback/findback.component';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { CommonModule } from '@angular/common';
-import {OwnComponent} from "./dashboard/own/own.component";
-import {UsedComponent} from "./dashboard/used/used.component";
-import {FavoritesComponent} from "./dashboard/favorites/favorites.component";
+import {OwnComponent} from './dashboard/own/own.component';
+import {UsedComponent} from './dashboard/used/used.component';
+import {FavoritesComponent} from './dashboard/favorites/favorites.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { UserspaceComponent } from './userspace/userspace.component';
 import { MessageboxComponent } from './messagebox/messagebox.component';
+import { CommentsComponent } from './document/comments/comments.component';
+import {PowerBoardComponent} from './document/power-board/power-board.component';
 
 
 const Components = [
@@ -34,11 +36,15 @@ const Components = [
   UsedComponent,
   FavoritesComponent,
   FindbackComponent,
-  FeedbackComponent
+  FeedbackComponent,
+  UserspaceComponent,
+  MessageboxComponent,
+  CommentsComponent,
+  PowerBoardComponent,
 ];
 
 @NgModule({
-    declarations: [...Components, UserspaceComponent, MessageboxComponent],
+    declarations: [...Components],
     imports: [
         RoutesRoutingModule,
         FormsModule,
