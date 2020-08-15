@@ -2,6 +2,7 @@ export interface DocComment {
     commentid: string;
     creatorname: string;
     creatoravator: string;
+    content: string;
     createtime: string;
     // lastmodify: string;
     // star: number;
