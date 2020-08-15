@@ -17,7 +17,7 @@ export class DocItemComponent implements OnInit {
 
   @Output() notify = new EventEmitter();
 
-  isVisible = false;
+  renameVisible = false;
   isOkLoading = false;
   public newfilename: string = this.fileName;
 
@@ -54,7 +54,7 @@ export class DocItemComponent implements OnInit {
           this.isOkLoading = false;
           this.fileName = this.newfilename;
           this.message.create('success', '修改成功');
-          this.isVisible = false;
+          this.renameVisible = false;
           this.notify.emit();
         }
       );
@@ -88,12 +88,17 @@ export class DocItemComponent implements OnInit {
     );
   }
 
-  showModal(): void {
-    this.isVisible = true;
+  favor(): void {
+    this.docItemService.favorDoc(this.fileId).subscribe(
+      res => {
+        this.message.create('success', '成功加入收藏');
+        this.notify.emit();
+      }
+    )
   }
 
   handleCancel(): void {
-    this.isVisible = false;
+    this.renameVisible = false;
     this.newfilename = this.fileName;
   }
 }

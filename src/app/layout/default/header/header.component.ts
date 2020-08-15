@@ -25,17 +25,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-        this.value = params['id'];
-        console.log(this.value);
-      }
-    );
-
-    // 临时
-    this.storage.set('avatar', '../../../../assets/default-avatar.jpeg');
-    this.storage.set('username', '接头霸王');
-
-    if (this.storage.get('username')===null) {
+    if (this.storage.get('username') == null) {
       this.userinfo_ser.getBasicInfo('').subscribe (
         res => {
           if (res.msg === 'true') {

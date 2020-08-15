@@ -35,4 +35,10 @@ export class DocItemService {
     form.set('did', did);
     return this.http.post<{ msg: string }>(environment.baseUrl + 'doc/deletedocconfirm/', form);
   }
+
+  public favorDoc(did: string): Observable<{ msg: string }> {
+    const form = new FormData();
+    form.set('did', did);
+    return this.http.post<{ msg: string }>(environment.baseUrl + 'doc/favordoc/', form);
+  }
 }

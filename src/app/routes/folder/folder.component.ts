@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {FolderService} from './folder.service';
+import {BreadcrumbService} from "../../core/services/breadcrumb.service";
 
 @Component({
   selector: 'app-folder',
@@ -22,7 +23,8 @@ export class FolderComponent implements OnInit {
   public path: {Id: string, Name: string}[];
   constructor(
     private route: ActivatedRoute,
-    private folderService: FolderService
+    private folderService: FolderService,
+    public breadcrumbService: BreadcrumbService
   ) { }
 
   ngOnInit(): void {
