@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 
 @Injectable({
@@ -23,15 +23,8 @@ export class FolderService {
     ];
   }
 
-  public getFiles(rootType: string): Observable<{ id: string, name: string }[]> {
-    return this.http.get<{ id: string, name: string }[]>(environment.baseUrl + 'doc/' + rootType + '/file/');
-  }
-
-  public getFolderPath(): { Id: string, Name: string }[] {
-    return [
-      {Id: '', Name: '我的桌面'},
-      {Id: 'xxx', Name: 'xxx'},
-      {Id: '', Name: '当前文件夹'}
-    ];
+  public getFiles(folderId: string): Observable<{ id: string, name: string }[]> {
+    const params = new HttpParams().set('folderId', folderId);
+    return this.http.get<{ id: string, name: string }[]>(environment.baseUrl + 'doc/folder/folder');
   }
 }

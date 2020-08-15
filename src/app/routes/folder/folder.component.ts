@@ -3,6 +3,8 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {FolderService} from './services/folder.service';
 import {BreadcrumbService} from '../../core/services/breadcrumb.service';
 import {DesktopService} from './services/desktop.service';
+import {SpaceService} from "./services/space.service";
+import {DashboardService} from "./services/dashboard.service";
 
 @Component({
   selector: 'app-folder',
@@ -11,7 +13,7 @@ import {DesktopService} from './services/desktop.service';
 })
 export class FolderComponent implements OnInit {
   @Input() type: string;
-  // user desktop space folder
+  // dashboard desktop space folder
 
   // user
   @Input() rootType: string;
@@ -31,6 +33,8 @@ export class FolderComponent implements OnInit {
     private folderService: FolderService,
     public breadcrumbService: BreadcrumbService,
     private desktopService: DesktopService,
+    private spaceService: SpaceService,
+    private dashboardServices: DashboardService,
   ) { }
 
   ngOnInit(): void {
@@ -53,8 +57,8 @@ export class FolderComponent implements OnInit {
       case 'desktop':
         this.initDesktop();
         break;
-      case 'user':
-        this.initUser();
+      case 'dashboard':
+        this.initDashboard();
         break;
       case 'space':
         this.initSpace();
@@ -73,8 +77,8 @@ export class FolderComponent implements OnInit {
     );
   }
 
-  initUser(): void {
-    this.folderService.getFiles(this.rootType).subscribe(
+  initDashboard(): void {
+    this.dashboardServices.getFiles(this.rootType).subscribe(
       res => {
         this.subFiles = res;
         console.log(res);
@@ -83,10 +87,20 @@ export class FolderComponent implements OnInit {
   }
 
   initSpace(): void {
-
+    this.spaceService.getFiles(this.spaceId).subscribe(
+      res => {
+        console.log(res);
+        this.subFiles = res;
+      }
+    );
   }
 
   initFolder(): void {
-
+    this.folderService.getFiles(this.folderId).subscribe(
+      res => {
+        console.log(res);
+        this.subFiles = res;
+      }
+    );
   }
 }

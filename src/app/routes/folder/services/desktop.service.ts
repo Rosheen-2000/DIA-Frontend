@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {Observable} from 'rxjs';
 
@@ -16,7 +16,7 @@ export class DesktopService {
     return this.http.get<{ id: string, name: string, starred: string }[]>(environment.baseUrl + 'doc/desktop/file');
   }
 
-  public getDesktopFolder(): any {
-    return this.http.get(environment.baseUrl + 'doc/desktop/folder');
+  public getDesktopFolder(spaceId: string): Observable<{ name: string, id: string}[]> {
+    return this.http.get<{ name: string, id: string}[]>(environment.baseUrl + 'doc/desktop/folder');
   }
 }
