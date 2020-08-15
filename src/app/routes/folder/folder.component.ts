@@ -15,7 +15,7 @@ export class FolderComponent implements OnInit {
   @Input() type: string;
   // dashboard desktop space folder
 
-  // user
+  // dashboard
   @Input() rootType: string;
 
   // space
