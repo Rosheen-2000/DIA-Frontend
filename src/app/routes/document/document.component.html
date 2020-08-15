@@ -3,6 +3,35 @@
     <button nz-button nzType="primary" (click)="clickSave()" style="float: right;">保存</button>
     <button nz-button nzType="default" (click)="clickBack()" style="float: right; margin-right: 10px;">返回</button>
     <nz-switch [ngModel]="false" nzCheckedChildren="已收藏" nzUnCheckedChildren="收藏" style="float: right; margin-right: 10px;"></nz-switch>
+    <button nzTooltipTitle="评论列表" nzTooltipPlacement="left" nz-button nz-tooltip class="comButton" nzType="default" (click)="open()" nzShape="circle" nzSize="large">
+      <i nz-icon nzType="comment"></i>
+    </button>
+    <nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" nzTitle="评论列表" nzWidth="400px" (nzOnClose)="close()">
+      <nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+        <ng-template #item let-item>
+          <nz-comment [nzAuthor]="item.author" [nzDatetime]="item.displaytime">
+            <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="item.avatar"></nz-avatar>
+            <nz-comment-content>
+              <p>{{ item.content }}</p>
+            </nz-comment-content>
+            <nz-comment-action>Reply to</nz-comment-action>
+          </nz-comment>
+        </ng-template>
+      </nz-list>
+      <nz-comment>
+        <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar>
+        <nz-comment-content>
+          <nz-form-item>
+            <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+          </nz-form-item>
+          <nz-form-item>
+            <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
+              Add Comment
+            </button>
+          </nz-form-item>
+        </nz-comment-content>
+      </nz-comment>
+    </nz-drawer>
     <table>
       <!-- <tr>
         <td>文档名称：</td>
@@ -30,4 +59,5 @@
     <textarea id="tiny"></textarea>
   </div>
 </div>
+
 
