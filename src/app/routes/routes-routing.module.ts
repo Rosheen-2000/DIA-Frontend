@@ -16,6 +16,7 @@ import {UsedComponent} from "./dashboard/used/used.component";
 import {FeedbackComponent} from "./feedback/feedback.component";
 import { UnsaveGuard } from '../core/guards/unsave.guard'
 import { UserspaceComponent } from './userspace/userspace.component'
+import { MessageboxComponent } from './messagebox/messagebox.component'
 
 const routes: Routes = [
   {
@@ -38,6 +39,7 @@ const routes: Routes = [
       {path: 'folder/:id', component: FolderComponent},
       {path: 'feedback', component: FeedbackComponent},
       {path: 'userspace', component: UserspaceComponent},
+      {path: 'messagebox', component: MessageboxComponent},
       {path: '', redirectTo: '/dashboard/own', pathMatch: 'full'},
     ]
   },
