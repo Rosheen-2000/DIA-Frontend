@@ -1,7 +1,7 @@
 <div *ngIf="type=='user'">
   <nz-breadcrumb>
-    <nz-breadcrumb-item>
-      {{rootName}}
+    <nz-breadcrumb-item *ngFor="let item of breadcrumbService.items">
+      <a [routerLink]="item.url">{{item.name}}</a>
     </nz-breadcrumb-item>
   </nz-breadcrumb>
 </div>
@@ -22,4 +22,8 @@
   <app-doc-item *ngFor="let file of subFiles"
                 [fileId]="file.id" [fileName]="file.name"
                 [isTrash]="rootType==='trash'" (notify)="onNotify()"></app-doc-item>
+</div>
+
+<div *ngIf="subFiles.length==0 && subFolders.length==0">
+  空空如也
 </div>
