@@ -45,11 +45,11 @@ export class UserinfoService {
   //   return this.
   // }
 
-  public changePwd(currentpwd: string, newpwd: string): Observable<{ res: string }> {
+  public changePwd(currentpwd: string, newpwd: string): Observable<{ msg: string }> {
     const form = new FormData();
     form.set('currentpwd', currentpwd);
     form.set('newpwd', newpwd);
-    return this.http.post<{ res: string }> (this.baseUrl + 'userinfo/changepwd/', form);
+    return this.http.post<{ msg: string }> (this.baseUrl + 'userinfo/changepwd/', form);
   }
 
   public changeAvatar(newavatar: string): Observable<{ msg:string }> {

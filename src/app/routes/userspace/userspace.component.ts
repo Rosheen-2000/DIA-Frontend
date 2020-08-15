@@ -100,7 +100,7 @@ export class UserspaceComponent implements OnInit {
       this.userservice.changePwd(this.currentpwd, this.newpwd).subscribe(
         res => {
           console.log(res);
-          if (res.res === 'true') {
+          if (res.msg === 'true') {
             this.message.create('success', '修改成功！');
             this.isOkLoading = false;
             this.changePwdVisible = false;
