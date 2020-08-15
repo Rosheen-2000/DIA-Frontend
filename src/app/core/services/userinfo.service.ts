@@ -21,7 +21,7 @@ export class UserinfoService {
     form.set('uid', uid);
     return this.http.post<{
       msg: string, uname: string, avatar: string
-    }>(this.baseUrl + 'checkuserinfo/basic/', form);
+    }>(this.baseUrl + 'userinfo/basic/', form);
   }
 
   public getUserInfo(uid: string): Observable<{
