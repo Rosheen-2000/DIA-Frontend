@@ -1,14 +1,7 @@
-<div *ngIf="type=='user'">
+<div>
   <nz-breadcrumb>
     <nz-breadcrumb-item *ngFor="let item of breadcrumbService.items">
       <a [routerLink]="item.url">{{item.name}}</a>
-    </nz-breadcrumb-item>
-  </nz-breadcrumb>
-</div>
-<div *ngIf="type==''">
-  <nz-breadcrumb>
-    <nz-breadcrumb-item *ngFor="let p of path">
-      {{p.Name}}
     </nz-breadcrumb-item>
   </nz-breadcrumb>
 </div>
