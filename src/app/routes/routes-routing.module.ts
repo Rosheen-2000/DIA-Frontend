@@ -30,22 +30,24 @@ const routes: Routes = [
           {path: 'own', component: OwnComponent},
           {path: 'favorites', component: FavoritesComponent},
           {path: 'used', component: UsedComponent},
+          {path: '**', redirectTo: 'own'},
         ]},
       {path: 'trash', component: TrashComponent},
       {path: 'space/:id', component: SpaceComponent},
       {path: 'desktop', component: DesktopComponent},
       {path: 'folder/:id', component: FolderComponent},
       {path: 'feedback', component: FeedbackComponent},
-      {path: 'userspace', component: UserspaceComponent}
+      {path: 'userspace', component: UserspaceComponent},
+      {path: '', redirectTo: '/dashboard/own', pathMatch: 'full'},
     ]
   },
   {
-    path: '', component: EditorComponent, children: [
-      {path: 'docs/:id', component: DocumentComponent, canDeactivate: [UnsaveGuard]}
+    path: 'docs', component: EditorComponent, children: [
+      {path: ':id', component: DocumentComponent, canDeactivate: [UnsaveGuard]}
     ]
   },
   {
-    path: '**', redirectTo: 'dashboard/own'
+    path: '**', redirectTo: '/dashboard/own'
   }
 ];
 
