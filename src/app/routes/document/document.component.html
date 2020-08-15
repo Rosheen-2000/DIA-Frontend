@@ -2,6 +2,7 @@
   <div class="table">
     <button nz-button nzType="primary" (click)="clickSave()" style="float: right;">保存</button>
     <button nz-button nzType="default" (click)="clickBack()" style="float: right; margin-right: 10px;">返回</button>
+    <nz-switch [ngModel]="false" nzCheckedChildren="已收藏" nzUnCheckedChildren="收藏" style="float: right; margin-right: 10px;"></nz-switch>
     <table>
       <!-- <tr>
         <td>文档名称：</td>
@@ -16,9 +17,10 @@
       <tr>
         <td>权限设置：</td>
         <td>
-          <nz-select ngModel="readonly">
-            <nz-option nzValue="readonly" nzLabel="可读"></nz-option>
-            <nz-option nzValue="readwrite" nzLabel="读写"></nz-option>
+          <nz-select ngModel="none">
+            <nz-option nzValue="none" nzLabel="不可见"></nz-option>
+            <nz-option nzValue="readonly" nzLabel="只读"></nz-option>
+            <nz-option nzValue="readwrite" nzLabel="可编辑"></nz-option>
           </nz-select>
         </td>
       </tr>
