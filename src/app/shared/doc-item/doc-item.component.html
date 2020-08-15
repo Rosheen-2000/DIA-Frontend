@@ -8,8 +8,11 @@
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu *ngIf="!isTrash">
-    <li nz-menu-item (click)='favor()'>
+    <li nz-menu-item *ngIf="!isFavored" (click)='favor()'>
       收藏
+    </li>
+    <li nz-menu-item *ngIf="isFavored" (click)='unfavor()'>
+      取消收藏
     </li>
     <li nz-menu-item (click)="renameVisible=true">
       重命名

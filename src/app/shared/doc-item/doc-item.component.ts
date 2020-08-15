@@ -17,6 +17,8 @@ export class DocItemComponent implements OnInit {
 
   @Output() notify = new EventEmitter();
 
+  isFavored: boolean = false;
+
   renameVisible = false;
   isOkLoading = false;
   public newfilename: string = this.fileName;
@@ -92,6 +94,15 @@ export class DocItemComponent implements OnInit {
     this.docItemService.favorDoc(this.fileId).subscribe(
       res => {
         this.message.create('success', '成功加入收藏');
+        this.notify.emit();
+      }
+    )
+  }
+
+  unfavor(): void {
+    this.docItemService.unfavorDoc(this.fileId).subscribe(
+      res => {
+        this.message.create('success', '成功取消收藏');
         this.notify.emit();
       }
     )

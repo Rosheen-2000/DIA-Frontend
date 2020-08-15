@@ -2,7 +2,9 @@
   <div class="table">
     <button nz-button nzType="primary" (click)="clickSave()" style="float: right;">保存</button>
     <button nz-button nzType="default" (click)="clickBack()" style="float: right; margin-right: 10px;">返回</button>
-    <nz-switch [ngModel]="false" nzCheckedChildren="已收藏" nzUnCheckedChildren="收藏" style="float: right; margin-right: 10px;"></nz-switch>
+    <!-- TODO 按钮宽度会改变，可以考虑把文字移出按钮 -->
+    <nz-switch [ngModel]="false" nzCheckedChildren="已收藏" nzUnCheckedChildren="收 藏" 
+      [nzControl]="true" (click)="clickSwitch()" [nzLoading]="switchLoading" style="float: right; margin-right: 10px; width: 80px;"></nz-switch>
     <button nzTooltipTitle="评论列表" nzTooltipPlacement="left" nz-button nz-tooltip class="comButton" nzType="default" (click)="open()" nzShape="circle" nzSize="large">
       <i nz-icon nzType="comment"></i>
     </button>
