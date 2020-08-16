@@ -17,6 +17,7 @@ import {FeedbackComponent} from "./feedback/feedback.component";
 import { UnsaveGuard } from '../core/guards/unsave.guard'
 import { UserspaceComponent } from './userspace/userspace.component'
 import { MessageboxComponent } from './messagebox/messagebox.component'
+import { NewteamComponent } from './teamspace/newteam/newteam.component'
 
 const routes: Routes = [
   {
@@ -40,6 +41,9 @@ const routes: Routes = [
       {path: 'feedback', component: FeedbackComponent},
       {path: 'userspace', component: UserspaceComponent},
       {path: 'messagebox', component: MessageboxComponent},
+      {path: 'teamspace', children: [
+        {path: 'newteam', component: NewteamComponent}
+      ]},
       {path: '', redirectTo: '/dashboard/own', pathMatch: 'full'},
     ]
   },

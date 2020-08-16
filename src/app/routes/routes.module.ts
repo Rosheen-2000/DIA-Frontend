@@ -22,6 +22,7 @@ import { UserspaceComponent } from './userspace/userspace.component';
 import { MessageboxComponent } from './messagebox/messagebox.component';
 import { CommentsComponent } from './document/comments/comments.component';
 import {PowerBoardComponent} from './document/power-board/power-board.component';
+import { NewteamComponent } from './teamspace/newteam/newteam.component';
 
 
 const Components = [
@@ -44,7 +45,7 @@ const Components = [
 ];
 
 @NgModule({
-    declarations: [...Components],
+    declarations: [...Components, NewteamComponent],
     imports: [
         RoutesRoutingModule,
         FormsModule,
