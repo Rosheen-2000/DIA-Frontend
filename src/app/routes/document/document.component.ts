@@ -71,53 +71,6 @@ export class DocumentComponent implements OnInit, OnDestroy {
     this.visible = false;
   }
 
-  //评论区数据
-  data = [
-    {
-      author: 'Han Solo',
-      avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      content:
-        'We supply a series of design principles, practical patterns and high quality design resources' +
-        '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-      displaytime: formatDistance(new Date(), addDays(new Date(), 1))
-    },
-    {
-      author: 'Han Solo',
-      avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      content:
-        'We supply a series of design principles, practical patterns and high quality design resources' +
-        '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-      displaytime: formatDistance(new Date(), addDays(new Date(), 2))
-    }
-  ];
-
-    submitting = false;
-  user = {
-    author: 'Han Solo',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-  };
-  inputValue = '';
-
-  handleSubmit(): void {
-    // this.submitting = true;
-    // const content = this.inputValue;
-    // this.inputValue = '';
-    // setTimeout(() => {
-    //   this.submitting = false;
-    //   this.data = [
-    //     ...this.data,
-    //     {
-    //       ...this.user,
-    //       content,
-    //       displayTime: formatDistance(new Date(), new Date())
-    //     }
-    //   ].map(e => {
-    //     return {
-    //     };
-    //   });
-    // }, 800);
-  }
-
   // 防抖 保存文本内容
   // updateResult = new Observable<{ msg: string }>();
   // private updateContent = new Subject<string>();
