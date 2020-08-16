@@ -11,20 +11,22 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import {CommonModule} from "@angular/common";
+import { TeamSettingComponent } from './team-setting/team-setting.component';
 
 const Components = [
   LogoComponent,
   DocItemComponent,
   FileSystemComponent,
   FolderItemComponent,
-  TemplateModalComponent
+  TemplateModalComponent,
+  TeamSettingComponent
 ];
 
 @NgModule({
   exports: [
     ...Components
   ],
-  declarations: [...Components],
+  declarations: [...Components, TeamSettingComponent],
     imports: [
         RouterModule,
         NzIconModule,

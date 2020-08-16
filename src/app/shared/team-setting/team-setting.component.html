@@ -1,0 +1,99 @@
+<button nzTooltipTitle="团队设置" nzTooltipPlacement="left" nz-button nz-tooltip class="comButton" nzType="default" (click)="showModal()" nzShape="circle" nzSize="large">
+    <i nz-icon nzType="setting"></i>
+  </button>
+
+  <!-- 团队创建者的modal -->
+  <nz-modal
+    [(nzVisible)]="isVisible"
+    nzTitle="团队设置"
+    (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleOk()"
+    [nzOkLoading]="isOkLoading"
+    [nzStyle]="{ top: '20px' }"
+  >
+    <div class="showInfo">
+        <nz-descriptions nzTitle="团队名称">
+            <nz-descriptions-item nzTitle="创建时间">xxxx/xx/xx</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="创建者">XXXXX</nz-descriptions-item>
+          </nz-descriptions>
+    </div>
+    <div class="showMember">
+        <nz-divider></nz-divider>
+        <nz-table #headerTable [nzData]="listOfData" [nzScroll]="{ y: '150px' }" [nzFrontPagination]="false">
+            <thead>
+              <tr>
+                <th nzWidth="35%">成员</th>
+                <th nzWidth="30%">身份</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of headerTable.data">
+                <td>{{ data.name }}</td>
+                <td>{{ data.status }}</td>
+                <td style="font-size: 12px;">
+                  <a>设为管理员</a>
+                  <nz-divider nzType="vertical"></nz-divider>
+                  <a>移出团队</a>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+    </div>
+    <div class="inviteMember">
+        邀请成员：
+        <nz-select
+        nzShowSearch
+        nzServerSearch
+        nzPlaceHolder="input search text"
+        [(ngModel)]="selectedValue"
+        [nzShowArrow]="false"
+        [nzFilterOption]="nzFilterOption"
+        (nzOnSearch)="search($event)"
+        >
+        <nz-option *ngFor="let o of listOfOption" [nzLabel]="o.text" [nzValue]="o.value"> </nz-option>
+        </nz-select>
+    </div>
+    <div class="generalSetting">
+        <nz-divider></nz-divider>
+        <button nz-button nzType="default" nzDanger>解散团队</button>
+    </div>
+  </nz-modal>
+
+  <!-- 团队成员的Modal -->
+  <!-- <nz-modal
+    [(nzVisible)]="isVisible"
+    nzTitle="团队设置"
+    (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleOk()"
+    [nzOkLoading]="isOkLoading"
+    [nzStyle]="{ top: '20px' }"
+  >
+    <div class="showInfo">
+        <nz-descriptions nzTitle="团队名称">
+            <nz-descriptions-item nzTitle="创建时间">xxxx/xx/xx</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="创建者">XXXXX</nz-descriptions-item>
+          </nz-descriptions>
+    </div>
+    <div class="showMember">
+        <nz-divider></nz-divider>
+        <nz-table #headerTable [nzData]="listOfData" [nzScroll]="{ y: '150px' }" [nzFrontPagination]="false">
+            <thead>
+              <tr>
+                <th nzWidth="70%">成员</th>
+                <th nzWidth="30%">身份</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of headerTable.data">
+                <td>{{ data.name }}</td>
+                <td>{{ data.status }}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+    </div>
+    <div class="generalSetting">
+        <nz-divider></nz-divider>
+        <button nz-button nzType="default" nzDanger>退出团队</button>
+    </div>
+  </nz-modal> -->
