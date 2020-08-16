@@ -25,7 +25,7 @@ export class FolderComponent implements OnInit {
   private folderId: string;
 
 
-  public subFolders: {Id: string, Name: string}[];
+  public subFolders: {Id: string, Name: string}[] = [];
   public subFiles: {id: string, name: string}[] = [];
 
   constructor(
