@@ -4,3 +4,20 @@
   bottom: 120px;
   box-shadow: -5px 5px 3px #707070;
 }
+
+.content {
+  height: 600px;
+}
+
+.dynamic-button {
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  font-size: 24px;
+  color: #999;
+  transition: all 0.3s;
+}
+
+.dynamic-button:hover {
+  color: #777;
+}

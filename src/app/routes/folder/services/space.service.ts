@@ -12,9 +12,9 @@ export class SpaceService {
     private http: HttpClient
   ) { }
 
-  public getFiles(spaceId: string): Observable<{ id: string, name: string, starred: string }[]>{
+  public getFiles(spaceId: string): Observable<{ id: string, name: string, starred: boolean }[]>{
     const params = new HttpParams().set('spaceId', spaceId);
-    return this.http.get<{ id: string, name: string, starred: string }[]>(
+    return this.http.get<{ id: string, name: string, starred: boolean }[]>(
       environment.baseUrl + 'doc/space/file', {params});
   }
 
