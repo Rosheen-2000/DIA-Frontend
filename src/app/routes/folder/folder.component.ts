@@ -80,7 +80,7 @@ export class FolderComponent implements OnInit {
   initDashboard(): void {
     this.dashboardServices.getFiles(this.rootType).subscribe(
       res => {
-        this.subFiles = res;
+        this.subFiles = res.files;
         console.log(res);
       }
     );

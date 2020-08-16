@@ -12,7 +12,7 @@ export class DashboardService {
     private http: HttpClient
   ) { }
 
-  public getFiles(rootType: string): Observable<{ id: string, name: string }[]> {
-    return this.http.get<{ id: string, name: string }[]>(environment.baseUrl + 'doc/' + rootType + '/file/');
+  public getFiles(rootType: string): Observable<{ files :{ id: string, name: string }[]}> {
+    return this.http.get<{ files :{ id: string, name: string }[]}>(environment.baseUrl + 'doc/' + rootType + '/file/');
   }
 }

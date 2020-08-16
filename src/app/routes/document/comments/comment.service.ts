@@ -14,7 +14,7 @@ export class CommentService {
   ) { }
 
   public getComments(docid: string): Observable<{ commentinfo: DocComment }[]> {
-    const params = new HttpParams().set('docis', docid);
+    const params = new HttpParams().set('docid', docid);
     return this.http.get<{ commentinfo: DocComment }[]>(environment.baseUrl + 'comment/get/', { params });
   }
 

@@ -10,7 +10,7 @@
     </button>
     <app-power-board [docId]="docId"></app-power-board>
     <nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" nzTitle="评论列表" nzWidth="400px" (nzOnClose)="close()">
-      <app-comments></app-comments>
+      <app-comments [docid]="docId"></app-comments>
     </nz-drawer>
     <table>
       <!-- <tr>
