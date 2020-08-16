@@ -3,8 +3,8 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {FolderService} from './services/folder.service';
 import {BreadcrumbService} from '../../core/services/breadcrumb.service';
 import {DesktopService} from './services/desktop.service';
-import {SpaceService} from "./services/space.service";
-import {DashboardService} from "./services/dashboard.service";
+import {SpaceService} from './services/space.service';
+import {DashboardService} from './services/dashboard.service';
 
 @Component({
   selector: 'app-folder',

@@ -51,9 +51,10 @@ const belongOptions = [
 export class DocumentComponent implements OnInit, OnDestroy {
 
   docId: string;
-  switchLoading: boolean = false;
-  // TODO 添加获取收藏信息的方法
-  public isFavored: boolean = false;
+
+  // 收藏切换按钮
+  public switchLoading = false;
+  public isFavored = false;
 
   nzBelongOptions: any[] | null = null;
   values: any[] | null = null;
@@ -82,7 +83,6 @@ export class DocumentComponent implements OnInit, OnDestroy {
     public dialogService: DialogService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private docitemservice: DocItemService,
   ) {
   }
 
@@ -129,12 +129,12 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   initData() {
-    console.log('fetch data');
     this.docService.getDocument(this.docId).subscribe(
       res => {
         console.log(res);
-        console.log('set data');
+        this.isFavored = res.starred;
         tinymce.activeEditor.setContent(res.Content);
+        this.switchLoading = false;
       }
     );
   }
@@ -162,36 +162,36 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   clickSwitch(): void {
-    if (!this.switchLoading) {
-      this.switchLoading = true;
-      if (!this.isFavored) {
-        this.docitemservice.favorDoc(this.docId).subscribe(
-          res => {
-            if (res.msg === 'true') {
-              this.isFavored = !this.isFavored;
-              this.message.create('success', '成功加入收藏');
-            }
-            else {
-              this.message.create('error', '操作失败，请稍后再试');
-            }
-            this.switchLoading = false;
+    this.switchLoading = true;
+    console.log('switch' + this.isFavored);
+    if (this.isFavored) {
+      console.log(this.isFavored);
+      this.docService.favorDoc(this.docId).subscribe(
+        res => {
+          console.log(res);
+          if (res.msg === 'true') {
+            this.message.create('success', '成功加入收藏');
           }
-        )
-      }
-      else {
-        this.docitemservice.unfavorDoc(this.docId).subscribe(
-          res => {
-            if (res.msg === 'true') {
-              this.isFavored = !this.isFavored;
-              this.message.create('success', '成功取消收藏');
-            }
-            else {
-              this.message.create('error', '操作失败，请稍后再试');
-            }
-            this.switchLoading = false;
+          else {
+            this.message.create('error', '操作失败，请稍后再试');
           }
-        )
-      }
+          this.switchLoading = false;
+        }
+      );
+    }
+    else {
+      this.docService.unFavorDoc(this.docId).subscribe(
+        res => {
+          console.log(res);
+          if (res.msg === 'true') {
+            this.message.create('success', '成功取消收藏');
+          }
+          else {
+            this.message.create('error', '操作失败，请稍后再试');
+          }
+          this.switchLoading = false;
+        }
+      );
     }
   }
 

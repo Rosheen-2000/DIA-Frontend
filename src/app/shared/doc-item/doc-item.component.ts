@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {NzContextMenuService, NzDropdownMenuComponent} from "ng-zorro-antd";
 import {DocItemService} from "./doc-item.service";
 import { NzMessageService } from 'ng-zorro-antd/message';
+import {DocFavorService} from "./doc-favor.service";
 
 @Component({
   selector: 'app-doc-item',
@@ -14,10 +15,9 @@ export class DocItemComponent implements OnInit {
   @Input() public fileId: string;
 
   @Input() public isTrash: boolean;
+  @Input() public isFavored: boolean;
 
   @Output() notify = new EventEmitter();
-
-  isFavored: boolean = false;
 
   renameVisible = false;
   isOkLoading = false;
@@ -28,6 +28,7 @@ export class DocItemComponent implements OnInit {
     private nzContextMenuService: NzContextMenuService,
     private docItemService: DocItemService,
     private message: NzMessageService,
+    private docFavorService: DocFavorService,
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +45,7 @@ export class DocItemComponent implements OnInit {
   rename(): void {
     console.log(this.fileId);
     console.log(this.fileName);
-    if (this.fileName.length===0) {
+    if (this.fileName.length === 0) {
       this.message.create('warning', '请输入非空的文件名');
     }
     else {
@@ -91,21 +92,21 @@ export class DocItemComponent implements OnInit {
   }
 
   favor(): void {
-    this.docItemService.favorDoc(this.fileId).subscribe(
+    this.docFavorService.favorDoc(this.fileId).subscribe(
       res => {
         this.message.create('success', '成功加入收藏');
         this.notify.emit();
       }
-    )
+    );
   }
 
-  unfavor(): void {
-    this.docItemService.unfavorDoc(this.fileId).subscribe(
+  unFavor(): void {
+    this.docFavorService.unFavorDoc(this.fileId).subscribe(
       res => {
         this.message.create('success', '成功取消收藏');
         this.notify.emit();
       }
-    )
+    );
   }
 
   handleCancel(): void {

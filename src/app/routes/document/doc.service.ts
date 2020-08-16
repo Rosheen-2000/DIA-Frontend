@@ -16,11 +16,11 @@ export class DocService {
     this.baseUrl = environment.baseUrl;
   }
 
-  public getDocument(docId: string): Observable<{ Title: string, Content: string }> {
+  public getDocument(docId: string): Observable<{ Title: string, Content: string, starred: boolean}> {
     const form = new FormData();
     form.set('_docid', docId);
     // const params = new HttpParams().set('_docid', docId);
-    return this.http.post<{ Title: string, Content: string }> (
+    return this.http.post<{ Title: string, Content: string , starred: boolean}> (
       this.baseUrl + 'doc/getdoccontent/', form);
     // return {
     //   Title: docId + 'Title',
@@ -51,4 +51,15 @@ export class DocService {
       this.baseUrl + 'doc/deletedoc/', form);
   }
 
+  public favorDoc(did: string): Observable<{ msg: string }> {
+    const form = new FormData();
+    form.set('did', did);
+    return this.http.post<{ msg: string }>(environment.baseUrl + 'doc/favordoc/', form);
+  }
+
+  public unFavorDoc(did: string): Observable<{ msg: string }> {
+    const form = new FormData();
+    form.set('did', did);
+    return this.http.post<{ msg: string }>(environment.baseUrl + 'doc/unfavordoc/', form);
+  }
 }

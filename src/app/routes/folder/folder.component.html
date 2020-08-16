@@ -14,7 +14,9 @@
 <div style="margin: 20px;">
   <app-doc-item *ngFor="let file of subFiles"
                 [fileId]="file.id" [fileName]="file.name"
-                [isTrash]="rootType==='trash'" (notify)="onNotify()"></app-doc-item>
+                [isTrash]="rootType==='trash'"
+                [isFavored]="rootType==='favorites'"
+                (notify)="onNotify()"></app-doc-item>
 </div>
 
 <div *ngIf="subFiles.length==0 && subFolders.length==0">
