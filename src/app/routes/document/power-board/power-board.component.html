@@ -1,7 +1,60 @@
 <button nzTooltipTitle="协作面板" nzTooltipPlacement="left" nz-button nz-tooltip class="powButton" nzType="default" (click)="openPowerDrawer()" nzShape="circle" nzSize="large">
   <i nz-icon nzType="setting"></i>
 </button>
-<nz-drawer [nzClosable]="false" [nzVisible]="powerBoardVisible" (nzOnClose)="closePowerDrawer()">
-  <p>查看设置协作者</p>
-  <p>查看设置文档分享权限</p>
+<nz-drawer [nzClosable]="false" [nzVisible]="powerBoardVisible" (nzOnClose)="closePowerDrawer()" nzTitle="协作设置" nzWidth="400px">
+  <nz-collapse [nzBordered]=true nzAccordion>
+    <nz-collapse-panel nzHeader="协作者" [nzActive]="true">
+      <div class="content">
+        <nz-table style="margin: 0 0">
+          <thead>
+          <tr>
+            <th>用户</th>
+            <th>权限</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Kamui</td>
+            <td>只读</td>
+            <td>设置</td>
+          </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </nz-collapse-panel>
+    <nz-collapse-panel nzHeader="管理员" >
+      <div class="content">
+        <nz-table style="margin: 0 0">
+          <thead>
+          <tr>
+            <th>用户</th>
+            <th>权限</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Kamui</td>
+            <td>只读</td>
+            <td>设置</td>
+          </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </nz-collapse-panel>
+    <nz-collapse-panel nzHeader="共享设置">
+      <div class="content">
+        <nz-radio-group [nzDisabled]="userPower < 3" [(ngModel)]="publicShare" nzName="ratioGroup" (ngModelChange)="setShareOption()">
+          <label nz-radio [nzValue]="false">私有文档</label>
+          <label nz-radio [nzValue]="true">公开分享</label>
+        </nz-radio-group>
+        <nz-radio-group *ngIf="publicShare" [nzDisabled]="userPower < 3" [(ngModel)]="editableShare" nzName="ratioGroup" (ngModelChange)="setShareOption()">
+          <p>任何拥有分享链接的人都</p>
+          <label nz-radio [nzValue]="false">可以阅读</label>
+          <label nz-radio [nzValue]="true">可以编辑</label>
+      </nz-radio-group>
+      </div>
+    </nz-collapse-panel>
+  </nz-collapse>
 </nz-drawer>
