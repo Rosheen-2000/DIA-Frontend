@@ -11,8 +11,18 @@ export class PowerBoardComponent implements OnInit {
 
   public powerBoardVisible = false;
 
+  // 协作者
+  corporations: {username: string, avatar: string, userid: string}[] =  [
+    { username: 'KaMu1', avatar: '', userid: '1'},
+  ];
+
+  // 管理员
+  admins: {username: string, avatar: string, userid: string}[] = [
+    { username: 'KaMu1', avatar: '', userid: '1'},
+  ];
+
   // 用户权限等级
-  public userPower = 2;
+  public userPower = 4;
 
   // 共享设置
   publicShare = false;
@@ -44,6 +54,18 @@ export class PowerBoardComponent implements OnInit {
       }
     }
     this.powerBoardService.setShareOption(this.docId, property).subscribe(
+      res => console.log(res)
+    );
+  }
+
+  removeAdmin(uid: string): void {
+    this.powerBoardService.setPower(this.docId, uid, 0).subscribe(
+      res => console.log(res)
+    );
+  }
+
+  addAdmin(): void {
+    this.powerBoardService.setPower(this.docId, '？', 3).subscribe(
       res => console.log(res)
     );
   }

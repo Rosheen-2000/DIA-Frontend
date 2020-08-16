@@ -38,4 +38,12 @@ export class PowerBoardService {
     form.set('shareOption', shareOption + '');
     return this.http.post(environment.baseUrl + 'doc/set-share-option', form);
   }
+
+  public setPower(docid: string, uid: string, power: number): Observable<{ msg: string }> {
+    const form = new FormData();
+    form.set('uid', uid);
+    form.set('docid', docid);
+    form.set('power', power + '');
+    return this.http.post<{ msg: string }>(environment.baseUrl + 'doc/set-power', form);
+  }
 }
