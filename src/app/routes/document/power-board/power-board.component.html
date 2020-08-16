@@ -5,28 +5,50 @@
   <nz-collapse [nzBordered]=true nzAccordion>
     <nz-collapse-panel nzHeader="协作者" [nzActive]="true">
       <div class="content">
-          <div *ngFor="let p of corporations">
-            <nz-avatar nzSize="small" [nzSrc]="p.avatar" nzIcon="user"></nz-avatar>
-            {{p.username}}
-            <i *ngIf="userPower >= 4" nz-icon nzType="minus-circle-o" class="dynamic-button"></i>
-          </div>
-        <div>
-          <input>
-          <i *ngIf="userPower >= 4" nz-icon nzType="plus-circle-o" class="dynamic-button"></i>
-        </div>
+        <button nz-button nzType="dashed" (click)="modalOpen('add-corporation')">添加协作者</button>
+
+        <nz-table #corporationTable [nzData]="corporations" [nzFrontPagination]="false">
+          <thead>
+            <tr>
+              <th>头像</th>
+              <th>用户名</th>
+              <th>协作权限</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of corporationTable.data">
+              <td><nz-avatar nzSize="small" [nzSrc]="p.avatar" nzIcon="user"></nz-avatar></td>
+              <td>{{p.username}}</td>
+              <td>
+                <nz-switch [nzDisabled]="userPower < 3" [(ngModel)]="p.editable" nzCheckedChildren="仅访问" nzUnCheckedChildren="可编辑"></nz-switch>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+
       </div>
     </nz-collapse-panel>
     <nz-collapse-panel nzHeader="管理员">
       <div class="content">
-        <div *ngFor="let p of admins">
-          <nz-avatar nzSize="small" [nzSrc]="p.avatar" nzIcon="user"></nz-avatar>
-          {{p.username}}
-          <i *ngIf="userPower >= 4" nz-icon nzType="minus-circle-o" class="dynamic-button" (click)="removeAdmin(p.userid)"></i>
-        </div>
-        <div>
-          <input>
-          <i *ngIf="userPower >= 4" nz-icon nzType="plus-circle-o" class="dynamic-button" (click)="addAdmin()"></i>
-        </div>
+        <button nz-button nzType="dashed" (click)="modalOpen('add-admin')">添加管理员</button>
+        <nz-table #adminTable [nzData]="admins" [nzFrontPagination]="false">
+          <thead>
+          <tr>
+            <th>头像</th>
+            <th>用户名</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let p of adminTable.data">
+            <td><nz-avatar nzSize="small" [nzSrc]="p.avatar" nzIcon="user"></nz-avatar></td>
+            <td>{{p.username}}</td>
+            <td>
+              <button nz-button [disabled]="userPower < 4" nzType="danger">移除</button>
+            </td>
+          </tr>
+          </tbody>
+        </nz-table>
       </div>
     </nz-collapse-panel>
     <nz-collapse-panel nzHeader="共享设置">
@@ -42,5 +64,33 @@
       </nz-radio-group>
       </div>
     </nz-collapse-panel>
+    <nz-collapse-panel nzHeader="评论设置">
+      <div class="content"></div>
+    </nz-collapse-panel>
   </nz-collapse>
 </nz-drawer>
+
+
+<!--添加协作者-->
+<nz-modal [(nzVisible)]="modalControls.addCorporation" nzTitle="添加协作者" (nzOnCancel)="modalClose()">
+  <p>Content one</p>
+  <p>Content two</p>
+  <p>Content three</p>
+  <p>Content three</p>
+</nz-modal>
+
+<!--添加管理员-->
+<nz-modal [(nzVisible)]="modalControls.addAdmin" nzTitle="添加管理员" (nzOnCancel)="modalClose()">
+  <p>Content one</p>
+  <p>Content two</p>
+  <p>Content three</p>
+  <p>Content three</p>
+</nz-modal>
+
+<!---->
+<nz-modal [(nzVisible)]="modalControls.addAdmin" nzTitle="添加管理员" (nzOnCancel)="modalClose()">
+  <p>Content one</p>
+  <p>Content two</p>
+  <p>Content three</p>
+  <p>Content three</p>
+</nz-modal>

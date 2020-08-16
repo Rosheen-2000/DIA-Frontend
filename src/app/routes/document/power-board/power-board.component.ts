@@ -12,13 +12,15 @@ export class PowerBoardComponent implements OnInit {
   public powerBoardVisible = false;
 
   // 协作者
-  corporations: {username: string, avatar: string, userid: string}[] =  [
-    { username: 'KaMu1', avatar: '', userid: '1'},
+  corporations: {username: string, avatar: string, editable: boolean}[] =  [
+    { username: 'KaMu1', avatar: '', editable: true},
+    { username: 'KaMu2', avatar: '', editable: false},
   ];
 
   // 管理员
-  admins: {username: string, avatar: string, userid: string}[] = [
-    { username: 'KaMu1', avatar: '', userid: '1'},
+  admins: {username: string, avatar: string}[] = [
+    { username: 'KaMu3', avatar: ''},
+    { username: 'KaMu4', avatar: ''},
   ];
 
   // 用户权限等级
@@ -28,11 +30,21 @@ export class PowerBoardComponent implements OnInit {
   publicShare = false;
   editableShare = false;
 
+  modalControls = {
+    addCorporation: false,
+    addAdmin: false,
+  };
+
   constructor(
     private powerBoardService: PowerBoardService,
   ) { }
 
   ngOnInit(): void {
+    this.initData();
+  }
+
+  initData(): void {
+    return;
   }
 
   openPowerDrawer(): void {
@@ -58,15 +70,34 @@ export class PowerBoardComponent implements OnInit {
     );
   }
 
-  removeAdmin(uid: string): void {
-    this.powerBoardService.setPower(this.docId, uid, 0).subscribe(
+  removeAdmin(username: string): void {
+    this.powerBoardService.setPower(this.docId, username, 0).subscribe(
       res => console.log(res)
     );
   }
 
   addAdmin(): void {
-    this.powerBoardService.setPower(this.docId, '？', 3).subscribe(
-      res => console.log(res)
-    );
+    // if (this.inputInvitedAdmin === '') {
+    //   return;
+    // }
+    // this.powerBoardService.setPower(this.docId, this.inputInvitedAdmin, 3).subscribe(
+    //   res => console.log(res)
+    // );
+  }
+
+  modalClose() {
+    this.modalControls.addCorporation = false;
+    this.modalControls.addAdmin = false;
+  }
+
+  modalOpen(target: string) {
+    switch (target) {
+      case 'add-corporation':
+        this.modalControls.addCorporation = true;
+        break;
+      case 'add-admin':
+        this.modalControls.addAdmin = true;
+        break;
+    }
   }
 }

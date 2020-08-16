@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
-import {environment} from "../../../../environments/environment";
-import {HttpClient} from "@angular/common/http";
+import {Observable} from 'rxjs';
+import {environment} from '../../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class DashboardService {
     private http: HttpClient
   ) { }
 
-  public getFiles(rootType: string): Observable<{ files :{ id: string, name: string }[]}> {
-    return this.http.get<{ files :{ id: string, name: string }[]}>(environment.baseUrl + 'doc/' + rootType + '/file/');
+  public getFiles(rootType: string): Observable<{ files: { id: string, name: string }[]}> {
+    return this.http.get<{ files: { id: string, name: string }[]}>(environment.baseUrl + 'doc/' + rootType + '/file/');
   }
 }

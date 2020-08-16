@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from "../../../../environments/environment";
+import {NzModalService} from "ng-zorro-antd";
 
 @Injectable({
   providedIn: 'root'
@@ -39,9 +40,9 @@ export class PowerBoardService {
     return this.http.post(environment.baseUrl + 'doc/set-share-option', form);
   }
 
-  public setPower(docid: string, uid: string, power: number): Observable<{ msg: string }> {
+  public setPower(docid: string, username: string, power: number): Observable<{ msg: string }> {
     const form = new FormData();
-    form.set('uid', uid);
+    form.set('username', username);
     form.set('docid', docid);
     form.set('power', power + '');
     return this.http.post<{ msg: string }>(environment.baseUrl + 'doc/set-power', form);
