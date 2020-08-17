@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { TeamService } from '../team.service'
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-newteam',
@@ -16,6 +18,9 @@ export class NewteamComponent implements OnInit {
   listOfOption: Array<{ uid: string, uname: string, avatar: string }> = [];
   nzFilterOption = () => true;
 
+  packages$: Observable<{ username: string, avatar: string, userid: string }>;
+  private searchText$ = new Subject<string>();
+
   constructor(
     private fb: FormBuilder,
     private teamservice: TeamService,
@@ -24,20 +29,16 @@ export class NewteamComponent implements OnInit {
   ngOnInit(): void {
     this.validateForm = this.fb.group({});
     this.addField();
+    this.packages$ = this.searchText$.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap(packageName => 
+        this.teamservice.getUserByName(packageName)),
+    )
   }
 
   search(value: string): void {
-    // this.teamservice.getUserByName(value).subscribe(
-    //   res => {
-    //     this.listOfOption = [
-    //       {
-    //         uid: res.userid,
-    //         uname: res.username,
-    //         avatar: res.avatar
-    //       }
-    //     ]
-    //   }
-    // )
+    // this.searchText$.next(value);
     // ! DEGUG用
     console.log('onsearch');
     this.listOfOption = [

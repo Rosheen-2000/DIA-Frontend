@@ -42,7 +42,7 @@
     </div>
     <div class="inviteMember">
         邀请成员：
-        <nz-select
+        <!-- <nz-select
         nzShowSearch
         nzServerSearch
         nzPlaceHolder="input search text"
@@ -52,7 +52,8 @@
         (nzOnSearch)="search($event)"
         >
         <nz-option *ngFor="let o of listOfOption" [nzLabel]="o.text" [nzValue]="o.value"> </nz-option>
-        </nz-select>
+        </nz-select> -->
+        <app-searchuser></app-searchuser>
     </div>
     <div class="generalSetting">
         <nz-divider></nz-divider>

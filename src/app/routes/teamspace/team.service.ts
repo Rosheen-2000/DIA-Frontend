@@ -77,10 +77,10 @@ export class TeamService {
     }>(this.baseUrl + 'user/getlistbyname/', { params });
   }
 
-  public inviteUser(teamid: string, uid: string): Observable<{ msg: string }> {
+  public inviteUser(teamid: string, uid: string[]): Observable<{ msg: string }> {
     const form = new FormData();
     form.set('teamid', teamid);
-    form.set('uid', uid);
+    form.set('uid', uid.toString());
     return this.http.post<{
       msg: string
     }>(this.baseUrl + 'team/invite/', form);

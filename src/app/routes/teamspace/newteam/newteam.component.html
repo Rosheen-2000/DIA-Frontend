@@ -37,7 +37,7 @@
               (nzOnSearch)="search($event)"
               style="width: 80%; float: left; left: 10px;"
             >
-              <nz-option *ngFor="let o of listOfOption" [nzLabel]="o.uname" [nzValue]="o.uid"> </nz-option>
+              <nz-option *ngFor="let o of packages$" [nzLabel]="o.username" [nzValue]="o.userid"> </nz-option>
             </nz-select>
             <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
           </nz-form-control>

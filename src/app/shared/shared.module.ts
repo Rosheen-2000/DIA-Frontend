@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import {CommonModule} from "@angular/common";
 import { TeamSettingComponent } from './team-setting/team-setting.component';
+import { SearchuserComponent } from './searchuser/searchuser.component';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 const Components = [
   LogoComponent,
@@ -26,7 +28,7 @@ const Components = [
   exports: [
     ...Components
   ],
-  declarations: [...Components, TeamSettingComponent],
+  declarations: [...Components, TeamSettingComponent, SearchuserComponent],
     imports: [
         RouterModule,
         NzIconModule,
@@ -35,6 +37,7 @@ const Components = [
         FormsModule,
         NzGridModule,
         CommonModule,
+        NzSelectModule,
     ]
 })
 export class SharedModule {
