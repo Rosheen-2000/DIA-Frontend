@@ -62,6 +62,7 @@ export class FolderComponent implements OnInit {
         break;
       case 'space':
         this.initSpace();
+        this.breadcrumbService.space(this.spaceId, 'xxx');
         break;
       case 'folder':
         this.initFolder();
@@ -90,9 +91,7 @@ export class FolderComponent implements OnInit {
   initSpace(): void {
     this.spaceService.getFiles(this.spaceId).subscribe(
       res => {
-        console.log('files' + res);
         this.subFiles = res.files;
-        this.breadcrumbService.space(this.spaceId, 'xxx');
       }
     );
   }

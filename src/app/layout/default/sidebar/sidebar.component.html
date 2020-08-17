@@ -10,7 +10,7 @@
 
   <li nz-menu-item nzMatchRouter class="siderItem"><a routerLink="/desktop">我的桌面</a></li>
   <li nz-menu-item nzMatchRouter class="siderItem"><a routerLink="/trash">回收站</a></li>
-  <li nz-submenu nzTitle="团队空间" class="siderItem" (mouseenter)="initData()">
+  <li nz-submenu nzTitle="团队空间" class="siderItem" (nzOpenChange)="initData()">
     <ul>
       <li nz-menu-item nzMatchRouter>
         <a (click)="newTeam()">
