@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import {CommonModule} from "@angular/common";
 import { TeamSettingComponent } from './team-setting/team-setting.component';
+import { NewfolderModalComponent } from './newfolder-modal/newfolder-modal.component';
 
 const Components = [
   LogoComponent,
@@ -19,14 +20,15 @@ const Components = [
   FileSystemComponent,
   FolderItemComponent,
   TemplateModalComponent,
-  TeamSettingComponent
+  TeamSettingComponent,
+  NewfolderModalComponent
 ];
 
 @NgModule({
   exports: [
     ...Components
   ],
-  declarations: [...Components, TeamSettingComponent],
+  declarations: [...Components, TeamSettingComponent, NewfolderModalComponent],
     imports: [
         RouterModule,
         NzIconModule,

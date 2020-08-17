@@ -29,8 +29,12 @@
 </ul>
 
 <div class="addButton">
-  <button nzTooltipTitle="新建文档" nzTooltipPlacement="right" nz-button nz-tooltip 
+  <button nzTooltipTitle="新建文档" nzTooltipPlacement="top" nz-button nz-tooltip 
           nzType="primary" nzShape="circle" (click)="chooseTemplate()">
-      <i nz-icon nzType="plus" nzRotate="90"></i>
+      <i nz-icon nzType="file-add" ></i>
+  </button>
+  <button nzTooltipTitle="新建文件夹" nzTooltipPlacement="top" nz-button nz-tooltip 
+          nzType="primary" nzShape="circle" (click)="newFolder()">
+      <i nz-icon nzType="folder-add"></i>
   </button>
 </div>
