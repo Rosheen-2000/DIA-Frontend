@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { TeamService } from '../team.service'
 
 @Component({
   selector: 'app-newteam',
@@ -12,10 +13,40 @@ export class NewteamComponent implements OnInit {
   validateForm!: FormGroup;
   listOfControl: Array<{ id: number; controlInstance: string }> = [];
   selectedValue = null;
-  listOfOption: Array<{ value: string; text: string }> = [];
+  listOfOption: Array<{ uid: string, uname: string, avatar: string }> = [];
   nzFilterOption = () => true;
 
+  constructor(
+    private fb: FormBuilder,
+    private teamservice: TeamService,
+  ) {}
+
+  ngOnInit(): void {
+    this.validateForm = this.fb.group({});
+    this.addField();
+  }
+
   search(value: string): void {
+    // this.teamservice.getUserByName(value).subscribe(
+    //   res => {
+    //     this.listOfOption = [
+    //       {
+    //         uid: res.userid,
+    //         uname: res.username,
+    //         avatar: res.avatar
+    //       }
+    //     ]
+    //   }
+    // )
+    // ! DEGUG用
+    console.log('onsearch');
+    this.listOfOption = [
+      {
+        uid: '110',
+        uname: 'testname',
+        avatar: 'avatar'
+      }
+    ]
     // this.httpClient
     //   .jsonp<{ result: Array<[string, string]> }>(`https://suggest.taobao.com/sug?code=utf-8&q=${value}`, 'callback')
     //   .subscribe(data => {
@@ -61,13 +92,6 @@ export class NewteamComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();
     }
     console.log(this.validateForm.value);
-  }
-
-  constructor(private fb: FormBuilder) {}
-
-  ngOnInit(): void {
-    this.validateForm = this.fb.group({});
-    this.addField();
   }
 
 }

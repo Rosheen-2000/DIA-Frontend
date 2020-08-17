@@ -1,60 +1,60 @@
 <div class="showinfo">
-    <div class="wordinfo">
-        <p style="font-size: 20px; margin-top: 1em;">创建团队</p>
-        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" style="width: 500px;">
-            <nz-form-item>
-                <nz-form-label [nzXs]="24" [nzSm]="4">团队名称</nz-form-label>
-                <nz-form-control
-          [nzXs]="24"
-          [nzSm]="20"
-          [nzOffset]="0"
-          nzErrorTip="Please input passenger's name or delete this field."
-        >
-          <input
-            class="passenger-input"
-            nz-input
-            [attr.id]=""
-            [formControlName]=""
-            style="width: 80%; float: left; left: 10px;"
-          />
-        </nz-form-control>
-              </nz-form-item>
-            <nz-form-item *ngFor="let control of listOfControl; let i = index">
-              <nz-form-label [nzXs]="24" [nzSm]="4" *ngIf="i == 0" [nzFor]="control.controlInstance">邀请成员</nz-form-label>
-              <nz-form-control
-                [nzXs]="24"
-                [nzSm]="20"
-                [nzOffset]="i == 0 ? 0 : 4"
-                nzErrorTip="Please input passenger's name or delete this field."
-              >
-                <nz-select
-                nzShowSearch
-                nzServerSearch
-                nzPlaceHolder="请输入用户名搜索用户"
-                [(ngModel)]="selectedValue"
-                [nzShowArrow]="false"
-                [nzFilterOption]="nzFilterOption"
-                (nzOnSearch)="search($event)"
-                style="width: 80%; float: left; left: 10px;"
-                >
-                <nz-option *ngFor="let o of listOfOption" [nzLabel]="o.text" [nzValue]="o.value"> </nz-option>
-                </nz-select>
-                <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
-              </nz-form-control>
-            </nz-form-item>
-            <nz-form-item>
-              <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
-                <button nz-button nzType="dashed" class="add-button" (click)="addField($event)" style="width: 80%; float: left; left: 10px;">
-                  <i nz-icon nzType="plus"></i>
-                  添加邀请成员
-                </button>
-              </nz-form-control>
-            </nz-form-item>
-            <nz-form-item>
-              <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
-                <button nz-button nzType="primary" style="width: 80%; float: left; left: 10px;">创建团队</button>
-              </nz-form-control>
-            </nz-form-item>
-          </form>
-    </div>
+  <div class="wordinfo">
+    <p style="font-size: 20px; margin-top: 1em;">创建团队</p>
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" style="width: 500px;">
+        <nz-form-item>
+          <nz-form-label [nzXs]="24" [nzSm]="4">团队名称</nz-form-label>
+          <nz-form-control
+            [nzXs]="24"
+            [nzSm]="20"
+            [nzOffset]="0"
+            nzErrorTip="Please input passenger's name or delete this field."
+          >
+            <input
+              class="passenger-input"
+              nz-input
+              [attr.id]=""
+              [formControlName]=""
+              style="width: 80%; float: left; left: 10px;"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngFor="let control of listOfControl; let i = index">
+          <nz-form-label [nzXs]="24" [nzSm]="4" *ngIf="i == 0" [nzFor]="control.controlInstance">邀请成员</nz-form-label>
+          <nz-form-control
+            [nzXs]="24"
+            [nzSm]="20"
+            [nzOffset]="i == 0 ? 0 : 4"
+            nzErrorTip="Please input passenger's name or delete this field."
+          >
+            <nz-select
+              nzShowSearch
+              nzServerSearch
+              nzPlaceHolder="请输入用户名搜索用户"
+              [(ngModel)]="selectedValue"
+              [nzShowArrow]="false"
+              [nzFilterOption]="nzFilterOption"
+              (nzOnSearch)="search($event)"
+              style="width: 80%; float: left; left: 10px;"
+            >
+              <nz-option *ngFor="let o of listOfOption" [nzLabel]="o.uname" [nzValue]="o.uid"> </nz-option>
+            </nz-select>
+            <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
+            <button nz-button nzType="dashed" class="add-button" (click)="addField($event)" style="width: 80%; float: left; left: 10px;">
+              <i nz-icon nzType="plus"></i>
+              添加邀请成员
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
+            <button nz-button nzType="primary" style="width: 80%; float: left; left: 10px;">创建团队</button>
+          </nz-form-control>
+        </nz-form-item>
+    </form>
+  </div>
 </div>
