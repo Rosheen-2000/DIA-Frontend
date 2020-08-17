@@ -71,10 +71,14 @@ export class TeamService {
   // }
 
   public getUserByName(username: string): Observable<{ username: string, avatar: string, userid: string }> {
-    const params = new HttpParams().set('username', username);
-    return this.http.get<{
-      username: string, avatar: string, userid: string
-    }>(this.baseUrl + 'user/getlistbyname/', { params });
+    // const params = new HttpParams().set('username', username);
+    // return this.http.get<{
+    //   username: string, avatar: string, userid: string
+    // }>(this.baseUrl + 'user/getlistbyname/', { params });
+    console.log('searching');
+    return Observable.create(observer => {
+      observer.next({ username: 'fake', avatar: 'https://dss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/logo_white-d0c9fe2af5.png', userid: '114514' })
+    })
   }
 
   public inviteUser(teamid: string, uid: string[]): Observable<{ msg: string }> {

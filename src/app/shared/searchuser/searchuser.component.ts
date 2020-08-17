@@ -20,7 +20,7 @@ export class SearchuserComponent implements OnInit {
 
   res_users$: Observable<{ username: string, avatar: string, userid: string }>;
   private searchText$ = new Subject<string>();
-  res_users: { username: string, avatar: string, userid: string };
+  res_users: { username: string, avatar: string, userid: string }[] = [];
 
   constructor(
     private teamservice: TeamService,
@@ -31,21 +31,27 @@ export class SearchuserComponent implements OnInit {
     this.res_users$ = this.searchText$.pipe(
       debounceTime(500),
       distinctUntilChanged(),
-      switchMap(packageName => 
-        this.teamservice.getUserByName(packageName)),
+      switchMap(username => 
+        this.teamservice.getUserByName(username)),
     );
-    this.res_users$.subscribe(res => this.res_users = res);
+    this.res_users$.subscribe(res => this.res_users[0] = res);
   }
 
-  search(value: string): void {
-    // this.searchText$.next(value);
+  search(): void {
+    this.searchText$.next(this.search_content);
     console.log('onsearch');
   }
 
   select(target): void {
     console.log('clicked');
-    this.selected_list.push(target);
-    this.selected_uid.push(target.userid);
+    if (this.selected_uid.indexOf(target.userid)===-1) {
+      this.selected_list.push(target);
+      this.selected_uid.push(target.userid);
+    }
+    else {
+      this.message.create('warning', '已添加当前用户');
+    }
+    this.search_content = '';
   }
 
   remove(i): void {

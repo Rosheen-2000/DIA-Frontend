@@ -55,6 +55,7 @@ export class SidebarComponent implements OnInit {
 
   newTeamCancel(): void {
     this.createTeamModal = false;
+    this.modalLoading = false;
   }
 
   newTeamConfirm(): void {
