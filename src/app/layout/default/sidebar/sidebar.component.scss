@@ -4,25 +4,20 @@
 }
 
 .addButton {
-    width: 60px;
-    height: 60px;
     margin: 10px auto;
     text-align: center;
-    //box-shadow: -5px 5px 3px #909090;
-    //border-radius: 50%;
-    //background-color: #707070;
 }
 
 [nz-button] {
     width: 50px;
     height: 50px;
-    background-color: #707070;
-    border-color: #707070;
+    background-color: #909090;
+    border-color: #909090;
+    margin: 10px 15px;
+    box-shadow: -5px 5px 3px #000;
   }
 
 [nz-icon] {
-    margin-top: 2px;
-    font-size: 40px;
+    font-size: 30px;
     color: #ffffff;
-    //margin-left: 8px;
 }

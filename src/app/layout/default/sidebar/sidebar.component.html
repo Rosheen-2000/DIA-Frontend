@@ -10,15 +10,16 @@
 
   <li nz-menu-item nzMatchRouter class="siderItem"><a routerLink="/desktop">我的桌面</a></li>
   <li nz-menu-item nzMatchRouter class="siderItem"><a routerLink="/trash">回收站</a></li>
-  <li nz-submenu nzTitle="团队空间" class="siderItem">
+  <li nz-submenu nzTitle="团队空间" class="siderItem" >
     <ul>
-      <li nz-menu-item nzMatchRouter *ngFor="let i of spacesService.spaces">
-        <a [routerLink]="'/space/' + i.spaceId">{{i.spaceName}}</a>
-      </li>
       <li nz-menu-item nzMatchRouter>
-        <a routerLink="/teamspace/newteam">
+        <a (click)="newTeam()">
           创建团队
         </a>
+      </li>
+      <li nz-menu-divider *ngIf="spaceList.length"></li>
+      <li nz-menu-item nzMatchRouter *ngFor="let i of spaceList">
+        <a [routerLink]="'/space/' + i.teamid">{{i.teamname}}</a>
       </li>
     </ul>
   </li>
@@ -29,8 +30,17 @@
 </ul>
 
 <div class="addButton">
-  <button nzTooltipTitle="新建文档" nzTooltipPlacement="right" nz-button nz-tooltip 
+  <button nzTooltipTitle="新建文档" nzTooltipPlacement="right" nz-button nz-tooltip
           nzType="primary" nzShape="circle" (click)="chooseTemplate()">
-      <i nz-icon nzType="plus" nzRotate="90"></i>
+      <i nz-icon nzType="file-add" ></i>
+  </button>
+  <button nzTooltipTitle="新建文件夹" nzTooltipPlacement="top" nz-button nz-tooltip 
+          nzType="primary" nzShape="circle" (click)="newFolder()">
+      <i nz-icon nzType="folder-add"></i>
   </button>
 </div>
+
+<nz-modal [(nzVisible)]="createTeamModal" nzTitle="新建团队" (nzOnCancel)="newTeamCancel()"
+          [nzOkDisabled]="!teamNameInput" (nzOnOk)="newTeamConfirm()" [nzOkLoading]="modalLoading">
+  新团队名<input nz-input [(ngModel)]="teamNameInput">
+</nz-modal>

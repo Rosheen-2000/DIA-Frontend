@@ -1,19 +1,25 @@
 import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {environment} from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpacesService {
-  public spaces: { spaceId: string, spaceName: string }[] = [];
+  public spaces: { spaceid: string, spacename: string }[] = [];
 
-  constructor() {
+  constructor(
+    private http: HttpClient,
+  ) { }
+
+  public getSpaces(): Observable<{ teamlist: {teamid: string, teamname: string}[]}> {
+    return this.http.get<{ teamlist: {teamid: string, teamname: string}[]}>(environment.baseUrl + 'team/getlist');
   }
 
-  public getSpaces() {
-    this.spaces = [
-      {spaceId: '1', spaceName: '团队1'},
-      {spaceId: '2', spaceName: '团队2'},
-      {spaceId: '3', spaceName: '团队3'}
-    ];
+  public createTeam(teamname: string): Observable<{ msg: string, teamid: string }> {
+    const form = new FormData();
+    form.set('teamname', teamname);
+    return this.http.post<{ msg: string, teamid: string }>(environment.baseUrl + 'team/create', form);
   }
 }

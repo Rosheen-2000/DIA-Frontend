@@ -14,6 +14,7 @@ import {CommonModule} from "@angular/common";
 import { TeamSettingComponent } from './team-setting/team-setting.component';
 import { SearchuserComponent } from './searchuser/searchuser.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NewfolderModalComponent } from './newfolder-modal/newfolder-modal.component';
 
 const Components = [
   LogoComponent,
@@ -21,14 +22,15 @@ const Components = [
   FileSystemComponent,
   FolderItemComponent,
   TemplateModalComponent,
-  TeamSettingComponent
+  TeamSettingComponent,
+  NewfolderModalComponent
 ];
 
 @NgModule({
   exports: [
     ...Components
   ],
-  declarations: [...Components, TeamSettingComponent, SearchuserComponent],
+  declarations: [...Components, TeamSettingComponent, SearchuserComponent, NewfolderModalComponent],
     imports: [
         RouterModule,
         NzIconModule,
