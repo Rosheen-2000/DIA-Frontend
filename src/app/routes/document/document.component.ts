@@ -51,6 +51,7 @@ const belongOptions = [
 export class DocumentComponent implements OnInit, OnDestroy {
 
   docId: string;
+  public isTeamDoc = false;
 
   // 收藏切换按钮
   public switchLoading = false;
@@ -133,8 +134,9 @@ export class DocumentComponent implements OnInit, OnDestroy {
       res => {
         console.log(res);
         this.isFavored = res.starred;
-        tinymce.activeEditor.setContent(res.Content);
         this.switchLoading = false;
+        tinymce.activeEditor.setContent(res.Content);
+        this.isTeamDoc = res.isTeamDoc;
       }
     );
   }

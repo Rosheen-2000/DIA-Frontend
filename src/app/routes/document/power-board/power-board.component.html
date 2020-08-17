@@ -5,7 +5,7 @@
   <nz-collapse [nzBordered]=true nzAccordion>
     <nz-collapse-panel nzHeader="协作者" [nzActive]="true">
       <div class="content">
-        <button nz-button nzType="dashed" (click)="modalOpen('add-corporation')">添加协作者</button>
+        <button nz-button nzType="dashed" (click)="addCorporation()">添加协作者</button>
 
         <nz-table #corporationTable [nzData]="corporations" [nzFrontPagination]="false">
           <thead>
@@ -13,6 +13,7 @@
               <th>头像</th>
               <th>用户名</th>
               <th>协作权限</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody>
@@ -20,17 +21,40 @@
               <td><nz-avatar nzSize="small" [nzSrc]="p.avatar" nzIcon="user"></nz-avatar></td>
               <td>{{p.username}}</td>
               <td>
-                <nz-switch [nzDisabled]="userPower < 3" [(ngModel)]="p.editable" nzCheckedChildren="仅访问" nzUnCheckedChildren="可编辑"></nz-switch>
+                <nz-switch [nzDisabled]="userPower < 3" [(ngModel)]="p.editable" nzCheckedChildren="可编辑" nzUnCheckedChildren="仅访问"></nz-switch>
               </td>
+              <td><button [disabled]="userPower < 3" nz-button nzType="danger" (click)="removeCorporation(p.username)">移除</button></td>
             </tr>
           </tbody>
         </nz-table>
 
       </div>
     </nz-collapse-panel>
+    <nz-collapse-panel nzHeader="团队成员" *ngIf="isTeamDoc">
+      <div class="content">
+        <nz-table #teamMemberTable [nzData]="teamMembers" [nzFrontPagination]="false">
+          <thead>
+          <tr>
+            <th>头像</th>
+            <th>用户名</th>
+            <th>协作权限</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let p of teamMemberTable.data">
+            <td><nz-avatar nzSize="small" [nzSrc]="p.avatar" nzIcon="user"></nz-avatar></td>
+            <td>{{p.username}}</td>
+            <td>
+              <nz-switch [nzDisabled]="userPower < 3" [(ngModel)]="p.editable" nzCheckedChildren="可编辑" nzUnCheckedChildren="仅访问"></nz-switch>
+            </td>
+          </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </nz-collapse-panel>
     <nz-collapse-panel nzHeader="管理员">
       <div class="content">
-        <button nz-button nzType="dashed" (click)="modalOpen('add-admin')">添加管理员</button>
+        <button nz-button nzType="dashed" (click)="addAdmin()">添加管理员</button>
         <nz-table #adminTable [nzData]="admins" [nzFrontPagination]="false">
           <thead>
           <tr>
@@ -44,7 +68,7 @@
             <td><nz-avatar nzSize="small" [nzSrc]="p.avatar" nzIcon="user"></nz-avatar></td>
             <td>{{p.username}}</td>
             <td>
-              <button nz-button [disabled]="userPower < 4" nzType="danger">移除</button>
+              <button nz-button [disabled]="userPower < 4" nzType="danger" (click)="removeAdmin(p.username)">移除</button>
             </td>
           </tr>
           </tbody>
@@ -72,25 +96,40 @@
 
 
 <!--添加协作者-->
-<nz-modal [(nzVisible)]="modalControls.addCorporation" nzTitle="添加协作者" (nzOnCancel)="modalClose()">
-  <p>Content one</p>
-  <p>Content two</p>
-  <p>Content three</p>
-  <p>Content three</p>
+<nz-modal [(nzVisible)]="modalControls.addCorporation" nzTitle="添加协作者" (nzOnCancel)="modalClose()" (nzOnOk)="addCorporationConfirm()">
+  <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+    <input type="text" nz-input [(ngModel)]="selectedUsername" placeholder="input search text" />
+  </nz-input-group>
+  <ng-template #suffixIconButton>
+    <button nz-button nzType="primary" nzSearch (click)="search()"><i nz-icon nzType="search"></i></button>
+  </ng-template>
+  <nz-row *ngIf="searchResult">
+    <nz-col>{{searchResult.username}}</nz-col>
+    <nz-col>{{searchResult.avatar}}</nz-col>
+  </nz-row>
 </nz-modal>
 
 <!--添加管理员-->
-<nz-modal [(nzVisible)]="modalControls.addAdmin" nzTitle="添加管理员" (nzOnCancel)="modalClose()">
-  <p>Content one</p>
-  <p>Content two</p>
-  <p>Content three</p>
-  <p>Content three</p>
+<nz-modal [(nzVisible)]="modalControls.addAdmin" nzTitle="添加管理员" (nzOnCancel)="modalClose()" (nzOnOk)="addAdminConfirm()">
+  <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+    <input type="text" nz-input [(ngModel)]="selectedUsername" placeholder="input search text" />
+  </nz-input-group>
+  <ng-template #suffixIconButton>
+    <button nz-button nzType="primary" nzSearch (click)="search()"><i nz-icon nzType="search"></i></button>
+  </ng-template>
+  <nz-row *ngIf="searchResult">
+    <nz-col>{{searchResult.username}}</nz-col>
+    <nz-col>{{searchResult.avatar}}</nz-col>
+  </nz-row>
 </nz-modal>
 
-<!---->
-<nz-modal [(nzVisible)]="modalControls.addAdmin" nzTitle="添加管理员" (nzOnCancel)="modalClose()">
-  <p>Content one</p>
-  <p>Content two</p>
-  <p>Content three</p>
-  <p>Content three</p>
+<!--移除协作者-->
+<nz-modal [(nzVisible)]="modalControls.removeCorporation" nzTitle="移除协作者" (nzOnCancel)="modalClose()" (nzOnOk)="removeCorporationConfirm()">
+  你确定要移除{{selectedUsername}}的协作者权限么
+</nz-modal>
+
+<!--移除管理员-->
+<nz-modal [(nzVisible)]="modalControls.removeAdmin" nzTitle="移除管理员" (nzOnCancel)="modalClose()" (nzOnOk)="removeAdminConfirm()">
+  你确定要移除{{selectedUsername}}的管理员权限么
+  移除管理权限后，{{selectedUsername}}对该文档仍具有只读访问权限
 </nz-modal>

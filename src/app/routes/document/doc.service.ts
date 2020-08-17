@@ -16,11 +16,11 @@ export class DocService {
     this.baseUrl = environment.baseUrl;
   }
 
-  public getDocument(docId: string): Observable<{ Title: string, Content: string, starred: boolean}> {
+  public getDocument(docId: string): Observable<{ Title: string, Content: string, starred: boolean, isTeamDoc: boolean}> {
     const form = new FormData();
     form.set('_docid', docId);
     // const params = new HttpParams().set('_docid', docId);
-    return this.http.post<{ Title: string, Content: string , starred: boolean}> (
+    return this.http.post<{ Title: string, Content: string , starred: boolean, isTeamDoc: boolean}> (
       this.baseUrl + 'doc/getdoccontent/', form);
     // return {
     //   Title: docId + 'Title',

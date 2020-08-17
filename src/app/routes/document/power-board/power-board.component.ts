@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {PowerBoardService} from "./power-board.service";
+import {PowerBoardService} from './power-board.service';
 
 @Component({
   selector: 'app-power-board',
@@ -8,6 +8,7 @@ import {PowerBoardService} from "./power-board.service";
 })
 export class PowerBoardComponent implements OnInit {
   @Input() docId: string;
+  @Input() isTeamDoc: boolean;
 
   public powerBoardVisible = false;
 
@@ -15,6 +16,12 @@ export class PowerBoardComponent implements OnInit {
   corporations: {username: string, avatar: string, editable: boolean}[] =  [
     { username: 'KaMu1', avatar: '', editable: true},
     { username: 'KaMu2', avatar: '', editable: false},
+  ];
+
+  // 团队成员
+  teamMembers: {username: string, avatar: string, editable: boolean}[] =  [
+    { username: 'KaMu5', avatar: '', editable: true},
+    { username: 'KaMu6', avatar: '', editable: false},
   ];
 
   // 管理员
@@ -30,9 +37,14 @@ export class PowerBoardComponent implements OnInit {
   publicShare = false;
   editableShare = false;
 
+  selectedUsername: string;
+  searchResult: {username: string, avatar: string};
+
   modalControls = {
     addCorporation: false,
     addAdmin: false,
+    removeCorporation: false,
+    removeAdmin: false,
   };
 
   constructor(
@@ -70,34 +82,59 @@ export class PowerBoardComponent implements OnInit {
     );
   }
 
-  removeAdmin(username: string): void {
-    this.powerBoardService.setPower(this.docId, username, 0).subscribe(
-      res => console.log(res)
-    );
+  search(): void {
+    this.searchResult = {
+      username: 'search',
+      avatar: ''
+    };
   }
 
   addAdmin(): void {
-    // if (this.inputInvitedAdmin === '') {
-    //   return;
-    // }
-    // this.powerBoardService.setPower(this.docId, this.inputInvitedAdmin, 3).subscribe(
-    //   res => console.log(res)
-    // );
+    this.selectedUsername = '';
+    this.searchResult = null;
+    this.modalControls.addAdmin = true;
+  }
+
+  addAdminConfirm(): void {
+    this.modalControls.addAdmin = false;
+  }
+
+
+  addCorporation(): void {
+    this.selectedUsername = '';
+    this.searchResult = null;
+    this.modalControls.addCorporation = true;
+  }
+
+  addCorporationConfirm(): void {
+
+    this.modalControls.addCorporation = false;
+  }
+
+  removeCorporation(selected: string): void {
+    this.selectedUsername = selected;
+    this.modalControls.removeCorporation = true;
+  }
+
+  removeCorporationConfirm(): void {
+    console.log(this.selectedUsername);
+    this.modalControls.removeCorporation = false;
+  }
+
+  removeAdmin(selected: string): void {
+    this.selectedUsername = selected;
+    this.modalControls.removeAdmin = true;
+  }
+
+  removeAdminConfirm(): void {
+    console.log(this.selectedUsername);
+    this.modalControls.removeAdmin = false;
   }
 
   modalClose() {
     this.modalControls.addCorporation = false;
     this.modalControls.addAdmin = false;
-  }
-
-  modalOpen(target: string) {
-    switch (target) {
-      case 'add-corporation':
-        this.modalControls.addCorporation = true;
-        break;
-      case 'add-admin':
-        this.modalControls.addAdmin = true;
-        break;
-    }
+    this.modalControls.removeCorporation = false;
+    this.modalControls.removeAdmin = false;
   }
 }
