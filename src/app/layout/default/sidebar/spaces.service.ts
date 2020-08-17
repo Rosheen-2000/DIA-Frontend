@@ -7,8 +7,6 @@ import {environment} from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class SpacesService {
-  public spaces: { spaceid: string, spacename: string }[] = [];
-
   constructor(
     private http: HttpClient,
   ) { }
@@ -20,6 +18,6 @@ export class SpacesService {
   public createTeam(teamname: string): Observable<{ msg: string, teamid: string }> {
     const form = new FormData();
     form.set('teamname', teamname);
-    return this.http.post<{ msg: string, teamid: string }>(environment.baseUrl + 'team/create', form);
+    return this.http.post<{ msg: string, teamid: string }>(environment.baseUrl + 'team/create/', form);
   }
 }
