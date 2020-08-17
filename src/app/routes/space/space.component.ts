@@ -13,7 +13,9 @@ export class SpaceComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
+        console.log('space id changed');
         this.spaceId = params.id;
+        console.log(this.spaceId);
       }
     );
   }

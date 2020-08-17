@@ -6,19 +6,25 @@
   </nz-breadcrumb>
 </div>
 
-<div style="margin: 20px 20px 0;">
-  <app-folder-item *ngFor="let folder of subFolders"
-                   [folderId]="folder.Id" [folderName]="folder.Name"></app-folder-item>
+<div *ngIf="!loading.file && !loading.folder">
+  <div style="margin: 20px 20px 0;">
+    <app-folder-item *ngFor="let folder of subFolders"
+                     [folderId]="folder.Id" [folderName]="folder.Name"></app-folder-item>
+  </div>
+
+  <div style="margin: 20px;">
+    <app-doc-item *ngFor="let file of subFiles"
+                  [fileId]="file.id" [fileName]="file.name"
+                  [isTrash]="rootType==='trash'"
+                  [isFavored]="rootType==='favorites'"
+                  (notify)="onNotify()"></app-doc-item>
+  </div>
+
+  <div *ngIf="subFiles.length==0 && subFolders.length==0">
+    空空如也
+  </div>
 </div>
 
-<div style="margin: 20px;">
-  <app-doc-item *ngFor="let file of subFiles"
-                [fileId]="file.id" [fileName]="file.name"
-                [isTrash]="rootType==='trash'"
-                [isFavored]="rootType==='favorites'"
-                (notify)="onNotify()"></app-doc-item>
-</div>
-
-<div *ngIf="subFiles.length==0 && subFolders.length==0">
-  空空如也
+<div *ngIf="loading.file || loading.folder">
+  <app-folder-loading></app-folder-loading>
 </div>
