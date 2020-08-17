@@ -29,12 +29,12 @@ export class SidebarComponent implements OnInit {
 
   initData(): void {
     this.spaceList = [{teamname: 'test', teamid: '11'}];
-    this.spacesService.getSpaces().subscribe(
-      res => {
-        console.log(res);
-        this.spaceList = res.teamlist;
-      }
-    );
+    // this.spacesService.getSpaces().subscribe(
+    //   res => {
+    //     console.log(res);
+    //     this.spaceList = res.teamlist;
+    //   }
+    // );
   }
 
   chooseTemplate() {
