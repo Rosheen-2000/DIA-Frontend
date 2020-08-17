@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
@@ -10,31 +10,32 @@ export class PowerBoardService {
 
   constructor(
     private http: HttpClient,
-  ) { }
+  ) {
+  }
 
   public getCollaborators(docid: string): Observable<{
-    level1: {username: string, avatar: string}[],
-    level2: {username: string, avatar: string}[],
-    level3: {username: string, avatar: string}[],
-    level4: {username: string, avatar: string}[],
+    level1: { username: string, avatar: string, isTeamMember: boolean }[],
+    level2: { username: string, avatar: string, isTeamMember: boolean }[],
+    level3: { username: string, avatar: string, isTeamMember: boolean }[],
+    level4: { username: string, avatar: string, isTeamMember: boolean }[],
   }> {
     const params = new HttpParams().set('docid', docid);
     return this.http.get<{
-      level1: {username: string, avatar: string}[],
-      level2: {username: string, avatar: string}[],
-      level3: {username: string, avatar: string}[],
-      level4: {username: string, avatar: string}[],
+      level1: { username: string, avatar: string, isTeamMember: boolean }[],
+      level2: { username: string, avatar: string, isTeamMember: boolean }[],
+      level3: { username: string, avatar: string, isTeamMember: boolean }[],
+      level4: { username: string, avatar: string, isTeamMember: boolean }[],
     }>(environment.baseUrl + 'doc/get-power', {params});
   }
 
-  public getPower(docid: string): Observable<{ userPower: number, shareProperty: number}> {
+  public getPower(docid: string): Observable<{ userPower: number, shareProperty: number }> {
     const params = new HttpParams().set('docid', docid);
-    return this.http.get<{ userPower: number, shareProperty: number}>(environment.baseUrl + 'doc/get-power', {params});
+    return this.http.get<{ userPower: number, shareProperty: number }>(environment.baseUrl + 'doc/get-power', {params});
   }
 
   public setShareOption(docid: string, shareOption: number): Observable<any> {
     const form = new FormData();
-    form.set( 'dodid', docid);
+    form.set('dodid', docid);
     form.set('shareOption', shareOption + '');
     return this.http.post(environment.baseUrl + 'doc/set-share-option', form);
   }
@@ -45,5 +46,10 @@ export class PowerBoardService {
     form.set('docid', docid);
     form.set('power', power + '');
     return this.http.post<{ msg: string }>(environment.baseUrl + 'doc/set-power', form);
+  }
+
+  public search(username: string): Observable<{ username: string, avatar: string, userid: string }> {
+    const params = new HttpParams().set('username', username);
+    return this.http.get<{ username: string, avatar: string, userid: string }>(environment.baseUrl + 'user/getlistbyname', {params});
   }
 }

@@ -17,11 +17,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let p of corporationTable.data">
+            <tr *ngFor="let p of corporations, let i = index">
               <td><nz-avatar nzSize="small" [nzSrc]="p.avatar" nzIcon="user"></nz-avatar></td>
               <td>{{p.username}}</td>
               <td>
-                <nz-switch [nzDisabled]="userPower < 3" [(ngModel)]="p.editable" nzCheckedChildren="可编辑" nzUnCheckedChildren="仅访问"></nz-switch>
+                <nz-switch [nzLoading]="modalControls.loading" [nzDisabled]="userPower < 3"
+                           [(ngModel)]="p.editable" nzCheckedChildren="可编辑" nzUnCheckedChildren="仅访问"
+                           (click)="setCorporationEditable(i)" [nzControl]="true"></nz-switch>
               </td>
               <td><button [disabled]="userPower < 3" nz-button nzType="danger" (click)="removeCorporation(p.username)">移除</button></td>
             </tr>
@@ -41,11 +43,13 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let p of teamMemberTable.data">
+          <tr *ngFor="let p of teamMembers, let i = index">
             <td><nz-avatar nzSize="small" [nzSrc]="p.avatar" nzIcon="user"></nz-avatar></td>
             <td>{{p.username}}</td>
             <td>
-              <nz-switch [nzDisabled]="userPower < 3" [(ngModel)]="p.editable" nzCheckedChildren="可编辑" nzUnCheckedChildren="仅访问"></nz-switch>
+              <nz-switch [nzLoading]="modalControls.loading" [nzDisabled]="userPower < 3"
+                         [(ngModel)]="p.editable" nzCheckedChildren="可编辑" nzUnCheckedChildren="仅访问"
+                         (click)="setTeamMemberEditable(i)" [nzControl]="true"></nz-switch>
             </td>
           </tr>
           </tbody>
@@ -77,15 +81,16 @@
     </nz-collapse-panel>
     <nz-collapse-panel nzHeader="共享设置">
       <div class="content">
-        <nz-radio-group [nzDisabled]="userPower < 3" [(ngModel)]="publicShare" nzName="ratioGroup" (ngModelChange)="setShareOption()">
-          <label nz-radio [nzValue]="false">私有文档</label>
-          <label nz-radio [nzValue]="true">公开分享</label>
-        </nz-radio-group>
-        <nz-radio-group *ngIf="publicShare" [nzDisabled]="userPower < 3" [(ngModel)]="editableShare" nzName="ratioGroup" (ngModelChange)="setShareOption()">
+        <p>设置文档的分享属性</p>
+        <nz-switch [(ngModel)]="publicShare" nzCheckedChildren="公开" nzUnCheckedChildren="私有"
+                   [nzControl]="true" (click)="setSharePublic()"
+                   [nzLoading]="modalControls.loading"></nz-switch>
+        <div *ngIf="publicShare">
           <p>任何拥有分享链接的人都</p>
-          <label nz-radio [nzValue]="false">可以阅读</label>
-          <label nz-radio [nzValue]=true>可以编辑</label>
-      </nz-radio-group>
+          <nz-switch [(ngModel)]="editableShare" nzCheckedChildren="可编辑" nzUnCheckedChildren="仅访问"
+                     [nzControl]="true" (click)="setShareEditable()"
+                     [nzLoading]="modalControls.loading"></nz-switch>
+        </div>
       </div>
     </nz-collapse-panel>
     <nz-collapse-panel nzHeader="评论设置">
@@ -96,7 +101,7 @@
 
 
 <!--添加协作者-->
-<nz-modal [(nzVisible)]="modalControls.addCorporation" nzTitle="添加协作者" (nzOnCancel)="modalClose()" (nzOnOk)="addCorporationConfirm()">
+<nz-modal [(nzVisible)]="modalControls.addCorporation" nzTitle="添加协作者" [nzOkLoading]="modalControls.loading" [nzOkDisabled]="!searchResult" (nzOnCancel)="modalClose()" (nzOnOk)="addCorporationConfirm()">
   <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
     <input type="text" nz-input [(ngModel)]="selectedUsername" placeholder="input search text" />
   </nz-input-group>
@@ -104,13 +109,13 @@
     <button nz-button nzType="primary" nzSearch (click)="search()"><i nz-icon nzType="search"></i></button>
   </ng-template>
   <nz-row *ngIf="searchResult">
+    <nz-col><nz-avatar [nzSrc]="searchResult.avatar" nzIcon="user"></nz-avatar></nz-col>
     <nz-col>{{searchResult.username}}</nz-col>
-    <nz-col>{{searchResult.avatar}}</nz-col>
   </nz-row>
 </nz-modal>
 
 <!--添加管理员-->
-<nz-modal [(nzVisible)]="modalControls.addAdmin" nzTitle="添加管理员" (nzOnCancel)="modalClose()" (nzOnOk)="addAdminConfirm()">
+<nz-modal [(nzVisible)]="modalControls.addAdmin" nzTitle="添加管理员" [nzOkLoading]="modalControls.loading" [nzOkDisabled]="!searchResult" (nzOnCancel)="modalClose()" (nzOnOk)="addAdminConfirm()">
   <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
     <input type="text" nz-input [(ngModel)]="selectedUsername" placeholder="input search text" />
   </nz-input-group>
@@ -118,18 +123,18 @@
     <button nz-button nzType="primary" nzSearch (click)="search()"><i nz-icon nzType="search"></i></button>
   </ng-template>
   <nz-row *ngIf="searchResult">
+    <nz-col><nz-avatar [nzSrc]="searchResult.avatar" nzIcon="user"></nz-avatar></nz-col>
     <nz-col>{{searchResult.username}}</nz-col>
-    <nz-col>{{searchResult.avatar}}</nz-col>
   </nz-row>
 </nz-modal>
 
 <!--移除协作者-->
-<nz-modal [(nzVisible)]="modalControls.removeCorporation" nzTitle="移除协作者" (nzOnCancel)="modalClose()" (nzOnOk)="removeCorporationConfirm()">
+<nz-modal [(nzVisible)]="modalControls.removeCorporation" nzTitle="移除协作者" [nzOkLoading]="modalControls.loading" (nzOnCancel)="modalClose()" (nzOnOk)="removeCorporationConfirm()">
   你确定要移除{{selectedUsername}}的协作者权限么
 </nz-modal>
 
 <!--移除管理员-->
-<nz-modal [(nzVisible)]="modalControls.removeAdmin" nzTitle="移除管理员" (nzOnCancel)="modalClose()" (nzOnOk)="removeAdminConfirm()">
+<nz-modal [(nzVisible)]="modalControls.removeAdmin" nzTitle="移除管理员" [nzOkLoading]="modalControls.loading" (nzOnCancel)="modalClose()" (nzOnOk)="removeAdminConfirm()">
   你确定要移除{{selectedUsername}}的管理员权限么
   移除管理权限后，{{selectedUsername}}对该文档仍具有只读访问权限
 </nz-modal>
