@@ -53,7 +53,7 @@ export class WebsocketService {
     this.webSocket.onerror = (e) => this.onError(e);
   }
 
-  // 连接打开
+  // 连接打开时的回调函数
   onOpen(e) {
     console.log('websocket 已连接');
     // 设置连接成功

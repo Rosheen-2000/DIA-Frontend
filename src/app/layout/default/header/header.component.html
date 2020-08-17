@@ -7,7 +7,7 @@
   </div>
   <div class="avatar" style="background-color: #404040;">
     <a routerLink="/messagebox">
-      <nz-badge [nzCount]="5" style="margin:0 24px 0 10px;">
+      <nz-badge [(nzCount)]="unreadmsgnum" style="margin:0 24px 0 10px;">
         <nz-avatar nzIcon="user" [nzShape]="'square'" [nzSize]="45" [nzSrc]="avatar"></nz-avatar>
       </nz-badge>
     </a>

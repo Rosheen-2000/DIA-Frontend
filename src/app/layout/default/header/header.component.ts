@@ -3,6 +3,8 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import { UserinfoService } from '../../../core/services/userinfo.service'
 import { PassportService } from '../../../routes/passport/passport.service'
 import { StorageService } from '../../../core/services/storage.service'
+import {WebsocketService} from '../../../core/services/websocket.service'
+import { environment } from '../../../../environments/environment'
 
 @Component({
   selector: 'app-header',
@@ -10,10 +12,12 @@ import { StorageService } from '../../../core/services/storage.service'
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  private readonly wsBaseUrl: string;
   value = '';
   public username: string;
   public avatar: string;
   public isVisible: boolean = false;
+  public unreadmsgnum: number;
 
   constructor(
     private router: Router,
@@ -21,7 +25,9 @@ export class HeaderComponent implements OnInit {
     private userinfo_ser: UserinfoService,
     private passport: PassportService,
     private storage: StorageService,
+    public webSocketService: WebsocketService,
   ) {
+    this.wsBaseUrl = environment.wsBaseUrl;
   }
 
   ngOnInit(): void {
@@ -41,6 +47,30 @@ export class HeaderComponent implements OnInit {
       this.username = this.storage.get('username');
       this.avatar = this.storage.get('avatar');
     }
+    // this.sitemessage.getUnreadNum().subscribe(
+    //   res => {
+    //     this.unreadmsgnum = res.num;
+    //   }
+    // );
+    // ! 临时
+    this.unreadmsgnum = 5;
+    this.webSocketService.connect(this.wsBaseUrl + 'echo?name=' + this.username);
+    // 接收消息
+    this.webSocketService.messageSubject.subscribe(
+      data => {
+        switch(data.basicmsg) {
+          // 新通知
+          case 0:
+            console.log('收到了新的实时通知');
+            break;
+          // 登录收到的统计信息
+          case 1:
+            console.log('收到了统计信息');
+            console.log(data.num);
+            break;
+        }
+      }
+    );
   }
 
   onChanged(event: any): void {
