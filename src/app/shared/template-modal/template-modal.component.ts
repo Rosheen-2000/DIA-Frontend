@@ -5,6 +5,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {error} from '@angular/compiler/src/util';
 import {TemplateService} from "./template.service";
 import {NzModalService} from "ng-zorro-antd";
+import {BreadcrumbService} from "../../core/services/breadcrumb.service";
 
 @Component({
   selector: 'app-template-modal',
@@ -12,8 +13,8 @@ import {NzModalService} from "ng-zorro-antd";
   styleUrls: ['./template-modal.component.scss']
 })
 export class TemplateModalComponent implements OnInit {
-  public title: string = '';
-  public templateIndex: number = 0;
+  public title = '';
+  public templateIndex = 0;
   public templates: { name: string, id: string }[] = [];
 
   constructor(
@@ -21,7 +22,8 @@ export class TemplateModalComponent implements OnInit {
     private router: Router,
     private message: NzMessageService,
     private templateService: TemplateService,
-    private modal: NzModalService
+    private modal: NzModalService,
+    private breadCrumbService: BreadcrumbService,
   ) {
   }
 
@@ -37,11 +39,13 @@ export class TemplateModalComponent implements OnInit {
   }
 
   create(): void {
-    if (this.title.length===0) {
+    if (this.title.length === 0) {
       this.message.create('warning', '请设置文档名');
     }
     else {
-      this.templateService.newDoc(this.title, this.templates[this.templateIndex].id).subscribe(
+      console.log(this.breadCrumbService.path);
+      this.templateService.newDoc(this.title, this.templates[this.templateIndex].id,
+        this.breadCrumbService.path.foldId, this.breadCrumbService.path.spaceId).subscribe(
         res => {
           console.log(res);
           if (res.msg === 'true') {

@@ -3,6 +3,7 @@ import {SpacesService} from './spaces.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {TemplateModalComponent} from '../../../shared/template-modal/template-modal.component';
 import {NewfolderModalComponent} from '../../../shared/newfolder-modal/newfolder-modal.component';
+import {BreadcrumbService} from "../../../core/services/breadcrumb.service";
 
 @Component({
   selector: 'app-sidebar',

@@ -15,10 +15,12 @@ export class TemplateService {
     return this.http.get<any>(environment.baseUrl + 'template/getall/');
   }
 
-  public newDoc(title: string, template: string): Observable<{ msg: string, docid: string }> {
+  public newDoc(title: string, template: string, foldId: string, spaceId: string): Observable<{ msg: string, docid: string }> {
     const form = new FormData();
     form.set('title', title);
     form.set('template', template);
+    form.set('foldId', foldId);
+    form.set('spaceId', spaceId);
     return this.http.post<{ msg: string, docid: string }>(environment.baseUrl + 'doc/newdoc/', form);
   }
 }
