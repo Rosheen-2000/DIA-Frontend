@@ -1,14 +1,13 @@
 .outer {
     height: 100%;
-    padding-left: 50px;
-    padding-right: 60px;
 }
 
 .login_form {
     height: auto;
     width: 100%;
     position:relative;
-    top:120px;
+    top:21%;
+    text-align: center;
 }
 
 .form_head {
@@ -46,5 +45,5 @@ button {
 }
 
 .a {
-    width: 250px;
+    width: 100%;
 }

@@ -13,12 +13,14 @@
             <input nz-input formControlName="password" type="password" placeholder="  密码">
         </nz-form-control>
       </nz-form-item>
-      <nz-form-item class="form_bottom">
-          <button nz-button nzType="primary" type="submit">登录</button>
-          <button nz-button nzType="default" [routerLink]="'/passport/register'">注册</button>
+      <nz-form-item>
+          <div class="form_bottom">
+            <button nz-button nzType="primary" type="submit">登录</button>
+            <button nz-button nzType="default" [routerLink]="'/passport/register'">注册</button>
+          </div>
           <br>
           <!-- TODO 找回密码页 -->
-          <p class="a"><a nz-button nzType="link" (click)="notfinished()" style="font-size: 12px; text-decoration: underline;">找回密码</a></p> 
+          <p class="a"><a nz-button nzType="link" (click)="notfinished()" style="font-size: 12px;">找回密码</a></p> 
       </nz-form-item>
     </form>
 </div>
