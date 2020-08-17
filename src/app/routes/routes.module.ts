@@ -23,6 +23,7 @@ import { MessageboxComponent } from './messagebox/messagebox.component';
 import { CommentsComponent } from './document/comments/comments.component';
 import {PowerBoardComponent} from './document/power-board/power-board.component';
 import { NewteamComponent } from './teamspace/newteam/newteam.component';
+import { WebsocketPageComponent } from './websocket-page/websocket-page.component';
 
 
 const Components = [
@@ -45,7 +46,7 @@ const Components = [
 ];
 
 @NgModule({
-    declarations: [...Components, NewteamComponent],
+    declarations: [...Components, NewteamComponent, WebsocketPageComponent],
     imports: [
         RoutesRoutingModule,
         FormsModule,

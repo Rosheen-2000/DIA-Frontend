@@ -18,8 +18,10 @@ import { UnsaveGuard } from '../core/guards/unsave.guard'
 import { UserspaceComponent } from './userspace/userspace.component'
 import { MessageboxComponent } from './messagebox/messagebox.component'
 import { NewteamComponent } from './teamspace/newteam/newteam.component'
+import { WebsocketPageComponent } from './websocket-page/websocket-page.component'
 
 const routes: Routes = [
+  {path: 'websocket', component: WebsocketPageComponent},
   {
     path: 'passport', component: PassportComponent, children: [
       {path: 'login', component: LoginComponent},
