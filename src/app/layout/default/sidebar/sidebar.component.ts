@@ -66,14 +66,16 @@ export class SidebarComponent implements OnInit {
         this.modalLoading = false;
         this.createTeamModal = false;
         this.message.create('success', '新建成功');
-      }, error => {
+      }, 
+      error => {
         this.modalLoading = false;
         this.createTeamModal = false;
         this.message.create('error', '新建失败');
       }
     );
+  }
 
-  newFolder() {
+  newFolder(): void {
     const modal = this.modal.create({
       nzTitle: '新建文件夹',
       nzContent: NewfolderModalComponent,
