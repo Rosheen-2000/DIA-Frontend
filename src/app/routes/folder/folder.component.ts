@@ -12,11 +12,10 @@ import {DashboardService} from './services/dashboard.service';
   styleUrls: ['./folder.component.scss']
 })
 export class FolderComponent implements OnInit {
-  @Input() type: string;
-  // dashboard desktop space folder
+  @Input() type: 'dashboard'|'desktop'|'space'|'folder';
 
   // dashboard
-  @Input() rootType: string;
+  @Input() rootType: 'own'|'favorites'|'used'|'trash';
 
   // space
   @Input() spaceId: string;
@@ -56,9 +55,11 @@ export class FolderComponent implements OnInit {
     switch (this.type) {
       case 'desktop':
         this.initDesktop();
+        this.breadcrumbService.desktop();
         break;
       case 'dashboard':
         this.initDashboard();
+        this.breadcrumbService.dashboard(this.rootType);
         break;
       case 'space':
         this.initSpace();
@@ -69,10 +70,11 @@ export class FolderComponent implements OnInit {
   }
 
   initDesktop(): void {
+    console.log('我桌面呢');
     this.desktopService.getDesktopFile().subscribe(
       res => {
-        console.log(res);
-        this.subFiles = res;
+        console.log('desktopfiles');
+        this.subFiles = res.files;
       }
     );
   }
