@@ -3,7 +3,7 @@
         <div class="form_head">
             <span>注  册</span>
         </div>
-      <nz-form-item>
+      <nz-form-item style="margin-bottom: 10%;">
         <nz-form-control>
             <input nz-input formControlName="username" placeholder="  用户名" (blur)="checkUnameValid()">
             <div class="alert">
@@ -12,12 +12,12 @@
             </div>
         </nz-form-control>
       </nz-form-item>
-      <nz-form-item>
+      <nz-form-item style="margin-bottom: 10%;">
         <nz-form-control>
             <input nz-input formControlName="password" type="password" placeholder="  密码">
         </nz-form-control>
       </nz-form-item>
-      <nz-form-item>
+      <nz-form-item style="margin-bottom: 10%;">
         <nz-form-control>
           <!-- TODO 样式调整 -->
             <input nz-input formControlName="pwd_confirm" type="password" placeholder="  重复密码" (keyup)="checkPwdConsist($event)">
@@ -25,7 +25,7 @@
               <nz-alert nzType="error" nzMessage="两次输入密码不一致" *ngIf="pwd_consist===false"></nz-alert>
             </div>
         </nz-form-control>
-      </nz-form-item>
+      </nz-form-item >
       <nz-form-item class="form_bottom" style="margin-bottom: 15px;">
           <div class="form_head" style="margin-bottom: 0;">
             <button nz-button nzType="primary" type="submit" [disabled]="!pwd_consist || !uname_valid">注册</button>
