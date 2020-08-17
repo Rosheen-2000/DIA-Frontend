@@ -28,7 +28,6 @@ export class SidebarComponent implements OnInit {
   }
 
   initData(): void {
-    this.spaceList = [{teamname: 'test', teamid: '11'}];
     this.spacesService.getSpaces().subscribe(
       res => {
         console.log(res);
@@ -67,7 +66,7 @@ export class SidebarComponent implements OnInit {
         this.modalLoading = false;
         this.createTeamModal = false;
         this.message.create('success', '新建成功');
-      }, 
+      },
       error => {
         this.modalLoading = false;
         this.createTeamModal = false;

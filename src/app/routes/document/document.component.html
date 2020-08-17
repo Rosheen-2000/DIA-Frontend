@@ -22,16 +22,6 @@
           <nz-cascader [nzOptions]="nzBelongOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)"></nz-cascader>
         </td>
       </tr>
-      <tr>
-        <td>权限设置：</td>
-        <td>
-          <nz-select ngModel="none">
-            <nz-option nzValue="none" nzLabel="不可见"></nz-option>
-            <nz-option nzValue="readonly" nzLabel="只读"></nz-option>
-            <nz-option nzValue="readwrite" nzLabel="可编辑"></nz-option>
-          </nz-select>
-        </td>
-      </tr>
     </table>
   </div>
   <div class="editor">

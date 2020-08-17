@@ -42,5 +42,7 @@
 
 <nz-modal [(nzVisible)]="createTeamModal" nzTitle="新建团队" (nzOnCancel)="newTeamCancel()"
           [nzOkDisabled]="!teamNameInput" (nzOnOk)="newTeamConfirm()" [nzOkLoading]="modalLoading">
-  新团队名<input nz-input [(ngModel)]="teamNameInput">
+  <div style="text-align: center;">
+    团队名：<input nz-input [(ngModel)]="teamNameInput" style="width: 80%;">
+  </div>
 </nz-modal>

@@ -34,7 +34,7 @@ export class BreadcrumbService {
         this.items = [{name: '我创建的', url: '/dashboard/own'}];
         break;
       case 'trash':
-        this.items = [{name: '回收站', url: '/dashboard/trash'}];
+        this.items = [{name: '回收站', url: '/trash'}];
         break;
       case 'used':
         this.items = [{name: '最近使用', url: '/dashboard/used'}];
