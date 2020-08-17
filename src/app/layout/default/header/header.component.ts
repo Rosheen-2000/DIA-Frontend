@@ -54,23 +54,23 @@ export class HeaderComponent implements OnInit {
     // );
     // ! 临时
     this.unreadmsgnum = 5;
-    this.webSocketService.connect(this.wsBaseUrl + 'echo?name=' + this.username);
+    // this.webSocketService.connect(this.wsBaseUrl + 'echo?name=' + this.username);
     // 接收消息
-    this.webSocketService.messageSubject.subscribe(
-      data => {
-        switch(data.basicmsg) {
-          // 新通知
-          case 0:
-            console.log('收到了新的实时通知');
-            break;
-          // 登录收到的统计信息
-          case 1:
-            console.log('收到了统计信息');
-            console.log(data.num);
-            break;
-        }
-      }
-    );
+    // this.webSocketService.messageSubject.subscribe(
+    //   data => {
+    //     switch(data.basicmsg) {
+    //       // 新通知
+    //       case 0:
+    //         console.log('收到了新的实时通知');
+    //         break;
+    //       // 登录收到的统计信息
+    //       case 1:
+    //         console.log('收到了统计信息');
+    //         console.log(data.num);
+    //         break;
+    //     }
+    //   }
+    // );
   }
 
   onChanged(event: any): void {
