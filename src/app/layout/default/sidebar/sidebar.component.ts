@@ -46,6 +46,7 @@ export class SidebarComponent implements OnInit {
       nzComponentParams: {
         // modal: modal
       },
+      nzFooter: []
     });
   }
 
@@ -81,7 +82,6 @@ export class SidebarComponent implements OnInit {
     const modal = this.modal.create({
       nzTitle: '新建文件夹',
       nzContent: NewfolderModalComponent,
-      nzGetContainer: () => document.body,
       nzComponentParams: {
         // modal: modal
       },

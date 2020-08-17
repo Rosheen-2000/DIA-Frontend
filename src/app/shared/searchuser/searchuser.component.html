@@ -1,9 +1,5 @@
 <!-- TODO 样式的设置 -->
 <div class="outer">
-  <div class="header">
-    <span>邀请用户</span>
-  </div>
-
   <div class="search">
     <nz-input-group nzSize="large">
       <input placeholder="请输入要邀请的用户名" nz-input [(ngModel)]="search_content" (ngModelChange)="search()" [nzAutocomplete]="auto" />
@@ -25,7 +21,9 @@
             <a >{{ item.username }}</a>
           </nz-list-item-meta-title>
         </nz-list-item-meta>
+       <ul nz-list-item-actions>
         <nz-list-item-action><a (click)="remove(i)">移除</a></nz-list-item-action>
+       </ul>
       </nz-list-item>
     </nz-list>
   </div>
@@ -48,7 +46,7 @@
 
   <!-- ! 临时替代 -->
   <nz-list nzItemLayout="horizontal" [nzLoading]="loading">
-    <nz-list-item *ngFor="let item of selected_list">
+    <nz-list-item *ngFor="let item of selected_list; ">
       <nz-list-item-meta
         nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
         nzDescription=""
@@ -57,6 +55,9 @@
           <a href="https://ng.ant.design">{{ item.username }}</a>
         </nz-list-item-meta-title>
       </nz-list-item-meta>
+      <ul nz-list-item-actions>
+        <nz-list-item-action><a style="text-decoration: underline;">移除</a></nz-list-item-action>
+      </ul>
     </nz-list-item>
     <nz-list-empty *ngIf="selected_list.length === 0"></nz-list-empty>
   </nz-list>

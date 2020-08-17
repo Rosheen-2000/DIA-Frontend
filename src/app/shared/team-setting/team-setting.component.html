@@ -48,8 +48,25 @@
   您是否确认要解散团队，解散后团队文档将无法恢复
 </nz-modal>
 
+<nz-modal nzTitle="添加成员" nzFooter="[]" [(nzVisible)]="modalControls.addMember"
+          (nzOnCancel)="closeModal()" [nzOkLoading]="modalControls.loading"
+          (nzOnOk)="addMemberConfirm()" [nzOkDisabled]="!searchResult">
+  <!-- 输入用户名：
+  <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+    <input type="text" nz-input [(ngModel)]="selectedUsername" placeholder="input search text" />
+  </nz-input-group>
+  <ng-template #suffixIconButton>
+    <button nz-button nzType="primary" nzSearch (click)="search()"><i nz-icon nzType="search"></i></button>
+  </ng-template>
+  <nz-row *ngIf="searchResult">
+    <nz-col><nz-avatar [nzSrc]="searchResult.avatar" nzIcon="user"></nz-avatar></nz-col>
+    <nz-col>{{searchResult.username}}</nz-col>
+  </nz-row> -->
+  <app-searchuser></app-searchuser>
+</nz-modal>
 
-<nz-modal nzTitle="添加成员" [(nzVisible)]="modalControls.addMember"
+
+<!-- <nz-modal nzTitle="添加成员" [(nzVisible)]="modalControls.addMember"
           (nzOnCancel)="closeModal()" [nzOkLoading]="modalControls.loading"
           (nzOnOk)="addMemberConfirm()" [nzOkDisabled]="!searchResult">
   输入用户名：
@@ -63,7 +80,7 @@
     <nz-col><nz-avatar [nzSrc]="searchResult.avatar" nzIcon="user"></nz-avatar></nz-col>
     <nz-col>{{searchResult.username}}</nz-col>
   </nz-row>
-</nz-modal>
+</nz-modal> -->
 
 <nz-modal nzTitle="移除成员" [(nzVisible)]="modalControls.removeMember"
           (nzOnCancel)="closeModal()" [nzOkLoading]="modalControls.loading"

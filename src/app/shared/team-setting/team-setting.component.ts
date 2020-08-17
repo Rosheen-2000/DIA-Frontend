@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import {TeamSettingService} from './team-setting.service';
 import {Router} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd';
+import {SearchuserComponent} from '../searchuser/searchuser.component';
+import { NzModalService} from 'ng-zorro-antd';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-team-setting',
@@ -39,6 +42,7 @@ export class TeamSettingComponent implements OnInit {
     private teamSettingService: TeamSettingService,
     private router: Router,
     private message: NzMessageService,
+    public modal: NzModalService,
   ) {}
 
   ngOnInit(): void {
@@ -111,6 +115,17 @@ export class TeamSettingComponent implements OnInit {
     this.searchResult = null;
     this.modalControls.addMember = true;
   }
+
+  // addMember() {
+  //   const modal = this.modal.create({
+  //     nzTitle: '邀请团队成员',
+  //     nzContent: SearchuserComponent,
+  //     nzComponentParams: {
+  //       // modal: modal
+  //     },
+  //     nzFooter: []
+  //   });
+  // }
 
   addMemberConfirm(): void {
     this.modalControls.loading = true;
