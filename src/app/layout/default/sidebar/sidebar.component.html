@@ -10,7 +10,7 @@
 
   <li nz-menu-item nzMatchRouter class="siderItem"><a routerLink="/desktop">我的桌面</a></li>
   <li nz-menu-item nzMatchRouter class="siderItem"><a routerLink="/trash">回收站</a></li>
-  <li nz-submenu nzTitle="团队空间" class="siderItem" >
+  <li nz-submenu nzTitle="团队空间" class="siderItem" (mouseenter)="initData()">
     <ul>
       <li nz-menu-item nzMatchRouter>
         <a (click)="newTeam()">
@@ -18,7 +18,7 @@
         </a>
       </li>
       <li nz-menu-divider *ngIf="spaceList.length"></li>
-      <li nz-menu-item nzMatchRouter *ngFor="let i of spaceList">
+      <li nz-menu-item *ngFor="let i of spaceList">
         <a [routerLink]="'/space/' + i.teamid">{{i.teamname}}</a>
       </li>
     </ul>
@@ -34,7 +34,7 @@
           nzType="primary" nzShape="circle" (click)="chooseTemplate()">
       <i nz-icon nzType="file-add" ></i>
   </button>
-  <button nzTooltipTitle="新建文件夹" nzTooltipPlacement="top" nz-button nz-tooltip 
+  <button nzTooltipTitle="新建文件夹" nzTooltipPlacement="top" nz-button nz-tooltip
           nzType="primary" nzShape="circle" (click)="newFolder()">
       <i nz-icon nzType="folder-add"></i>
   </button>

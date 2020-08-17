@@ -38,10 +38,9 @@ export class FolderComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.folderId = params.id;
+      this.folderId = params.folderId;
       if (this.folderId) {
         this.type = 'folder';
-        console.log(this.folderId);
       }
       this.initData();
     });
@@ -91,8 +90,9 @@ export class FolderComponent implements OnInit {
   initSpace(): void {
     this.spaceService.getFiles(this.spaceId).subscribe(
       res => {
-        console.log(res);
-        this.subFiles = res;
+        console.log('files' + res);
+        this.subFiles = res.files;
+        this.breadcrumbService.space(this.spaceId, 'xxx');
       }
     );
   }

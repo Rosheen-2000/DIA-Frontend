@@ -52,8 +52,9 @@ export class BreadcrumbService {
     return;
   }
 
-  private space(spaceId: string): void {
+  public space(spaceId: string, spaceName: string): void {
     this.path.spaceId = spaceId;
+    this.items = [{name: spaceName, url: '/space' + spaceId }];
   }
 
   private fetchFolderPath(): Observable<any> {

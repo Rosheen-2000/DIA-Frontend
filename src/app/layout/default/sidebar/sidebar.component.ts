@@ -10,7 +10,7 @@ import {NewfolderModalComponent} from '../../../shared/newfolder-modal/newfolder
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-
+  public loading = true;
   public spaceList: {teamid: string, teamname: string}[] = [];
 
   public createTeamModal = false;
@@ -28,6 +28,7 @@ export class SidebarComponent implements OnInit {
   }
 
   initData(): void {
+    console.log('fresh');
     this.spacesService.getSpaces().subscribe(
       res => {
         console.log(res);

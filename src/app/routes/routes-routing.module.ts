@@ -37,7 +37,7 @@ const routes: Routes = [
       {path: 'trash', component: TrashComponent},
       {path: 'space/:id', component: SpaceComponent},
       {path: 'desktop', component: DesktopComponent},
-      {path: 'folder/:id', component: FolderComponent},
+      {path: 'folder/:foldId', component: FolderComponent},
       {path: 'feedback', component: FeedbackComponent},
       {path: 'userspace', component: UserspaceComponent},
       {path: 'messagebox', component: MessageboxComponent},
