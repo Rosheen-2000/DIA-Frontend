@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BreadcrumbService {
-  public items: { name: string, url: string }[];
+  public items: { name: string, url: string }[] = [];
+  public path: { foldId: string, spaceId: string } = {foldId: '', spaceId: ''};
 
   constructor(
     private http: HttpClient,
@@ -23,6 +24,8 @@ export class BreadcrumbService {
   }
 
   public dashboard(rootType: 'own' | 'favorites' | 'used' | 'trash'): void {
+    this.path.foldId = '';
+    this.path.spaceId = '';
     switch (rootType) {
       case 'favorites':
         this.items = [{name: '我的收藏', url: '/dashboard/favorites'}];
@@ -39,11 +42,18 @@ export class BreadcrumbService {
   }
 
   public desktop(): void {
-    this.items = [{name: '我的桌面', url: '/desktop'}]
+    this.items = [{name: '我的桌面', url: '/desktop'}];
+    this.path.foldId = '';
+    this.path.spaceId = '';
   }
 
   public folder(folderId: string): void {
+    this.path.foldId = folderId;
     return;
+  }
+
+  private space(spaceId: string): void {
+    this.path.spaceId = spaceId;
   }
 
   private fetchFolderPath(): Observable<any> {

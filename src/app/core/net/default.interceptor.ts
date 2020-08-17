@@ -38,7 +38,6 @@ export class DefaultInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-
     // 不拦截passport部分路由
     if (request.url.indexOf('passport') !== -1) {
       return next.handle(request);
@@ -46,6 +45,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     // 添加身份认证请求头
     const authToken = this.auth.getAuthorizationToken();
     const authReq = request.clone({setHeaders: {token: authToken}});
+    // return next.handle(authReq);
     // ErrorResponse处理
     return next.handle(authReq).pipe(
       catchError((err: HttpResponseBase) => {
