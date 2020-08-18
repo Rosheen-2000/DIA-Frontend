@@ -4,21 +4,21 @@
     <button nz-button nzType="default" (click)="clickBack()" class="backButton">返回</button>
     <button nz-button nzType="primary" (click)="sharingVisible=true" class="shareButton">分享</button>
     <nz-switch [(ngModel)]="isFavored" nzCheckedChildren="已收藏" nzUnCheckedChildren="未收藏" (ngModelChange)="clickSwitch()"
-               [nzLoading]="switchLoading" style="float: right; margin-right: 10px; width: 80px;"></nz-switch>
+               [nzLoading]="switchLoading" class="starButton"></nz-switch>
 
 
-    <table>
-      <!-- <tr>
+    <!-- <table>
+      <tr>
         <td>文档名称：</td>
         <td><input nz-input placeholder="Basic usage" ngModel="value" /></td>
-      </tr> -->
+      </tr>
       <tr>
         <td>所属：</td>
         <td>
           <nz-cascader [nzOptions]="nzBelongOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)"></nz-cascader>
         </td>
       </tr>
-    </table>
+    </table> -->
   </div>
   <div class="editor">
     <textarea id="tiny"></textarea>
