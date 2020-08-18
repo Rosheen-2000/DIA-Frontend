@@ -3,9 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import {TeamSettingService} from './team-setting.service';
 import {Router} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd';
-import {SearchuserComponent} from '../searchuser/searchuser.component';
 import { NzModalService} from 'ng-zorro-antd';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { Observable, Subject } from 'rxjs';
+import { TeamService } from 'src/app/routes/teamspace/team.service';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-team-setting',
@@ -26,6 +28,15 @@ export class TeamSettingComponent implements OnInit, OnChanges {
 
   public userPower: number;
 
+  public search_content = null;
+  public loading: boolean = false;
+  public selected_list: {userid: string, username: string, avatar: string}[] = [];
+  public selected_uid: string[] = [];
+
+  res_users$: Observable<{ username: string, avatar: string, userid: string }>;
+  private searchText$ = new Subject<string>();
+  res_users: { username: string, avatar: string, userid: string }[] = [];
+
   modalControls = {
     loading: false,
     destroyTeam: false,
@@ -40,12 +51,28 @@ export class TeamSettingComponent implements OnInit, OnChanges {
     private router: Router,
     private message: NzMessageService,
     public modal: NzModalService,
+    private teamservice: TeamService,
   ) {}
 
   ngOnInit(): void {
     if (this.teamId){
       this.initData();
-    }
+    };
+    this.res_users$ = this.searchText$.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap(username => 
+        this.teamservice.getUserByName(username)),
+    );
+    this.res_users$.subscribe(res => {
+      // 避免幽灵成员
+      if (res.userid === '') {
+        this.res_users = [];
+      }
+      else {
+        this.res_users[0] = res;
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -69,19 +96,6 @@ export class TeamSettingComponent implements OnInit, OnChanges {
         this.members = res.member;
       }
     );
-  }
-
-  search(): void {
-    // this.powerBoardService.search(this.selectedUsername).subscribe(
-    //   res => {
-    //     console.log(res);
-    //   }
-    // );
-    this.searchResult = {
-      username: 'search_result',
-      useravatar: '',
-      userId: '1',
-    };
   }
 
   openDrawer(): void {
@@ -195,6 +209,51 @@ export class TeamSettingComponent implements OnInit, OnChanges {
           this.message.success('退出成功');
           this.router.navigate(['/dashboard/own']);
         }
+      }
+    );
+  }
+
+  search(): void {
+    this.searchText$.next(this.search_content);
+    console.log('onsearch');
+  }
+
+  select(target): void {
+    console.log('clicked');
+    if (this.selected_uid.indexOf(target.userid)===-1) {
+      this.selected_list.push(target);
+      this.selected_uid.push(target.userid);
+    }
+    else {
+      this.message.create('warning', '已添加当前用户');
+    }
+    this.search_content = '';
+  }
+
+  remove(target): void {
+    const _index = this.selected_uid.indexOf(target.userid);
+    this.selected_list.splice(_index, 1);
+    this.selected_uid.splice(_index, 1);
+  }
+
+  invite(): void {
+    this.teamservice.inviteUser(this.teamId, this.selected_uid).subscribe(
+      res => {
+        if (res.msg === 'true') {
+          this.message.create('success', '已发出邀请');
+          this.selected_list = [];
+          this.selected_uid = [];
+        }
+        else if (res.msg === 'warn') {
+          this.message.create('warning', '部分邀请成功，部分所选用户已在团队中');
+        }
+        else {
+          this.message.create('error', '邀请失败，请确认您拥有权限且所选用户不在团队中');
+        }
+        
+      },
+      error => {
+        this.message.create('error', '奇怪的错误增加了，请稍后再试');
       }
     );
   }

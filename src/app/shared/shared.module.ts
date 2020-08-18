@@ -12,7 +12,6 @@ import { FormsModule } from '@angular/forms';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import {CommonModule} from "@angular/common";
 import { TeamSettingComponent } from './team-setting/team-setting.component';
-import { SearchuserComponent } from './searchuser/searchuser.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NewfolderModalComponent } from './newfolder-modal/newfolder-modal.component';
 import { SharingModalComponent } from './sharing-modal/sharing-modal.component';
@@ -32,7 +31,7 @@ const Components = [
   exports: [
     ...Components
   ],
-  declarations: [...Components, TeamSettingComponent, SearchuserComponent, NewfolderModalComponent, SharingModalComponent],
+  declarations: [...Components, TeamSettingComponent, NewfolderModalComponent, SharingModalComponent],
     imports: [
         RouterModule,
         NzIconModule,

@@ -51,8 +51,51 @@
 
 <nz-modal nzTitle="添加成员" nzFooter="" [(nzVisible)]="modalControls.addMember"
           (nzOnCancel)="closeModal()" [nzOkLoading]="modalControls.loading"
-          (nzOnOk)="addMemberConfirm()" [nzOkDisabled]="!searchResult">
-  <app-searchuser [teamid]='teamId'></app-searchuser>
+          (nzOnOk)="invite()" nzOkText='邀请' [nzOkDisabled]="this.selected_list.length===0">
+  <div class="outer">
+    <div class="search">
+      <nz-input-group nzSize="large">
+        <input placeholder="请输入要邀请的用户名" nz-input [(ngModel)]="search_content" (ngModelChange)="search()" [nzAutocomplete]="auto" />
+      </nz-input-group>
+      <nz-autocomplete #auto>
+        <nz-auto-option *ngFor="let o of res_users" [nzLabel]="o.username" [nzValue]="o.userid" (click)='select(o)'>
+          {{ o.username }}
+        </nz-auto-option>
+      </nz-autocomplete>
+  
+      <nz-list nzItemLayout="horizontal" [nzLoading]="loading">
+        <nz-list-item *ngFor="let item of selected_list; let i of index">
+          <nz-list-item-meta
+            [(nzAvatar)]="item.avatar"
+          >
+            <nz-list-item-meta-title>
+              <a >{{ item.username }}</a>
+            </nz-list-item-meta-title>
+          </nz-list-item-meta>
+          <ul nz-list-item-actions>
+          <nz-list-item-action><a (click)="remove(i)">移除</a></nz-list-item-action>
+          </ul>
+        </nz-list-item>
+      </nz-list>
+    </div>
+  
+    <nz-list nzItemLayout="horizontal" [nzLoading]="loading">
+      <nz-list-item *ngFor="let item of selected_list">
+        <nz-list-item-meta
+          nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          nzDescription=""
+        >
+          <nz-list-item-meta-title>
+            <a href="https://ng.ant.design">{{ item.username }}</a>
+          </nz-list-item-meta-title>
+        </nz-list-item-meta>
+        <ul nz-list-item-actions>
+          <nz-list-item-action><a (click)="remove(0)" style="text-decoration: underline;">移除</a></nz-list-item-action>
+        </ul>
+      </nz-list-item>
+      <nz-list-empty *ngIf="selected_list.length === 0"></nz-list-empty>
+    </nz-list>
+  </div>
 </nz-modal>
 
 <nz-modal nzTitle="移除成员" [(nzVisible)]="modalControls.removeMember"
