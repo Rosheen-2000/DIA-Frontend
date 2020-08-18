@@ -64,6 +64,7 @@
           <tr>
             <th>头像</th>
             <th>用户名</th>
+            <th>身份</th>
             <th>操作</th>
           </tr>
           </thead>
@@ -72,7 +73,11 @@
             <td><nz-avatar nzSize="small" [nzSrc]="p.avatar" nzIcon="user"></nz-avatar></td>
             <td>{{p.username}}</td>
             <td>
-              <button nz-button [disabled]="userPower < 4" nzType="danger" (click)="removeAdmin(p.username)">移除</button>
+              <div *ngIf="p.isCreator || p.isTeamLeader">所有者</div>
+              <div *ngIf="!p.isCreator && !p.isTeamLeader">成员</div>
+            </td>
+            <td>
+              <button nz-button [disabled]="userPower < 4 || p.isCreator || p.isTeamLeader" nzType="danger" (click)="removeAdmin(p.username)">移除</button>
             </td>
           </tr>
           </tbody>
