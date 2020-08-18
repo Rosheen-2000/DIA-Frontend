@@ -26,4 +26,11 @@ export class MessageService {
   }> {
     return this.http.get<any>(environment.baseUrl + 'message/getall');
   }
+
+  public changeStatus(mid: string, isread: boolean): Observable<{ msg: string }> {
+    const form = new FormData();
+    form.set('mid', mid);
+    form.set('isread', isread.toString());
+    return this.http.post<{ msg: string }> (environment.baseUrl + 'message/changestatus/', form)
+  }
 }

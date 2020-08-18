@@ -87,10 +87,12 @@ export class TeamService {
     }>(this.baseUrl + 'team/invite/', form);
   }
 
-  // TODO 处理入队邀请的实现
-  // public handleInvite(): Observable<> {
-
-  // }
+  public handleInvite(teamid: string, handle: string): Observable<{ msg: string }> {
+    const form = new FormData();
+    form.set('teamid', teamid);
+    form.set('handle', handle);
+    return this.http.post<{ msg: string }> (this.baseUrl + 'team/dealinginvite/', form)
+  }
 
   public removeMember(teamid: string, uid: string): Observable<{ msg: string }> {
     const form = new FormData();
