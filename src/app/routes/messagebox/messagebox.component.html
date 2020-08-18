@@ -3,12 +3,13 @@
     <nz-list-item *ngFor="let item of data">
       <nz-list-item-meta
         nzAvatar="/assets/msg.png"
-        nzDescription="系统消息"
+        nzDescription="yyyy-mm-dd hh:mm"
       >
         <nz-list-item-meta-title>
-          {{item.content}}
+          系统消息
         </nz-list-item-meta-title>
       </nz-list-item-meta>
+      {{item.content}}
       <ul nz-list-item-actions>
         <!-- 两个按钮是给团队邀请用的 -->
         <nz-list-item-action *ngIf="item.type === 'invite'">
@@ -16,9 +17,9 @@
           <br>
           <button nz-button nzType="default" style="margin-bottom: 2px;">拒绝</button>
         </nz-list-item-action>
-        <nz-list-item-action>
+        <nz-list-item-action *ngIf="item.type !== 'invite'">
           <nz-switch [ngModel]="false" nzCheckedChildren="已读" nzUnCheckedChildren="未读"
-                     style="position: relative; top: -20px;"></nz-switch>
+                     ></nz-switch>
         </nz-list-item-action>
       </ul>
     </nz-list-item>
