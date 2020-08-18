@@ -32,11 +32,11 @@
 <div class="addButton">
   <button nzTooltipTitle="新建文档" nzTooltipPlacement="right" nz-button nz-tooltip
           nzType="primary" nzShape="circle" (click)="chooseTemplate()">
-      <i nz-icon nzType="file-add" ></i>
+    <i nz-icon nzType="file-add"></i>
   </button>
   <button nzTooltipTitle="新建文件夹" nzTooltipPlacement="top" nz-button nz-tooltip
           nzType="primary" nzShape="circle" (click)="newFolder()">
-      <i nz-icon nzType="folder-add"></i>
+    <i nz-icon nzType="folder-add"></i>
   </button>
 </div>
 
@@ -44,5 +44,16 @@
           [nzOkDisabled]="!teamNameInput" (nzOnOk)="newTeamConfirm()" [nzOkLoading]="modalLoading">
   <div style="text-align: center;">
     团队名：<input nz-input [(ngModel)]="teamNameInput" style="width: 80%;">
+  </div>
+</nz-modal>
+
+<nz-modal  nzTitle="新建文件夹"
+          [(nzVisible)]="modalControls.addFolder" [nzOkLoading]="modalControls.loading"
+          (nzOnCancel)="modalClose()" (nzOnOk)="newFolderConfirm()">
+  <div class="modal-folder">
+    <div class="folderName">
+      文件夹名称：
+      <input nz-input [(ngModel)]="modalInput" placeholder="新建文件夹" style="width: 70%;"/>
+    </div>
   </div>
 </nz-modal>

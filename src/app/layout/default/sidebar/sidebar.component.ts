@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {SpacesService} from './spaces.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {TemplateModalComponent} from '../../../shared/template-modal/template-modal.component';
-import {NewfolderModalComponent} from '../../../shared/newfolder-modal/newfolder-modal.component';
-import {BreadcrumbService} from "../../../core/services/breadcrumb.service";
+import {BreadcrumbService} from '../../../core/services/breadcrumb.service';
+import {NewItemService} from './new-item.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,10 +18,18 @@ export class SidebarComponent implements OnInit {
   public teamNameInput = '';
   public modalLoading = false;
 
+  public modalInput = '';
+  public modalControls = {
+    loading: false,
+    addFolder: false
+  };
+
   constructor(
     public spacesService: SpacesService,
     public modal: NzModalService,
     private message: NzMessageService,
+    private newItemService: NewItemService,
+    private breadService: BreadcrumbService,
   ) { }
 
   ngOnInit(): void {
@@ -46,7 +54,7 @@ export class SidebarComponent implements OnInit {
       nzComponentParams: {
         // modal: modal
       },
-      nzFooter: []
+      nzFooter: [],
     });
   }
 
@@ -79,20 +87,27 @@ export class SidebarComponent implements OnInit {
   }
 
   newFolder(): void {
-    const modal = this.modal.create({
-      nzTitle: '新建文件夹',
-      nzContent: NewfolderModalComponent,
-      nzComponentParams: {
-        // modal: modal
-      },
-      nzFooter: [
-        // {
-        //   label: '取消',
-        //   onClick: () => {
-        //     modal.destroy();
-        //   }
-        // }
-      ]
-    });
+    this.modalControls.addFolder = true;
+  }
+
+  modalClose() {
+    this.modalControls.loading = false;
+    this.modalControls.addFolder = false;
+  }
+
+  newFolderConfirm() {
+    this.modalControls.loading = true;
+    this.newItemService.newFolder(this.modalInput, this.breadService.path.foldId, this.breadService.path.spaceId).subscribe(
+      res => {
+        if (res.msg === 'true') {
+          this.modalControls.loading = false;
+          this.modalControls.addFolder = false;
+          this.message.success('创建成功');
+        }
+        }, error => {
+        this.modalControls.loading = false;
+        this.message.error('创建失败');
+      }
+    );
   }
 }
