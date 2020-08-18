@@ -37,6 +37,7 @@ export class DocService {
   }
 
   public modifyContent(docid: string, content: string): Observable<{ msg: string }> {
+    console.log('开始保存');
     const form = new FormData();
     form.set('did', docid);
     form.set('content', content);

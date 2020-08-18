@@ -85,8 +85,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   // 防抖 保存文本内容
-  // updateResult = new Observable<{ msg: string }>();
-  // private updateContent = new Subject<string>();
+  updateResult$ = new Observable<{ msg: string }>();
+  private updateContent$ = new Subject<string>();
 
   constructor(
     private docService: DocService,
@@ -107,6 +107,28 @@ export class DocumentComponent implements OnInit, OnDestroy {
     });
 
     this.initEditor();
+
+    // 自动保存
+    this.updateResult$ = this.updateContent$.pipe(
+      debounceTime(2000),
+      distinctUntilChanged(),
+      switchMap( text => 
+        this.docService.modifyContent(this.docId, tinymce.activeEditor.getContent())
+      ),
+    );
+    this.updateResult$.subscribe(
+      res => {
+        if (res.msg === 'true') {
+          console.log('自动保存成功');
+        }
+        else {
+          console.log('自动保存失败');
+        }
+      },
+      error => {
+        console.log('自动保存时发生了奇怪的错误');
+      }
+    )
   }
 
   ngOnDestroy() {
@@ -136,6 +158,12 @@ export class DocumentComponent implements OnInit, OnDestroy {
       init_instance_callback(editor) {
         console.log('editor initialized');
         window.MyEditor.component.initData();
+      },
+      setup: function(editor) {
+        editor.on('keyup', function(e) {
+          console.log('KeyUp! But nothing happened...');
+          window.MyEditor.component.autoSave();
+        });
       }
     });
   }
@@ -210,6 +238,10 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
   onChanges(values: any): void {
     console.log(values, this.values);
+  }
+
+  autoSave() {
+    this.updateContent$.next(tinymce.activeEditor.getContent());
   }
 }
 
