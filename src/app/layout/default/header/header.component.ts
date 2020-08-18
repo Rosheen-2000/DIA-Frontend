@@ -5,6 +5,7 @@ import { PassportService } from '../../../routes/passport/passport.service'
 import { StorageService } from '../../../core/services/storage.service'
 import {WebsocketService} from '../../../core/services/websocket.service'
 import { environment } from '../../../../environments/environment'
+import {HeaderService} from "./header.service";
 
 @Component({
   selector: 'app-header',
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit {
     private passport: PassportService,
     private storage: StorageService,
     public webSocketService: WebsocketService,
+    private headerService: HeaderService,
   ) {
     this.wsBaseUrl = environment.wsBaseUrl;
   }
@@ -47,11 +49,9 @@ export class HeaderComponent implements OnInit {
       this.username = this.storage.get('username');
       this.avatar = this.storage.get('avatar');
     }
-    // this.sitemessage.getUnreadNum().subscribe(
-    //   res => {
-    //     this.unreadmsgnum = res.num;
-    //   }
-    // );
+
+    this.freshMessageNum();
+
     // ! 临时
     this.unreadmsgnum = 5;
     // this.webSocketService.connect(this.wsBaseUrl + 'echo?name=' + this.username);
@@ -71,6 +71,12 @@ export class HeaderComponent implements OnInit {
     //     }
     //   }
     // );
+  }
+
+  freshMessageNum(): void {
+    this.headerService.getMessageNum().subscribe(
+      res => this.unreadmsgnum = res.num
+    );
   }
 
   onChanged(event: any): void {
