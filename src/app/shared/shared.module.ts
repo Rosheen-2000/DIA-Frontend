@@ -15,6 +15,8 @@ import { TeamSettingComponent } from './team-setting/team-setting.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NewfolderModalComponent } from './newfolder-modal/newfolder-modal.component';
 import { SharingModalComponent } from './sharing-modal/sharing-modal.component';
+import {QRCodeModule} from "angularx-qrcode";
+import {ClipboardModule} from "ngx-clipboard";
 
 const Components = [
   LogoComponent,
@@ -32,16 +34,18 @@ const Components = [
     ...Components
   ],
   declarations: [...Components, TeamSettingComponent, NewfolderModalComponent, SharingModalComponent],
-    imports: [
-        RouterModule,
-        NzIconModule,
-        NgZorroAntdModule,
-        NzInputModule,
-        FormsModule,
-        NzGridModule,
-        CommonModule,
-        NzSelectModule,
-    ]
+  imports: [
+    RouterModule,
+    NzIconModule,
+    NgZorroAntdModule,
+    NzInputModule,
+    FormsModule,
+    NzGridModule,
+    CommonModule,
+    NzSelectModule,
+    QRCodeModule,
+    ClipboardModule,
+  ]
 })
 export class SharedModule {
 }

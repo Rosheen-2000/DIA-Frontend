@@ -14,22 +14,13 @@ export class PowerBoardComponent implements OnInit {
   public powerBoardVisible = false;
 
   // 协作者
-  corporations: { username: string, avatar: string, editable: boolean }[] = [
-    {username: 'KaMu1', avatar: '', editable: true},
-    {username: 'KaMu2', avatar: '', editable: false},
-  ];
+  corporations: { username: string, avatar: string, editable: boolean }[] = [];
 
   // 团队成员
-  teamMembers: { username: string, avatar: string, editable: boolean }[] = [
-    {username: 'KaMu5', avatar: '', editable: true},
-    {username: 'KaMu6', avatar: '', editable: false},
-  ];
+  teamMembers: { username: string, avatar: string, editable: boolean }[] = [];
 
   // 管理员
-  admins: { username: string, avatar: string, isCreator: boolean, isTeamLeader: boolean }[] = [
-    {username: 'KaMu3', avatar: '', isCreator: true, isTeamLeader: false},
-    {username: 'KaMu4', avatar: '', isCreator: false, isTeamLeader: true},
-  ];
+  admins: { username: string, avatar: string, isCreator: boolean, isTeamLeader: boolean }[] = [];
 
   // 用户权限等级
   public userPower = 4;

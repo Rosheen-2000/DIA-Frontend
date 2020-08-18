@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
-import {NzContextMenuService, NzDropdownMenuComponent} from "ng-zorro-antd";
-import {DocItemService} from "./doc-item.service";
+import {NzContextMenuService, NzDropdownMenuComponent} from 'ng-zorro-antd';
+import {DocItemService} from './doc-item.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import {DocFavorService} from "./doc-favor.service";
+import {DocFavorService} from './doc-favor.service';
 
 @Component({
   selector: 'app-doc-item',
@@ -21,6 +21,7 @@ export class DocItemComponent implements OnInit {
 
   sharingVisible = false;
   renameVisible = false;
+  infoVisible = false;
   isOkLoading = false;
   public newfilename: string = this.fileName;
 
@@ -123,5 +124,13 @@ export class DocItemComponent implements OnInit {
 
   sharingOk(): void {
     this.sharingVisible = false;
+  }
+
+  infoCancel(): void {
+    this.infoVisible = false;
+  }
+
+  infoOk(): void {
+    this.infoVisible = false;
   }
 }

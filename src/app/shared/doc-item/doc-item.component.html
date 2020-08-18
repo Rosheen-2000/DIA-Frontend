@@ -17,6 +17,9 @@
     <li nz-menu-item (click)="renameVisible=true">
       重命名
     </li>
+    <li nz-menu-item (click)="infoVisible=true">
+      文档信息
+    </li>
     <li nz-menu-item (click)="sharingVisible=true">
       分享
     </li>
@@ -45,5 +48,23 @@
   (nzOnCancel)="sharingCancel()"
   (nzOnOk)="sharingOk()"
 >
-  <app-sharing-modal></app-sharing-modal>
+  <app-sharing-modal [docId]="fileId"></app-sharing-modal>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="infoVisible"
+  nzTitle="文档信息"
+  (nzOnCancel)="infoCancel()"
+  (nzOnOk)="infoOk()"
+>
+<div>
+  <nz-descriptions nzTitle="文档名" nzColumn="300">
+  </nz-descriptions>
+  <div class="content-left">
+    <p>创建者：username</p>
+    <p>创建时间：yyyy-mm-dd</p>
+    <p>修改次数：x</p>
+    <p>最后修改：yyyy-mm-dd</p>
+  </div>
+</div>
 </nz-modal>
