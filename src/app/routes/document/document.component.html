@@ -4,13 +4,21 @@
     <button nz-button nzType="default" (click)="clickBack()" class="backButton">返回</button>
     <button nz-button nzType="primary" (click)="sharingVisible=true" class="shareButton">分享</button>
     <nz-switch [(ngModel)]="isFavored" nzCheckedChildren="已收藏" nzUnCheckedChildren="未收藏" (ngModelChange)="clickSwitch()"
-               [nzLoading]="switchLoading" class="starButton"></nz-switch>
-    <button nzTooltipTitle="评论列表" nzTooltipPlacement="left" nz-button nz-tooltip class="comButton" nzType="default" (click)="open()" nzShape="circle" nzSize="large">
-      <i nz-icon nzType="comment"></i>
-    </button>
-    <nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" nzTitle="评论列表" nzWidth="400px" (nzOnClose)="close()">
-      <app-comments [docid]="docId"></app-comments>
-    </nz-drawer>
+               [nzLoading]="switchLoading" style="float: right; margin-right: 10px; width: 80px;"></nz-switch>
+
+
+    <table>
+      <!-- <tr>
+        <td>文档名称：</td>
+        <td><input nz-input placeholder="Basic usage" ngModel="value" /></td>
+      </tr> -->
+      <tr>
+        <td>所属：</td>
+        <td>
+          <nz-cascader [nzOptions]="nzBelongOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)"></nz-cascader>
+        </td>
+      </tr>
+    </table>
   </div>
   <div class="editor">
     <textarea id="tiny"></textarea>
@@ -18,6 +26,7 @@
 </div>
 
 <app-power-board [docId]="docId" [isTeamDoc]="true"></app-power-board>
+<app-comments [docid]="docId"></app-comments>
 
 <nz-modal
   [(nzVisible)]="sharingVisible"

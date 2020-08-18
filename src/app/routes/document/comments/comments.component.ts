@@ -13,6 +13,9 @@ export class CommentsComponent implements OnInit {
 
   @Input() docid: string;
 
+  // 评论区drawer的变量和函数
+  visible = false;
+
   constructor(
     private commentservice: CommentService,
     private message: NzMessageService,
@@ -81,6 +84,16 @@ export class CommentsComponent implements OnInit {
   };
   inputValue = '';
 
+
+
+  open(): void {
+    this.visible = true;
+  }
+
+  close(): void {
+    this.visible = false;
+  }
+
   handleSubmit(): void {
     this.submitting = true;
     const content = this.inputValue;
@@ -100,7 +113,7 @@ export class CommentsComponent implements OnInit {
         this.submitting = false;
         this.message.create('error', '奇怪的错误增加了，请稍后再试');
       }
-      
+
     )
     // this.inputValue = '';
     // setTimeout(() => {

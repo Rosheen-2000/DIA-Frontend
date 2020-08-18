@@ -12,15 +12,14 @@
   font-size: 16px;
 }
 
+[nz-input] {
+  font-size: 16px;
 .table {
   height: 20px;
 }
 
-.comButton {
-  position: fixed;
-  right: 40px;
-  bottom: 40px;
-  box-shadow: -5px 5px 3px #000;
+[nz-select] {
+  font-size: 16px;
 }
 
 .saveButton {
@@ -49,4 +48,5 @@
   right: 25px;
   top: 130px;
   // box-shadow: -5px 5px 3px #000;
+}
 }
