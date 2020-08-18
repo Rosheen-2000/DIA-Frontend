@@ -16,9 +16,54 @@ export class MessageboxComponent implements OnInit {
   @Input() webSocketService: WebsocketService;
 
   initLoading = true; // bug
-  loadingMore = false;
-  data: any[] = [];
+  // loadingMore = false;
+  // data: any[] = [];
   list: Array<{ loading: boolean; name: any }> = [];
+
+  //样式用数据
+  loading = false;
+  data = [
+    {
+      title: 'Ant Design Title 1'
+    },
+    {
+      title: 'Ant Design Title 2'
+    },
+    {
+      title: 'Ant Design Title 3'
+    },
+    {
+      title: 'Ant Design Title 4'
+    }
+  ];
+
+  change(): void {
+    this.loading = true;
+    if (this.data.length > 0) {
+      setTimeout(() => {
+        this.data = [];
+        this.loading = false;
+      }, 1000);
+    } else {
+      setTimeout(() => {
+        this.data = [
+          {
+            title: 'Ant Design Title 1'
+          },
+          {
+            title: 'Ant Design Title 2'
+          },
+          {
+            title: 'Ant Design Title 3'
+          },
+          {
+            title: 'Ant Design Title 4'
+          }
+        ];
+        this.loading = false;
+      }, 1000);
+    }
+  }
 
   constructor(
     private http: HttpClient, 
@@ -38,15 +83,15 @@ export class MessageboxComponent implements OnInit {
     this.http.get(fakeDataUrl).subscribe((res: any) => callback(res));
   }
 
-  onLoadMore(): void {
-    this.loadingMore = true;
-    this.list = this.data.concat([...Array(count)].fill({}).map(() => ({ loading: true, name: {} })));
-    this.http.get(fakeDataUrl).subscribe((res: any) => {
-      this.data = this.data.concat(res.results);
-      this.list = [...this.data];
-      this.loadingMore = false;
-    });
-  }
+  // onLoadMore(): void {
+  //   this.loadingMore = true;
+  //   this.list = this.data.concat([...Array(count)].fill({}).map(() => ({ loading: true, name: {} })));
+  //   this.http.get(fakeDataUrl).subscribe((res: any) => {
+  //     this.data = this.data.concat(res.results);
+  //     this.list = [...this.data];
+  //     this.loadingMore = false;
+  //   });
+  // }
 
   edit(item: any): void {
     this.msg.success(item.email);
@@ -55,7 +100,7 @@ export class MessageboxComponent implements OnInit {
   getMessages(): void {
     this.sitemsg.getMyMessages().subscribe(
       res => {
-        res.forEach(item => this.data.push(item));
+        //会报错，先注释掉 res.forEach(item => this.data.push(item));
       }
     )
   }
