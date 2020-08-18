@@ -14,12 +14,11 @@
         <!-- 两个按钮是给团队邀请用的 -->
         <nz-list-item-action *ngIf="item.type === 'invite' && !item.isread">
           <button nz-button nzType="primary" style="margin-bottom: 2px;" (click)="agree(item, i)">同意</button>
+          <br>
           <button nz-button nzType="default" style="margin-bottom: 2px;" (click)="refuse(item, i)">拒绝</button>
-        <nz-list-item-action *ngIf="item.type === 'invite'">
-        
         </nz-list-item-action>
         <nz-list-item-action *ngIf="item.type === 'invite' && item.isread">
-          <span>已处理</span>
+          <span style="margin: 0 9px;">已处理</span>
         </nz-list-item-action>
         <nz-list-item-action *ngIf="item.type !== 'invite'">
           <nz-switch [ngModel]="false" nzCheckedChildren="已读" nzUnCheckedChildren="未读"
