@@ -13,9 +13,9 @@ export class CommentService {
     private http: HttpClient,
   ) { }
 
-  public getComments(docid: string): Observable<{ commentinfo: DocComment }[]> {
+  public getComments(docid: string): Observable<{ comments: DocComment[] }> {
     const params = new HttpParams().set('docid', docid);
-    return this.http.get<{ commentinfo: DocComment }[]>(environment.baseUrl + 'comment/get/', { params });
+    return this.http.get<any>(environment.baseUrl + 'comment/get/', { params });
   }
 
   public createComment(docid: string, content: string): Observable<{ msg: string }> {
@@ -51,4 +51,11 @@ export class CommentService {
     return this.http.post<{ msg: string }>(environment.baseUrl + 'comment/star/', form);
   }
 
+  public getBasicInfo(uid: string): Observable<{ msg: string, uname: string, avatar: string }> {
+    const form = new FormData();
+    form.set('uid', uid);
+    return this.http.post<{
+      msg: string, uname: string, avatar: string
+    }>(environment.baseUrl + 'userinfo/basic/', form);
+  }
 }

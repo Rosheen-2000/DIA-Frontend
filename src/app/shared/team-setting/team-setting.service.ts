@@ -45,14 +45,14 @@ export class TeamSettingService {
     const form = new FormData();
     form.set('teamid', teamid);
     form.set('uid', uid);
-    return this.http.post<any>(environment.baseUrl + 'team/invite', form);
+    return this.http.post<any>(environment.baseUrl + 'team/invite/', form);
   }
 
   public removeMember(teamid: string, uid: string): Observable<{msg: string}> {
     const form = new FormData();
     form.set('teamid', teamid);
     form.set('uid', uid);
-    return this.http.post<any>(environment.baseUrl + 'team/removeuser', form);
+    return this.http.post<any>(environment.baseUrl + 'team/removeuser/', form);
   }
 
   public quitTeam(teamId: string): Observable<{ msg: string }> {

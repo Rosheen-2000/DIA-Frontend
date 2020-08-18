@@ -3,7 +3,7 @@
   <i nz-icon nzType="setting"></i>
 </button>
 
-<nz-drawer nzWidth="400px" nzTitle="团队设置" [nzClosable]="false" [nzVisible]="drawerVisible" (nzOnClose)="closeDrawer()">
+<nz-drawer nzWidth="400px" [nzTitle]="teamName" [nzClosable]="false" [nzVisible]="drawerVisible" (nzOnClose)="closeDrawer()">
   <div class="showInfo">
     <nz-descriptions nzTitle="基本信息" nzColumn="1">
       <nz-descriptions-item nzTitle="创建时间">{{createdTime}}</nz-descriptions-item>

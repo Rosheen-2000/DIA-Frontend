@@ -17,15 +17,10 @@ export class PowerBoardService {
     level1: { username: string, avatar: string, isTeamMember: boolean }[],
     level2: { username: string, avatar: string, isTeamMember: boolean }[],
     level3: { username: string, avatar: string, isTeamMember: boolean }[],
-    level4: { username: string, avatar: string, isTeamMember: boolean }[],
+    level4: { username: string, avatar: string, isTeamMember: boolean, isCreator: boolean }[],
   }> {
     const params = new HttpParams().set('docid', docid);
-    return this.http.get<{
-      level1: { username: string, avatar: string, isTeamMember: boolean }[],
-      level2: { username: string, avatar: string, isTeamMember: boolean }[],
-      level3: { username: string, avatar: string, isTeamMember: boolean }[],
-      level4: { username: string, avatar: string, isTeamMember: boolean }[],
-    }>(environment.baseUrl + 'doc/get-corporation', {params});
+    return this.http.get<any>(environment.baseUrl + 'doc/get-corporation', {params});
   }
 
   public getPower(docid: string): Observable<{ userPower: number, shareProperty: number }> {
@@ -37,7 +32,7 @@ export class PowerBoardService {
     const form = new FormData();
     form.set('dodid', docid);
     form.set('shareOption', shareOption + '');
-    return this.http.post(environment.baseUrl + 'doc/set-share-option', form);
+    return this.http.post(environment.baseUrl + 'doc/set-share-option/', form);
   }
 
   public setPower(docid: string, username: string, power: number): Observable<{ msg: string }> {
@@ -45,7 +40,7 @@ export class PowerBoardService {
     form.set('username', username);
     form.set('docid', docid);
     form.set('power', power + '');
-    return this.http.post<{ msg: string }>(environment.baseUrl + 'doc/set-power', form);
+    return this.http.post<{ msg: string }>(environment.baseUrl + 'doc/set-power/', form);
   }
 
   public search(username: string): Observable<{ username: string, avatar: string, userid: string }> {
