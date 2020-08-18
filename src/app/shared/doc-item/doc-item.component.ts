@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
-import {NzContextMenuService, NzDropdownMenuComponent} from "ng-zorro-antd";
-import {DocItemService} from "./doc-item.service";
+import {NzContextMenuService, NzDropdownMenuComponent} from 'ng-zorro-antd';
+import {DocItemService} from './doc-item.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import {DocFavorService} from "./doc-favor.service";
+import {DocFavorService} from './doc-favor.service';
 
 @Component({
   selector: 'app-doc-item',
