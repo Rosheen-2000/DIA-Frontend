@@ -48,7 +48,7 @@
   您是否确认要解散团队，解散后团队文档将无法恢复
 </nz-modal>
 
-<nz-modal nzTitle="添加成员" nzFooter="[]" [(nzVisible)]="modalControls.addMember"
+<nz-modal nzTitle="添加成员" nzFooter="" [(nzVisible)]="modalControls.addMember"
           (nzOnCancel)="closeModal()" [nzOkLoading]="modalControls.loading"
           (nzOnOk)="addMemberConfirm()" [nzOkDisabled]="!searchResult">
   <!-- 输入用户名：
@@ -62,7 +62,7 @@
     <nz-col><nz-avatar [nzSrc]="searchResult.avatar" nzIcon="user"></nz-avatar></nz-col>
     <nz-col>{{searchResult.username}}</nz-col>
   </nz-row> -->
-  <app-searchuser></app-searchuser>
+  <app-searchuser [teamid]='teamId'></app-searchuser>
 </nz-modal>
 
 

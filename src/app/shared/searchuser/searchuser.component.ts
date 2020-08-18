@@ -54,20 +54,27 @@ export class SearchuserComponent implements OnInit {
     this.search_content = '';
   }
 
-  remove(i): void {
-    this.selected_list.splice(i, 1);
-    this.selected_uid.splice(i, 1);
+  remove(target): void {
+    const _index = this.selected_uid.indexOf(target.userid);
+    this.selected_list.splice(_index, 1);
+    this.selected_uid.splice(_index, 1);
   }
 
   invite(): void {
     this.teamservice.inviteUser(this.teamid, this.selected_uid).subscribe(
       res => {
         if (res.msg === 'true') {
-          this.message.create('seccess', '已发出邀请');
+          this.message.create('success', '已发出邀请');
+          this.selected_list = [];
+          this.selected_uid = [];
+        }
+        else if (res.msg === 'warn') {
+          this.message.create('warning', '部分邀请成功，部分所选用户已在团队中');
         }
         else {
-          this.message.create('error', '邀请失败，请稍后再试');
+          this.message.create('error', '邀请失败，请确认您拥有权限且所选用户不在团队中');
         }
+        
       },
       error => {
         this.message.create('error', '奇怪的错误增加了，请稍后再试');
