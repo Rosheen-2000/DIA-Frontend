@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {PowerBoardService} from './power-board.service';
-import {NzMessageService} from "ng-zorro-antd";
+import {NzMessageService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-power-board',
@@ -26,9 +26,9 @@ export class PowerBoardComponent implements OnInit {
   ];
 
   // 管理员
-  admins: { username: string, avatar: string }[] = [
-    {username: 'KaMu3', avatar: ''},
-    {username: 'KaMu4', avatar: ''},
+  admins: { username: string, avatar: string, isCreator: boolean, isTeamLeader: boolean }[] = [
+    {username: 'KaMu3', avatar: '', isCreator: true, isTeamLeader: false},
+    {username: 'KaMu4', avatar: '', isCreator: false, isTeamLeader: true},
   ];
 
   // 用户权限等级
@@ -62,7 +62,6 @@ export class PowerBoardComponent implements OnInit {
   initData(): void {
     this.powerBoardService.getPower(this.docId).subscribe(
       res => {
-        console.log(res);
         this.publicShare = res.shareProperty > 0;
         this.editableShare = res.shareProperty === 2;
         this.userPower = res.userPower;
@@ -71,8 +70,44 @@ export class PowerBoardComponent implements OnInit {
 
     this.powerBoardService.getCollaborators(this.docId).subscribe(
       res => {
-        console.log('corp');
         console.log(res);
+        const resCorporation: { username: string, avatar: string, editable: boolean }[] = [];
+        const resTeamMembers: { username: string, avatar: string, editable: boolean }[] = [];
+        const resAdmins: { username: string, avatar: string, isCreator: boolean, isTeamLeader: boolean }[] = [];
+
+        res.level2.forEach(
+          (p) => {
+            if (p.isTeamMember) {
+              resTeamMembers.push({username: p.username, avatar: p.avatar, editable: true});
+            } else {
+              resCorporation.push({username: p.username, avatar: p.avatar, editable: true});
+            }
+          });
+
+        res.level1.forEach(
+          (p) => {
+            if (p.isTeamMember) {
+              resTeamMembers.push({username: p.username, avatar: p.avatar, editable: false});
+            } else {
+              resCorporation.push({username: p.username, avatar: p.avatar, editable: false});
+            }
+          });
+
+        res.level4.forEach(
+          (p) => {
+            resAdmins.push({username: p.username, avatar: p.avatar, isCreator: p.isCreator, isTeamLeader: !p.isCreator});
+          }
+        );
+
+        res.level3.forEach(
+          (p) => {
+            resAdmins.push({username: p.username, avatar: p.avatar, isCreator: false, isTeamLeader: false});
+          }
+        );
+
+        this.teamMembers = resTeamMembers;
+        this.corporations = resCorporation;
+        this.admins = resAdmins;
       }
     );
   }
