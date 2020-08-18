@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { addDays, formatDistance } from 'date-fns';
-import { CommentService } from './comment.service'
+import { CommentService } from './comment.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { DocComment } from './doccomment';
 
@@ -83,7 +83,7 @@ export class CommentsComponent implements OnInit {
 
   deleteComment(target: any): void {
     console.log('click!');
-    
+
     this.commentService.deleteComment(target.commentid).subscribe(
       res => {
         if (res.msg === 'true') {
@@ -98,6 +98,6 @@ export class CommentsComponent implements OnInit {
       error => {
         this.message.create('error', '奇怪的错误增加了，请稍后再试');
       }
-    )
+    );
   }
 }

@@ -12,7 +12,7 @@ import {NzMessageService} from "ng-zorro-antd";
 export class SharingModalComponent implements OnInit, OnChanges {
   @Input() docId: string;
 
-  public link = '';
+  public link: string;
 
   public shareOption = 0;
 
@@ -22,6 +22,9 @@ export class SharingModalComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
+    if (!this.docId) {
+      return;
+    }
     this.link = '106.15.74.187/docs/' + this.docId;
     this.shareModalService.getPower(this.docId).subscribe(
       res => this.shareOption = res.shareProperty

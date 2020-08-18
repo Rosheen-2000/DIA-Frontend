@@ -10,6 +10,6 @@
     <div *ngIf="shareOption==2">注：此文档被设为拥有链接的人可编辑</div>
   </div>
   <div style="text-align: center;">
-    <qrcode [qrdata]="link" [width]="256" style="width: auto"></qrcode>
+    <qrcode *ngIf="link" [qrdata]="link" [width]="256" style="width: auto"></qrcode>
   </div>
 </div>
