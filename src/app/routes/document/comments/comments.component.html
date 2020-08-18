@@ -12,7 +12,7 @@
         <nz-comment-content>
           <p>{{ item.content }}</p>
         </nz-comment-content>
-        <nz-comment-action>回复</nz-comment-action>
+        <nz-comment-action><span (click)="deleteComment(item)">删除</span></nz-comment-action>
         <ng-container *ngIf="item.children && item.children.length">
           <!-- BUG 套娃显示有依赖未解决 -->
           <ng-template ngFor let-child [ngForOf]="item.children">

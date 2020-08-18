@@ -80,4 +80,24 @@ export class CommentsComponent implements OnInit {
       }
     );
   }
+
+  deleteComment(target: any): void {
+    console.log('click!');
+    
+    this.commentService.deleteComment(target.commentid).subscribe(
+      res => {
+        if (res.msg === 'true') {
+          this.message.create('success', '删除成功');
+          this.ngOnInit();
+        }
+        else {
+          console.log(res);
+          this.message.create('error', '删除失败，请稍后再试');
+        }
+      },
+      error => {
+        this.message.create('error', '奇怪的错误增加了，请稍后再试');
+      }
+    )
+  }
 }
