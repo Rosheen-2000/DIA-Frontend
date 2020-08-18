@@ -1,4 +1,6 @@
 <div class="spindiv">
-    <nz-spin class="spin" nzSimple nzSize="large"></nz-spin>
+    <!-- <nz-spin class="spin" nzSimple nzSize="large"></nz-spin> -->
+    <ng-template #indicatorTemplate><i nz-icon nzType="loading"></i></ng-template>
+    <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
 </div>
 <!--这个加载动画可能会雷同-->
