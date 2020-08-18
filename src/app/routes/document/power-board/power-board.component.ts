@@ -71,6 +71,7 @@ export class PowerBoardComponent implements OnInit {
 
     this.powerBoardService.getCollaborators(this.docId).subscribe(
       res => {
+        console.log('corp');
         console.log(res);
       }
     );

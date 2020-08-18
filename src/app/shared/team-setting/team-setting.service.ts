@@ -12,6 +12,12 @@ export class TeamSettingService {
     private http: HttpClient,
   ) { }
 
+  public getPower(teamId: string): Observable<{ userPower: number}> {
+    const form = new FormData();
+    form.set('teamid', teamId);
+    return this.http.post<any>(environment.baseUrl + 'team/getpower/', form);
+  }
+
   public getInfo(teamId: string): Observable<{
     teamname: string,
     creatorname: string,
@@ -47,5 +53,11 @@ export class TeamSettingService {
     form.set('teamid', teamid);
     form.set('uid', uid);
     return this.http.post<any>(environment.baseUrl + 'team/removeuser', form);
+  }
+
+  public quitTeam(teamId: string): Observable<{ msg: string }> {
+    const form = new FormData();
+    form.set('teamid', teamId);
+    return this.http.post<any>(environment.baseUrl + 'team/quit/', form);
   }
 }

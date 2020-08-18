@@ -26,18 +26,19 @@
         <td *ngIf="data.uname == creator">队长</td>
         <td *ngIf="data.uname != creator">成员</td>
         <td style="font-size: 12px;">
-          <button nz-button [disabled]="data.uname == creator" nzType="danger" (click)="removeMember(data.uid)">移除</button>
+          <button nz-button *ngIf="data.uname != creator" [disabled]="userPower < 2" nzType="danger" (click)="removeMember(data.uid)">移除</button>
         </td>
       </tr>
       </tbody>
     </nz-table>
   </div>
   <div class="inviteMember">
-    <button nz-button nzType="primary" (click)="addMember()">邀请成员</button>
+    <button nz-button nzType="primary" [disabled]="userPower < 2" (click)="addMember()">邀请成员</button>
   </div>
   <div class="generalSetting">
     <nz-divider></nz-divider>
-    <button nz-button nzType="default" nzDanger (click)="destroyTeam()">解散团队</button>
+    <button nz-button nzType="default" *ngIf="userPower == 2" nzDanger (click)="destroyTeam()">解散团队</button>
+    <button nz-button nzType="default" *ngIf="userPower != 2" nzDanger (click)="quitTeam()">退出团队</button>
   </div>
 </nz-drawer>
 
@@ -51,41 +52,19 @@
 <nz-modal nzTitle="添加成员" nzFooter="" [(nzVisible)]="modalControls.addMember"
           (nzOnCancel)="closeModal()" [nzOkLoading]="modalControls.loading"
           (nzOnOk)="addMemberConfirm()" [nzOkDisabled]="!searchResult">
-  <!-- 输入用户名：
-  <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-    <input type="text" nz-input [(ngModel)]="selectedUsername" placeholder="input search text" />
-  </nz-input-group>
-  <ng-template #suffixIconButton>
-    <button nz-button nzType="primary" nzSearch (click)="search()"><i nz-icon nzType="search"></i></button>
-  </ng-template>
-  <nz-row *ngIf="searchResult">
-    <nz-col><nz-avatar [nzSrc]="searchResult.avatar" nzIcon="user"></nz-avatar></nz-col>
-    <nz-col>{{searchResult.username}}</nz-col>
-  </nz-row> -->
   <app-searchuser [teamid]='teamId'></app-searchuser>
 </nz-modal>
-
-
-<!-- <nz-modal nzTitle="添加成员" [(nzVisible)]="modalControls.addMember"
-          (nzOnCancel)="closeModal()" [nzOkLoading]="modalControls.loading"
-          (nzOnOk)="addMemberConfirm()" [nzOkDisabled]="!searchResult">
-  输入用户名：
-  <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-    <input type="text" nz-input [(ngModel)]="selectedUsername" placeholder="input search text" />
-  </nz-input-group>
-  <ng-template #suffixIconButton>
-    <button nz-button nzType="primary" nzSearch (click)="search()"><i nz-icon nzType="search"></i></button>
-  </ng-template>
-  <nz-row *ngIf="searchResult">
-    <nz-col><nz-avatar [nzSrc]="searchResult.avatar" nzIcon="user"></nz-avatar></nz-col>
-    <nz-col>{{searchResult.username}}</nz-col>
-  </nz-row>
-</nz-modal> -->
 
 <nz-modal nzTitle="移除成员" [(nzVisible)]="modalControls.removeMember"
           (nzOnCancel)="closeModal()" [nzOkLoading]="modalControls.loading"
           (nzOnOk)="removeMemberConfirm()">
   你确定要将{{selectedUsername}}从团队中移除么？
+</nz-modal>
+
+<nz-modal nzTitle="退出团队" [(nzVisible)]="modalControls.quitTeam"
+          (nzOnCancel)="closeModal()" [nzOkLoading]="modalControls.loading"
+          (nzOnOk)="quitTeamConfirm()">
+  你确定要退出团队么，你创建的团队文档也会一并删除
 </nz-modal>
 
 <!-- 团队成员的Modal -->

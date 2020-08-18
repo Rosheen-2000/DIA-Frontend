@@ -22,19 +22,16 @@ export class TeamSettingComponent implements OnInit, OnChanges {
   createdTime: string;
   creator: string;
 
-  public members: {uid: string, uname: string, useravatar: string}[] = [
-    { uname: 'KaMu1', useravatar: '', uid: '1'},
-    { uname: 'KaMu2', useravatar: '', uid: '2'},
-    { uname: 'KaMu3', useravatar: '', uid: '3'},
-    { uname: 'KaMu4', useravatar: '', uid: '4'},
-    { uname: 'KaMu5', useravatar: '', uid: '5'},
-  ];
+  public members: {uid: string, uname: string, useravatar: string}[] = [];
+
+  public userPower: number;
 
   modalControls = {
     loading: false,
     destroyTeam: false,
     addMember: false,
     removeMember: false,
+    quitTeam: false,
   };
 
   constructor(
@@ -58,6 +55,12 @@ export class TeamSettingComponent implements OnInit, OnChanges {
   }
 
   initData(): void {
+    this.teamSettingService.getPower(this.teamId).subscribe(
+      res => {
+        console.log(res);
+        this.userPower = res.userPower;
+      }
+    );
     this.teamSettingService.getInfo(this.teamId).subscribe(
       res => {
         console.log(res);
@@ -90,9 +93,11 @@ export class TeamSettingComponent implements OnInit, OnChanges {
   }
 
   closeModal(): void {
+    this.modalControls.loading = false;
     this.modalControls.destroyTeam = false;
     this.modalControls.addMember = false;
     this.modalControls.removeMember = false;
+    this.modalControls.quitTeam = false;
   }
 
   destroyTeam(): void {
@@ -172,6 +177,24 @@ export class TeamSettingComponent implements OnInit, OnChanges {
         this.modalControls.loading = false;
         this.modalControls.removeMember = false;
         this.message.error('移除失败');
+      }
+    );
+  }
+
+  quitTeam(): void {
+    this.modalControls.quitTeam = true;
+  }
+
+  quitTeamConfirm(): void {
+    this.modalControls.loading = true;
+    this.teamSettingService.quitTeam(this.teamId).subscribe(
+      res => {
+        if (res.msg === 'true') {
+          this.modalControls.loading = false;
+          this.modalControls.quitTeam = false;
+          this.message.success('退出成功');
+          this.router.navigate(['/dashboard/own']);
+        }
       }
     );
   }

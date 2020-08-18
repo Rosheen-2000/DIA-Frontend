@@ -25,7 +25,7 @@ export class PowerBoardService {
       level2: { username: string, avatar: string, isTeamMember: boolean }[],
       level3: { username: string, avatar: string, isTeamMember: boolean }[],
       level4: { username: string, avatar: string, isTeamMember: boolean }[],
-    }>(environment.baseUrl + 'doc/get-power', {params});
+    }>(environment.baseUrl + 'doc/get-corporation', {params});
   }
 
   public getPower(docid: string): Observable<{ userPower: number, shareProperty: number }> {
