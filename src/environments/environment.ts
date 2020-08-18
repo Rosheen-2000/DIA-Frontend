@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   baseUrl: 'http://106.15.74.187/api/',
-  wsBaseUrl: 'ws:/106.15.74.187/api/message/'
+  wsBaseUrl: 'ws:/106.15.74.187/api/ws/message/'
 };
 
 /*

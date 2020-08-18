@@ -88,6 +88,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
   updateResult$ = new Observable<{ msg: string }>();
   private updateContent$ = new Subject<string>();
 
+  public modified_mark: boolean = false;
+
   constructor(
     private docService: DocService,
     private route: ActivatedRoute,
@@ -112,9 +114,10 @@ export class DocumentComponent implements OnInit, OnDestroy {
     this.updateResult$ = this.updateContent$.pipe(
       debounceTime(2000),
       distinctUntilChanged(),
-      switchMap( text => 
-        this.docService.modifyContent(this.docId, tinymce.activeEditor.getContent())
-      ),
+      switchMap( text => {
+        this.modified_mark = false;
+        return this.docService.modifyContent(this.docId, text);
+      }),
     );
     this.updateResult$.subscribe(
       res => {
@@ -185,7 +188,6 @@ export class DocumentComponent implements OnInit, OnDestroy {
     this.docService.modifyContent(this.docId, tinymce.activeEditor.getContent()).subscribe(
       res => {
         if (res.msg === 'true') {
-
           this.message.create('success', '保存成功');
         } else {
           this.message.create('error', '保存失败，请稍后重试');
@@ -241,6 +243,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   autoSave() {
+    this.modified_mark = true;
     this.updateContent$.next(tinymce.activeEditor.getContent());
   }
 }

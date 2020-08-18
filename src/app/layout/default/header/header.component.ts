@@ -52,8 +52,6 @@ export class HeaderComponent implements OnInit {
 
     this.freshMessageNum();
 
-    // ! 临时
-    this.unreadmsgnum = 5;
     // this.webSocketService.connect(this.wsBaseUrl + 'echo?name=' + this.username);
     // 接收消息
     // this.webSocketService.messageSubject.subscribe(
