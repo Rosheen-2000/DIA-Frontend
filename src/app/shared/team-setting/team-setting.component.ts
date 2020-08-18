@@ -15,6 +15,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 export class TeamSettingComponent implements OnInit, OnChanges {
   @Input() teamId: string;
 
+  public teamName = '';
+
   drawerVisible = false;
   selectedUsername: string;
   searchResult: { username: string, useravatar: string, userId: string };
@@ -67,6 +69,7 @@ export class TeamSettingComponent implements OnInit, OnChanges {
         this.createdTime = res.createtime;
         this.creator = res.creatorname;
         this.members = res.member;
+        this.teamName = res.teamname;
       }
     );
   }
