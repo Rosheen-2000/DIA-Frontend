@@ -30,7 +30,7 @@ export class PowerBoardComponent implements OnInit, OnChanges {
   editableShare = false;
 
   selectedUsername: string;
-  searchResult: { username: string, avatar: string, userId: string };
+  searchResult: { username: string, avatar: string, userid: string };
 
   modalControls = {
     loading: false,
@@ -203,16 +203,26 @@ export class PowerBoardComponent implements OnInit, OnChanges {
   }
 
   search(): void {
-    // this.powerBoardService.search(this.selectedUsername).subscribe(
-    //   res => {
-    //     console.log(res);
-    //   }
-    // );
-    this.searchResult = {
-      username: 'search',
-      avatar: '',
-      userId: '1',
-    };
+    this.powerBoardService.search(this.selectedUsername).subscribe(
+      res => {
+        console.log(res);
+        if (res.userid === '') {
+          this.searchResult = undefined;
+          this.message.create('warning', '不存在此用户')
+        }
+        else {
+          this.searchResult = res;
+        }
+      },
+      error => {
+        this.message.create('error', '奇怪的错误增加了，请稍后再试');
+      }
+    );
+    // this.searchResult = {
+    //   username: 'search',
+    //   avatar: '',
+    //   userid: '1',
+    // };
   }
 
   addAdmin(): void {

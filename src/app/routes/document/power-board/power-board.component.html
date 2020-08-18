@@ -110,29 +110,35 @@
 <!--添加协作者-->
 <nz-modal [(nzVisible)]="modalControls.addCorporation" nzTitle="添加协作者" [nzOkLoading]="modalControls.loading" [nzOkDisabled]="!searchResult" (nzOnCancel)="modalClose()" (nzOnOk)="addCorporationConfirm()">
   <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-    <input type="text" nz-input [(ngModel)]="selectedUsername" placeholder="input search text" />
+    <input type="text" nz-input [(ngModel)]="selectedUsername" placeholder="请输入要邀请的用户名" />
   </nz-input-group>
   <ng-template #suffixIconButton>
     <button nz-button nzType="primary" nzSearch (click)="search()"><i nz-icon nzType="search"></i></button>
   </ng-template>
-  <nz-row *ngIf="searchResult">
-    <nz-col><nz-avatar [nzSrc]="searchResult.avatar" nzIcon="user"></nz-avatar></nz-col>
-    <nz-col>{{searchResult.username}}</nz-col>
-  </nz-row>
+  <div *ngIf="searchResult" style="width: 100%; margin-top: 20px;">
+    <span>即将添加：</span>
+    <nz-row style="margin-top: 15px; margin-left: 15px;">
+      <nz-col style="min-width: 50px;"><nz-avatar [nzSrc]="searchResult.avatar" nzIcon="user"></nz-avatar></nz-col>
+      <nz-col>{{searchResult.username}}</nz-col>
+    </nz-row>
+  </div>
 </nz-modal>
 
 <!--添加管理员-->
 <nz-modal [(nzVisible)]="modalControls.addAdmin" nzTitle="添加管理员" [nzOkLoading]="modalControls.loading" [nzOkDisabled]="!searchResult" (nzOnCancel)="modalClose()" (nzOnOk)="addAdminConfirm()">
   <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-    <input type="text" nz-input [(ngModel)]="selectedUsername" placeholder="input search text" />
+    <input type="text" nz-input [(ngModel)]="selectedUsername" placeholder="请输入要邀请的用户名" />
   </nz-input-group>
   <ng-template #suffixIconButton>
     <button nz-button nzType="primary" nzSearch (click)="search()"><i nz-icon nzType="search"></i></button>
   </ng-template>
-  <nz-row *ngIf="searchResult">
-    <nz-col><nz-avatar [nzSrc]="searchResult.avatar" nzIcon="user"></nz-avatar></nz-col>
-    <nz-col>{{searchResult.username}}</nz-col>
-  </nz-row>
+  <div *ngIf="searchResult" style="width: 100%; margin-top: 20px;">
+    <span>即将添加：</span>
+    <nz-row style="margin-top: 15px; margin-left: 15px;">
+      <nz-col style="min-width: 50px;"><nz-avatar [nzSrc]="searchResult.avatar" nzIcon="user"></nz-avatar></nz-col>
+      <nz-col>{{searchResult.username}}</nz-col>
+    </nz-row>
+  </div>
 </nz-modal>
 
 <!--移除协作者-->

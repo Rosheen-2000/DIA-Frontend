@@ -2,6 +2,15 @@
   <div class="table">
     <button nz-button nzType="primary" (click)="clickSave()" class="saveButton">保存</button>
     <button nz-button nzType="default" (click)="clickBack()" class="backButton">返回</button>
+    <div class="lock_info" style="width: 60px;" *ngIf="true"
+         nz-popover nzPopoverContent="其他用户正在编辑中，文档仅可浏览" nzPopoverPlacement="right">
+      <nz-alert nzType="error" nzMessage="不可编辑"></nz-alert>
+    </div>
+    <div class="permit_info" style="width: 60px;" *ngIf="false"
+         nz-popover nzPopoverContent="您拥有编辑权限，可编辑本文档" nzPopoverPlacement="right">
+      <nz-alert nzType="success" nzMessage="编辑权限"></nz-alert>
+    </div>
+    
     <button nz-button nzType="primary" (click)="sharingVisible=true" class="shareButton">分享</button>
     <nz-switch [(ngModel)]="isFavored" nzCheckedChildren="已收藏" nzUnCheckedChildren="未收藏" (ngModelChange)="clickSwitch()"
                [nzLoading]="switchLoading" class="starButton"></nz-switch>

@@ -38,6 +38,20 @@
   box-shadow: -5px 5px 3px #000;
 }
 
+.lock_info {
+  position: fixed;
+  left: 30px;
+  top: 190px;
+  box-shadow: -5px 5px 3px rgb(136, 37, 37);
+}
+
+.permit_info {
+  position: fixed;
+  left: 30px;
+  top: 190px;
+  box-shadow: -5px 5px 3px rgb(46, 122, 58);
+}
+
 .shareButton {
   position: absolute;
   right: 30px;
