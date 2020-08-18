@@ -46,11 +46,12 @@ export class TeamSettingComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
-    // this.initData();
+    if (this.teamId){
+      this.initData();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.teamId);
     if (this.teamId){
       this.initData();
     }
