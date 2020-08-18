@@ -16,23 +16,14 @@ export class CommentsComponent implements OnInit {
   // 评论区drawer的变量和函数
   visible = false;
 
-  constructor(
-    private commentservice: CommentService,
-    private message: NzMessageService,
-  ) { }
+  submitting = false;
+  user = {
+    author: '',
+    avatar: ''
+  };
+  inputValue = '';
 
-  ngOnInit(): void {
-    this.commentservice.getComments(this.docid).subscribe(
-      res => {
-        res.forEach(comment => this.data.push(comment.commentinfo));
-      },
-      error => {
-        console.log('加载评论失败');
-      }
-    )
-  }
-
-  //评论区数据
+  // 评论区数据
   data: DocComment[] = [
     new class implements DocComment{
       commentid = '001';
@@ -77,14 +68,28 @@ export class CommentsComponent implements OnInit {
     },
   ];
 
-  submitting = false;
-  user = {
-    author: 'Han Solo',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-  };
-  inputValue = '';
+  constructor(
+    private commentService: CommentService,
+    private message: NzMessageService,
+  ) { }
 
-
+  ngOnInit(): void {
+    this.commentService.getComments(this.docid).subscribe(
+      res => {
+        console.log(res);
+        res.comments.forEach(comment => this.data.push(comment));
+      },
+      error => {
+        console.log('加载评论失败');
+      }
+    );
+    this.commentService.getBasicInfo('').subscribe(
+      res => {
+        this.user.author = res.uname;
+        this.user.author = res.avatar;
+      }
+    );
+  }
 
   open(): void {
     this.visible = true;
@@ -97,7 +102,7 @@ export class CommentsComponent implements OnInit {
   handleSubmit(): void {
     this.submitting = true;
     const content = this.inputValue;
-    this.commentservice.createComment(this.docid, content).subscribe(
+    this.commentService.createComment(this.docid, content).subscribe(
       res => {
         if (res.msg === 'true') {
           this.inputValue = '';
@@ -105,6 +110,7 @@ export class CommentsComponent implements OnInit {
           this.message.create('success', '提交成功');
         }
         else {
+          console.log(res);
           this.submitting = false;
           this.message.create('error', '提交失败，请稍后再试');
         }
@@ -113,23 +119,6 @@ export class CommentsComponent implements OnInit {
         this.submitting = false;
         this.message.create('error', '奇怪的错误增加了，请稍后再试');
       }
-
-    )
-    // this.inputValue = '';
-    // setTimeout(() => {
-    //   this.submitting = false;
-    //   this.data = [
-    //     ...this.data,
-    //     {
-    //       ...this.user,
-    //       content,
-    //       displayTime: formatDistance(new Date(), new Date())
-    //     }
-    //   ].map(e => {
-    //     return {
-    //     };
-    //   });
-    // }, 800);
+    );
   }
-
 }
