@@ -192,7 +192,23 @@ export class UserspaceComponent implements OnInit {
 
   public changeAvatar(): void {
     this.isOkLoading = true;
-    this.userservice.changeAvatar(this.avatarUrl);
+    this.userservice.changeAvatar(this.avatarUrl).subscribe(
+      res => {
+        if (res.msg === 'true') {
+          this.message.create('success', '头像上传成功');
+          this.isOkLoading = false;
+          this.changeAvatarVisible = false;
+        }
+        else {
+          this.message.create('error', '头像上传失败');
+          this.isOkLoading = false;
+        }
+      },
+      error => {
+        this.message.create('error', '奇怪的错误增加了');
+        this.isOkLoading = false;
+      }
+    )
   }
 
   public showChangeAvatar(): void {
@@ -216,6 +232,7 @@ export class UserspaceComponent implements OnInit {
     this.changePwdVisible = false;
     this.changeMailVisible = false;
     this.changePhoneNoVisible = false;
+    this.isOkLoading = false;
   }
 
   public doAction(data: any): void {

@@ -53,6 +53,7 @@ export class UserinfoService {
   }
 
   public changeAvatar(newavatar: string): Observable<{ msg:string }> {
+    console.log(newavatar);
     const form = new FormData();
     form.set('newavatar', newavatar);
     return this.http.post<{ msg: string }> (this.baseUrl + 'userinfo/changeavatar/', form);
