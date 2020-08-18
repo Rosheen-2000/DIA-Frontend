@@ -67,7 +67,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
   // 分享
   sharingVisible = false;
-  
+
   sharingCancel(): void {
     this.sharingVisible = false;
   }
@@ -131,7 +131,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
       error => {
         console.log('自动保存时发生了奇怪的错误');
       }
-    )
+    );
   }
 
   ngOnDestroy() {
