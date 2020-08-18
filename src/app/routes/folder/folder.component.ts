@@ -30,7 +30,7 @@ export class FolderComponent implements OnInit, OnChanges {
 
 
   public subFolders: {Id: string, Name: string}[] = [];
-  public subFiles: {id: string, name: string}[] = [];
+  public subFiles: {id: string, name: string, starred: boolean}[] = [];
 
   constructor(
     private route: ActivatedRoute,

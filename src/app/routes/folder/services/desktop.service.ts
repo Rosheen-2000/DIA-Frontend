@@ -12,8 +12,8 @@ export class DesktopService {
     private http: HttpClient
   ) { }
 
-  public getDesktopFile(): Observable<{ files: { id: string, name: string, starred: string }[] }> {
-    return this.http.get<{ files: { id: string, name: string, starred: string }[] }>(environment.baseUrl + 'doc/desktop/file');
+  public getDesktopFile(): Observable<{ files: { id: string, name: string, starred: boolean }[] }> {
+    return this.http.get<{ files: { id: string, name: string, starred: boolean }[] }>(environment.baseUrl + 'doc/desktop/file');
   }
 
   public getDesktopFolder(spaceId: string): Observable<{ name: string, id: string}[]> {

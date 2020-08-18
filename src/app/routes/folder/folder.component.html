@@ -16,7 +16,7 @@
     <app-doc-item *ngFor="let file of subFiles"
                   [fileId]="file.id" [fileName]="file.name"
                   [isTrash]="rootType==='trash'"
-                  [isFavored]="rootType==='favorites'"
+                  [isFavored]="file.starred"
                   (notify)="onNotify()"></app-doc-item>
   </div>
 

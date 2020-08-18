@@ -23,8 +23,8 @@ export class FolderService {
     ];
   }
 
-  public getFiles(folderId: string): Observable<{ id: string, name: string }[]> {
+  public getFiles(folderId: string): Observable<{ id: string, name: string, starred: boolean }[]> {
     const params = new HttpParams().set('folderId', folderId);
-    return this.http.get<{ id: string, name: string }[]>(environment.baseUrl + 'doc/folder/folder');
+    return this.http.get<{ id: string, name: string, starred: boolean }[]>(environment.baseUrl + 'doc/folder/folder');
   }
 }

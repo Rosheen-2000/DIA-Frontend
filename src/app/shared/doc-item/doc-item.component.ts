@@ -95,6 +95,7 @@ export class DocItemComponent implements OnInit {
     this.docFavorService.favorDoc(this.fileId).subscribe(
       res => {
         this.message.create('success', '成功加入收藏');
+        this.isFavored = true;
         this.notify.emit();
       }
     );
@@ -104,6 +105,7 @@ export class DocItemComponent implements OnInit {
     this.docFavorService.unFavorDoc(this.fileId).subscribe(
       res => {
         this.message.create('success', '成功取消收藏');
+        this.isFavored = false;
         this.notify.emit();
       }
     );
