@@ -2,14 +2,14 @@
   <p>分享链接：</p>
   <div class="link">
       <p class="linkContent">{{link}}</p>
-    <button nz-button ngxClipboard [cbContent]="link" (cbOnSuccess)="copy()">复制到粘贴板</button>
+    <button class="copy" nz-button ngxClipboard [cbContent]="link" (cbOnSuccess)="copy()">复制到粘贴板</button>
   </div>
-  <div>
-    <div *ngIf="shareOption==0">此文档已被设为私有文档</div>
-    <div *ngIf="shareOption==1">此文档被设为拥有链接的人可访问</div>
-    <div *ngIf="shareOption==2">此文档被设为拥有链接的人可编辑</div>
+  <div class="hint">
+    <div *ngIf="shareOption==0">注：此文档已被设为私有文档，只有协作者可访问</div>
+    <div *ngIf="shareOption==1">注：此文档被设为拥有链接的人可访问</div>
+    <div *ngIf="shareOption==2">注：此文档被设为拥有链接的人可编辑</div>
   </div>
-  <div style="margin-left: 100px; width: auto">
+  <div style="text-align: center;">
     <qrcode [qrdata]="link" [width]="256" style="width: auto"></qrcode>
   </div>
 </div>
