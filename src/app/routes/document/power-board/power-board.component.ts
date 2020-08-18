@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {PowerBoardService} from './power-board.service';
 import {NzMessageService} from 'ng-zorro-antd';
 
@@ -7,7 +7,7 @@ import {NzMessageService} from 'ng-zorro-antd';
   templateUrl: './power-board.component.html',
   styleUrls: ['./power-board.component.scss']
 })
-export class PowerBoardComponent implements OnInit {
+export class PowerBoardComponent implements OnInit, OnChanges {
   @Input() docId: string;
   @Input() isTeamDoc: boolean;
 
@@ -47,10 +47,17 @@ export class PowerBoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!this.docId) {
+      return;
+    }
     this.initData();
   }
 
   initData(): void {
+    console.log(this.docId);
     this.powerBoardService.getPower(this.docId).subscribe(
       res => {
         this.publicShare = res.shareProperty > 0;
