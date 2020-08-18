@@ -24,49 +24,7 @@ export class CommentsComponent implements OnInit {
   inputValue = '';
 
   // 评论区数据
-  data: DocComment[] = [
-    new class implements DocComment{
-      commentid = '001';
-      creatorname = 'Han Solo';
-      creatoravatar = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
-      content =
-        'We supply a series of design principles, practical patterns and high quality design resources \
-        (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.';
-      createtime = formatDistance(new Date(), addDays(new Date(), 1));
-      children = [
-        new class implements DocComment{
-          commentid = '001';
-          creatorname = 'Han Solo';
-          creatoravatar = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
-          content =
-            'We supply a series of design principles, practical patterns and high quality design resources \
-            (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.';
-          createtime = formatDistance(new Date(), addDays(new Date(), 1));
-          children = [];
-        },
-        new class implements DocComment{
-          commentid = '001';
-          creatorname = 'Han Solo';
-          creatoravatar = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
-          content =
-            'We supply a series of design principles, practical patterns and high quality design resources \
-            (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.';
-          createtime = formatDistance(new Date(), addDays(new Date(), 1));
-          children = [];
-        },
-      ];
-    },
-    new class implements DocComment{
-      commentid = '001';
-      creatorname = 'Han Solo';
-      creatoravatar = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
-      content =
-        'We supply a series of design principles, practical patterns and high quality design resources \
-        (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.';
-      createtime = formatDistance(new Date(), addDays(new Date(), 1));
-      children = [];
-    },
-  ];
+  data: DocComment[] = [];
 
   constructor(
     private commentService: CommentService,
@@ -77,7 +35,7 @@ export class CommentsComponent implements OnInit {
     this.commentService.getComments(this.docid).subscribe(
       res => {
         console.log(res);
-        res.comments.forEach(comment => this.data.push(comment));
+        this.data = res.comments;
       },
       error => {
         console.log('加载评论失败');
@@ -108,6 +66,7 @@ export class CommentsComponent implements OnInit {
           this.inputValue = '';
           this.submitting = false;
           this.message.create('success', '提交成功');
+          this.ngOnInit();
         }
         else {
           console.log(res);
