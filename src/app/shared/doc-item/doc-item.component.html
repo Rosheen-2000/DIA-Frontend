@@ -17,6 +17,9 @@
     <li nz-menu-item (click)="renameVisible=true">
       重命名
     </li>
+    <li nz-menu-item (click)="sharingVisible=true">
+      分享
+    </li>
     <li nz-menu-item style="color: red;" (click)="delete()">删除</li>
   </ul>
 
@@ -34,4 +37,13 @@
   [nzOkLoading]="isOkLoading"
 >
   <input nz-input placeholder="请输入文档名" [(ngModel)]="newfilename" />
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="sharingVisible"
+  nzTitle="分享"
+  (nzOnCancel)="sharingCancel()"
+  (nzOnOk)="sharingOk()"
+>
+  <app-sharing-modal></app-sharing-modal>
 </nz-modal>

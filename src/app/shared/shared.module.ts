@@ -15,6 +15,7 @@ import { TeamSettingComponent } from './team-setting/team-setting.component';
 import { SearchuserComponent } from './searchuser/searchuser.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NewfolderModalComponent } from './newfolder-modal/newfolder-modal.component';
+import { SharingModalComponent } from './sharing-modal/sharing-modal.component';
 
 const Components = [
   LogoComponent,
@@ -23,14 +24,15 @@ const Components = [
   FolderItemComponent,
   TemplateModalComponent,
   TeamSettingComponent,
-  NewfolderModalComponent
+  NewfolderModalComponent,
+  SharingModalComponent
 ];
 
 @NgModule({
   exports: [
     ...Components
   ],
-  declarations: [...Components, TeamSettingComponent, SearchuserComponent, NewfolderModalComponent],
+  declarations: [...Components, TeamSettingComponent, SearchuserComponent, NewfolderModalComponent, SharingModalComponent],
     imports: [
         RouterModule,
         NzIconModule,

@@ -4,18 +4,6 @@
   margin-right: auto;
 }
 
-.change-options {
-  display: inline-block;
-  font-size: 12px;
-  margin-top: 8px;
-}
-
-.table {
-  width: 1000px;
-  margin: 20px auto;
-  font-size: 16px;
-}
-
 [nz-input] {
   font-size: 16px;
 }
@@ -24,9 +12,41 @@
   font-size: 16px;
 }
 
+.table {
+  height: 20px;
+}
+
 .comButton {
   position: fixed;
   right: 40px;
   bottom: 40px;
-  box-shadow: -5px 5px 3px #707070;
+  box-shadow: -5px 5px 3px #000;
+}
+
+.saveButton {
+  position: fixed;
+  left: 30px;
+  top: 90px;
+  box-shadow: -5px 5px 3px #000;
+}
+
+.backButton {
+  position: fixed;
+  left: 30px;
+  top: 130px;
+  box-shadow: -5px 5px 3px #000;
+}
+
+.shareButton {
+  position: absolute;
+  right: 30px;
+  top: 90px;
+  // box-shadow: -5px 5px 3px #000;
+}
+
+.starButton {
+  position: absolute;
+  right: 25px;
+  top: 130px;
+  // box-shadow: -5px 5px 3px #000;
 }

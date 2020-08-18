@@ -19,6 +19,7 @@ export class DocItemComponent implements OnInit {
 
   @Output() notify = new EventEmitter();
 
+  sharingVisible = false;
   renameVisible = false;
   isOkLoading = false;
   public newfilename: string = this.fileName;
@@ -114,5 +115,13 @@ export class DocItemComponent implements OnInit {
   handleCancel(): void {
     this.renameVisible = false;
     this.newfilename = this.fileName;
+  }
+
+  sharingCancel(): void {
+    this.sharingVisible = false;
+  }
+
+  sharingOk(): void {
+    this.sharingVisible = false;
   }
 }

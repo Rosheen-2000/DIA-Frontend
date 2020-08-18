@@ -65,6 +65,17 @@ export class DocumentComponent implements OnInit, OnDestroy {
   // 评论区drawer的变量和函数
   visible = false;
 
+  // 分享
+  sharingVisible = false;
+  
+  sharingCancel(): void {
+    this.sharingVisible = false;
+  }
+
+  sharingOk(): void {
+    this.sharingVisible = false;
+  }
+
   open(): void {
     this.visible = true;
   }
