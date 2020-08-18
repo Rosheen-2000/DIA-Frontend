@@ -5,7 +5,7 @@
   <nz-collapse [nzBordered]=true nzAccordion>
     <nz-collapse-panel nzHeader="协作者" [nzActive]="true">
       <div class="content">
-        <button nz-button nzType="dashed" (click)="addCorporation()">添加协作者</button>
+        <button class="add" nz-button nzType="dashed" (click)="addCorporation()">添加协作者</button>
 
         <nz-table #corporationTable [nzData]="corporations" [nzFrontPagination]="false">
           <thead>
@@ -58,7 +58,7 @@
     </nz-collapse-panel>
     <nz-collapse-panel nzHeader="管理员">
       <div class="content">
-        <button nz-button nzType="dashed" (click)="addAdmin()">添加管理员</button>
+        <button class="add" nz-button nzType="dashed" (click)="addAdmin()">添加管理员</button>
         <nz-table #adminTable [nzData]="admins" [nzFrontPagination]="false">
           <thead>
           <tr>
@@ -86,21 +86,23 @@
     </nz-collapse-panel>
     <nz-collapse-panel nzHeader="共享设置">
       <div class="content">
-        <p>设置文档的分享属性</p>
-        <nz-switch [(ngModel)]="publicShare" nzCheckedChildren="公开" nzUnCheckedChildren="私有"
+        <div class="powerdiv">
+          <p class="power">设置文档的分享属性</p>
+          <nz-switch [(ngModel)]="publicShare" nzCheckedChildren="公开" nzUnCheckedChildren="私有"
                    [nzControl]="true" (click)="setSharePublic()"
                    [nzLoading]="modalControls.loading"></nz-switch>
-        <div *ngIf="publicShare">
-          <p>任何拥有分享链接的人都</p>
+        </div >
+        <div class="powerdiv" *ngIf="publicShare">
+          <p class="power">任何拥有分享链接的人都</p>
           <nz-switch [(ngModel)]="editableShare" nzCheckedChildren="可编辑" nzUnCheckedChildren="仅访问"
                      [nzControl]="true" (click)="setShareEditable()"
                      [nzLoading]="modalControls.loading"></nz-switch>
         </div>
       </div>
     </nz-collapse-panel>
-    <nz-collapse-panel nzHeader="评论设置">
+    <!-- <nz-collapse-panel nzHeader="评论设置">
       <div class="content"></div>
-    </nz-collapse-panel>
+    </nz-collapse-panel> -->
   </nz-collapse>
 </nz-drawer>
 
