@@ -99,10 +99,10 @@ export class FolderComponent implements OnInit, OnChanges {
     );
   }
 
-  initSpace(): void {
+  async initSpace() {
     console.log('init space');
     this.loading.file = true;
-    this.spaceService.getFiles(this.spaceId).subscribe(
+    const request = this.spaceService.getFiles(this.spaceId).subscribe(
       res => {
         console.log(res);
         this.subFiles = res.files;
@@ -110,6 +110,8 @@ export class FolderComponent implements OnInit, OnChanges {
       }, error => {
         console.log(error);
         this.loading.file = false;
+      }, () => {
+        console.log('complete');
       }
     );
   }
