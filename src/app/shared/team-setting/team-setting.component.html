@@ -22,11 +22,11 @@
       </thead>
       <tbody>
       <tr *ngFor="let data of members, let i = index">
-        <td>{{ data.username }}</td>
-        <td *ngIf="i == 0">队长</td>
-        <td *ngIf="i != 0">成员</td>
+        <td>{{ data.uname }}</td>
+        <td *ngIf="data.uname == creator">队长</td>
+        <td *ngIf="data.uname != creator">成员</td>
         <td style="font-size: 12px;">
-          <button nz-button [disabled]="i==0" nzType="danger" (click)="removeMember(data.userId)">移除</button>
+          <button nz-button [disabled]="data.uname == creator" nzType="danger" (click)="removeMember(data.uid)">移除</button>
         </td>
       </tr>
       </tbody>

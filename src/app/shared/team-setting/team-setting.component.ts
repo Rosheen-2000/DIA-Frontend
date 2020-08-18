@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {TeamSettingService} from './team-setting.service';
 import {Router} from '@angular/router';
@@ -12,22 +12,22 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
   templateUrl: './team-setting.component.html',
   styleUrls: ['./team-setting.component.scss']
 })
-export class TeamSettingComponent implements OnInit {
+export class TeamSettingComponent implements OnInit, OnChanges {
   @Input() teamId: string;
 
   drawerVisible = false;
   selectedUsername: string;
-  searchResult: { username: string, avatar: string, userId: string };
+  searchResult: { username: string, useravatar: string, userId: string };
 
   createdTime: string;
   creator: string;
 
-  public members: {username: string, avatar: string, userId}[] = [
-    { username: 'KaMu1', avatar: '', userId: '1'},
-    { username: 'KaMu2', avatar: '', userId: '2'},
-    { username: 'KaMu3', avatar: '', userId: '3'},
-    { username: 'KaMu4', avatar: '', userId: '4'},
-    { username: 'KaMu5', avatar: '', userId: '5'},
+  public members: {uid: string, uname: string, useravatar: string}[] = [
+    { uname: 'KaMu1', useravatar: '', uid: '1'},
+    { uname: 'KaMu2', useravatar: '', uid: '2'},
+    { uname: 'KaMu3', useravatar: '', uid: '3'},
+    { uname: 'KaMu4', useravatar: '', uid: '4'},
+    { uname: 'KaMu5', useravatar: '', uid: '5'},
   ];
 
   modalControls = {
@@ -46,13 +46,24 @@ export class TeamSettingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.initData();
+    if (this.teamId){
+      this.initData();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.teamId){
+      this.initData();
+    }
   }
 
   initData(): void {
-    this.teamSettingService.getInfo().subscribe(
+    this.teamSettingService.getInfo(this.teamId).subscribe(
       res => {
         console.log(res);
+        this.createdTime = res.createtime;
+        this.creator = res.creatorname;
+        this.members = res.member;
       }
     );
   }
@@ -65,7 +76,7 @@ export class TeamSettingComponent implements OnInit {
     // );
     this.searchResult = {
       username: 'search_result',
-      avatar: '',
+      useravatar: '',
       userId: '1',
     };
   }
@@ -92,6 +103,7 @@ export class TeamSettingComponent implements OnInit {
     this.modalControls.loading = true;
     this.teamSettingService.destroyTeam(this.teamId).subscribe(
       res => {
+        console.log(res);
         if ( res.msg === 'true') {
           this.modalControls.loading = false;
           this.modalControls.destroyTeam = false;
