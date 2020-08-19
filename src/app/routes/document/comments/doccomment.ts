@@ -2,6 +2,7 @@ export interface DocComment {
     commentid: string;
     creatorname: string;
     creatoravatar: string;
+    creatorid: string;
     content: string;
     createtime: string;
     children: DocComment[];

@@ -14,6 +14,7 @@ interface Information {
 })
 export class InfoModalComponent implements OnInit, OnChanges {
   @Input() userId: string;
+  public avatar: string;
   listOfData: Information[] = [
     {
       infoHead: '用户名',
@@ -38,6 +39,7 @@ export class InfoModalComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     console.log('modal' + this.userId);
+    this.initData();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -46,7 +48,12 @@ export class InfoModalComponent implements OnInit, OnChanges {
 
   initData(): void {
     this.infoModalService.getAllInfo(this.userId).subscribe(
-      res => console.log(res)
+      res => {
+        this.listOfData[0].infoBody = res.uname;
+        this.listOfData[1].infoBody = res.phoneno;
+        this.listOfData[2].infoBody = res.mail;
+        this.avatar = res.avatar;
+      }
     );
   }
 
