@@ -102,24 +102,11 @@ export class DocumentComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((params: Params) => {
       this.docId = params.id;
       console.log(this.docId);
+      // 启动查询锁状体的计时器
+      this.startTimer();
     });
 
     this.initEditor();
-    console.log('拿到id'+this.docId);
-
-    // 启动查询锁状体的计时器
-    this.powerservice.getPower(this.docId).subscribe(
-      res => {
-        if (res.userPower > 1) {
-          this.can_edit = true;
-          console.log('开始计时');
-          
-          this.get_status_timer = setInterval(() => {
-            this.getLockStatus();
-          }, 5000);
-        }
-      }
-    );
 
     // 自动保存
     this.activateAutoSave();
@@ -132,6 +119,22 @@ export class DocumentComponent implements OnInit, OnDestroy {
     window.MyEditor = null;
     clearInterval(this.get_status_timer);
     clearInterval(this.maintain_lock_timer);
+  }
+
+  startTimer() {
+    this.powerservice.getPower(this.docId).subscribe(
+      res => {
+        console.log('即将开始计时');
+        console.log(res.userPower);
+        if (res.userPower > 1) {
+          this.can_edit = true;
+          console.log('开始计时');
+          this.get_status_timer = setInterval(() => {
+            this.getLockStatus();
+          }, 5000);
+        }
+      }
+    );
   }
 
   initEditor() {
@@ -195,7 +198,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
   activateAutoSave() {
     this.updateResult$ = this.updateContent$.pipe(
-      debounceTime(2000),
+      debounceTime(20000),
       distinctUntilChanged(),
       switchMap( text => {
         this.modified_mark = false;
@@ -221,35 +224,29 @@ export class DocumentComponent implements OnInit, OnDestroy {
     console.log('get lock status');
     this.docService.checkLockStatus(this.docId).subscribe(
       res => {
-        if (res.msg === 'true') {
-          switch(res.status) {
-            case 0:
-              this.current_lock_status = undefined;
-              console.log('文件无锁');
+        switch(res.status) {
+          case 0:
+            if (this.current_lock_status===false) {
+              this.once_blocked = true;
+            }
+            this.current_lock_status = undefined;
+            console.log('文件无锁');
+            // TODO 设置编辑器允许编辑
+            break;
+          case 1:
+            if (res.username === this.storage.get('username')) {
+              this.current_lock_status = true;
+              console.log('持有锁');
               // TODO 设置编辑器允许编辑
-              break;
-            case 1:
-              if (res.username === this.storage.get('username')) {
-                this.current_lock_status = true;
-                console.log('持有锁');
-                // TODO 设置编辑器允许编辑
-              }
-              else {
-                this.current_lock_status = false;
-                this.once_blocked = true;
-                console.log('其他用户持有锁');
-                // TODO 设置编辑器不可编辑
-              }
-              break;
-            default:
-              console.log('返回信息有误');
-          }
-        }
-        else {
-          console.log(res.msg);
-          console.log(res.status);
-          console.log(res.username);
-          console.log('查询出错');
+            }
+            else {
+              this.current_lock_status = false;
+              console.log('其他用户持有锁');
+              // TODO 设置编辑器不可编辑
+            }
+            break;
+          default:
+            console.log('返回信息有误');
         }
       }
     )
@@ -302,6 +299,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
       res => {
         if (res.msg === 'true') {
           this.message.create('success', '保存成功');
+          // 手动保存后不再维持写锁
+          clearInterval(this.maintain_lock_timer);
         } else {
           this.message.create('error', '保存失败，请稍后重试');
         }

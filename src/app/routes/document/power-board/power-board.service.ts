@@ -24,6 +24,7 @@ export class PowerBoardService {
   }
 
   public getPower(docid: string): Observable<{ userPower: number, shareProperty: number }> {
+    console.log('函数中docid' + docid);
     const params = new HttpParams().set('docid', docid);
     return this.http.get<{ userPower: number, shareProperty: number }>(environment.baseUrl + 'doc/get-power', {params});
   }
