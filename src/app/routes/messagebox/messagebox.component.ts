@@ -115,6 +115,8 @@ export class MessageboxComponent implements OnInit {
         );
         this.loading = false;
         this.data = tempData;
+        console.log('data: ' + this.data);
+        
       }, error => {
         console.log(error);
       }
