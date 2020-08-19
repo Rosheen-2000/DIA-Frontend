@@ -57,3 +57,36 @@
     </div>
   </div>
 </nz-modal>
+
+<nz-modal nzTitle="选择模版" [(nzVisible)]="modalControls.addFile"
+          (nzOnOk)="addFileConfirm()" (nzOnCancel)="modalClose()">
+  <div class="outer">
+    <nz-row>
+      <nz-col nzSpan="16" style="height: 100px">
+        文档标题： <input [(ngModel)]="title"/>
+        <div class="alert" style="width: 240px;">
+          <nz-alert nzType="error" nzMessage="文档标题不能为空" *ngIf="title==''"></nz-alert>
+        </div>
+        <!-- <nz-list nzBordered nzHeader="所有模版" style="width: 280px; height: 200px">
+          <nz-list-item *ngFor="let t of templates;let i = index">
+            <a nz-typography (click)="chooseTemplate(i)">{{t.name}}</a>
+          </nz-list-item>
+        </nz-list> -->
+        <div style="margin: 5px auto">
+          选择模板：
+          <div style="display: inline;">
+            <nz-radio-group ngModel="A">
+              <!-- (ngModelChange)	选中变化时回调 -->
+              <label *ngFor="let t of templates;let i = index" nz-radio nzValue="{{t.name}}" (click)="choose(i)">{{t.name}}</label>
+            </nz-radio-group>
+          </div>
+        </div>
+      </nz-col>
+      <nz-col nzSpan="8">
+        <nz-row>
+          <div class="preview" style="width: 160px; height: 200px; background: black"></div>
+        </nz-row>
+      </nz-col>
+    </nz-row>
+  </div>
+</nz-modal>

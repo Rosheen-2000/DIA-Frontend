@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {PowerBoardService} from './power-board.service';
-import {NzMessageService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {InfoModalComponent} from "../../../shared/info-modal/info-modal.component";
 
 @Component({
   selector: 'app-power-board',
@@ -43,6 +44,7 @@ export class PowerBoardComponent implements OnInit, OnChanges {
   constructor(
     private powerBoardService: PowerBoardService,
     private message: NzMessageService,
+    private modal: NzModalService,
   ) {
   }
 
@@ -325,5 +327,15 @@ export class PowerBoardComponent implements OnInit, OnChanges {
     this.modalControls.addAdmin = false;
     this.modalControls.removeCorporation = false;
     this.modalControls.removeAdmin = false;
+  }
+
+  openUserInfo(userId: string) {
+    this.modal.create({
+      nzTitle: '用户信息',
+      nzContent: InfoModalComponent,
+      nzComponentParams: {
+        userId
+      },
+    });
   }
 }

@@ -8,6 +8,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { Observable, Subject } from 'rxjs';
 import { TeamService } from 'src/app/routes/teamspace/team.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import {InfoModalComponent} from "../info-modal/info-modal.component";
 
 @Component({
   selector: 'app-team-setting',
@@ -63,7 +64,7 @@ export class TeamSettingComponent implements OnInit, OnChanges {
     this.res_users$ = this.searchText$.pipe(
       debounceTime(500),
       distinctUntilChanged(),
-      switchMap(username => 
+      switchMap(username =>
         this.teamservice.getUserByName(username)),
     );
     this.res_users$.subscribe(res => {
@@ -253,11 +254,21 @@ export class TeamSettingComponent implements OnInit, OnChanges {
         else {
           this.message.create('error', '邀请失败，请确认您拥有权限且所选用户不在团队中');
         }
-        
       },
       error => {
         this.message.create('error', '奇怪的错误增加了，请稍后再试');
       }
     );
+  }
+
+  openUserInfo(userId: string) {
+    console.log(userId);
+    this.modal.create({
+      nzTitle: '用户信息',
+      nzContent: InfoModalComponent,
+      nzComponentParams: {
+        userId
+      },
+    });
   }
 }

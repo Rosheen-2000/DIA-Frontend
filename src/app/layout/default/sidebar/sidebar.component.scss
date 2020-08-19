@@ -33,3 +33,18 @@
     margin: 15px auto 0;
   }
 }
+
+nz-divider {
+  color: #333;
+  fontweight: normal;
+}
+.inner-box {
+  background: #0092ff;
+  padding: 8px 0;
+}
+
+[nz-radio] {
+  display: block;
+  height: 32px;
+  line-height: 32px;
+}
