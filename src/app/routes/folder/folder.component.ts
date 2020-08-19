@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {FolderService} from './services/folder.service';
 import {BreadcrumbService} from '../../core/services/breadcrumb.service';
@@ -21,7 +21,7 @@ export class FolderComponent implements OnInit, OnChanges {
   @Input() spaceId: string;
 
   // folder
-  private folderId: string;
+  @Input() folderId: string;
 
   public loading = {
     file: false,
@@ -29,7 +29,7 @@ export class FolderComponent implements OnInit, OnChanges {
   };
 
 
-  public subFolders: {Id: string, Name: string}[] = [];
+  public subFolders: {id: string, name: string}[] = [];
   public subFiles: {id: string, name: string, starred: boolean}[] = [];
 
   constructor(
@@ -42,19 +42,16 @@ export class FolderComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    // this.route.params.subscribe((params: Params) => {
-    //   this.folderId = params.folderId;
-    //   if (this.folderId) {
-    //     this.type = 'folder';
-    //   }
-    //   this.initData();
-    // });
-    // this.initData();
+    console.log('ngoninit');
+    this.initData();
   }
 
-  ngOnChanges(): void {
-    console.log('ng on changed');
-    this.initData();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.spaceId) {
+      if (!changes.spaceId.firstChange) {
+        this.initData();
+      }
+    }
   }
 
   onNotify(): void {
@@ -87,6 +84,11 @@ export class FolderComponent implements OnInit, OnChanges {
         this.subFiles = res.files;
       }
     );
+    this.desktopService.getDesktopFolder().subscribe(
+      res => {
+        this.subFolders = res.folders;
+      }
+    );
   }
 
   initDashboard(): void {
@@ -99,7 +101,7 @@ export class FolderComponent implements OnInit, OnChanges {
     );
   }
 
-  async initSpace() {
+  initSpace() {
     console.log('init space');
     this.loading.file = true;
     const request = this.spaceService.getFiles(this.spaceId).subscribe(

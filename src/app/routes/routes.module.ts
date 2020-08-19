@@ -24,6 +24,7 @@ import { CommentsComponent } from './document/comments/comments.component';
 import {PowerBoardComponent} from './document/power-board/power-board.component';
 import { NewteamComponent } from './teamspace/newteam/newteam.component';
 import { FolderLoadingComponent } from './folder/folder-loading/folder-loading.component';
+import { FolderRouteComponent } from './folder-route/folder-route.component';
 
 
 const Components = [
@@ -46,7 +47,7 @@ const Components = [
 ];
 
 @NgModule({
-    declarations: [...Components, NewteamComponent, FolderLoadingComponent],
+    declarations: [...Components, NewteamComponent, FolderLoadingComponent, FolderRouteComponent],
     imports: [
         RoutesRoutingModule,
         FormsModule,
