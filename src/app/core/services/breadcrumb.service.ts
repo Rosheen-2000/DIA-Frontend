@@ -50,6 +50,7 @@ export class BreadcrumbService {
 
   public folder(folderId: string): void {
     this.path.foldId = folderId;
+    console.log('enter folder ' + folderId);
     this.fetchFolderPath(folderId).subscribe(
       res => {
         console.log(res);

@@ -16,15 +16,15 @@ export class FolderService {
     this.baseUrl = environment.baseUrl;
   }
 
-  public getSubFolders(): { Id: string, Name: string }[] {
-    return [
-      {Id: 'Folder1', Name: 'Folder1'},
-      {Id: 'Folder2', Name: 'Folder2'}
-    ];
+  public getSubFiles(folderId: string): Observable<{ files: { id: string, name: string, starred: boolean }[]}> {
+    const form = new FormData();
+    form.set('folderId', folderId);
+    return this.http.post<any>(environment.baseUrl + 'doc/folder/file/', form);
   }
 
-  public getSubFiles(folderId: string): Observable<{ files: { id: string, name: string, starred: boolean }[]}> {
-    const params = new HttpParams().set('folderId', folderId);
-    return this.http.get<any>(environment.baseUrl + 'doc/folder/file', {params});
+  public getSubFolders(folderId: string): Observable<{ folders: {name: string, id: string}[]}> {
+    const form = new FormData();
+    form.set('folderId', folderId);
+    return this.http.post<any>(environment.baseUrl + 'doc/folder/folder/', form);
   }
 }

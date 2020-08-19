@@ -83,14 +83,18 @@ export class FolderComponent implements OnInit, OnChanges {
 
   initDesktop(): void {
     console.log('init desktop');
+    this.loading.folder = true;
+    this.loading.file = true;
     this.desktopService.getDesktopFile().subscribe(
       res => {
         this.subFiles = res.files;
+        this.loading.file = false;
       }
     );
     this.desktopService.getDesktopFolder().subscribe(
       res => {
         this.subFolders = res.folders;
+        this.loading.folder = false;
       }
     );
   }
@@ -135,12 +139,18 @@ export class FolderComponent implements OnInit, OnChanges {
 
   initFolder(): void {
     this.loading.file = true;
+    this.loading.folder = true;
     this.folderService.getSubFiles(this.folderId).subscribe(
       res => {
-        console.log(res);
         this.subFiles = res.files;
         this.loading.file = false;
       }
     );
+    this.folderService.getSubFolders(this.folderId).subscribe(
+      res => {
+        this.subFolders = res.folders;
+        this.loading.folder = false;
+      }
+    )
   }
 }

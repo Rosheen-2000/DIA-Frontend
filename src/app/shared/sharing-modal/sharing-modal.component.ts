@@ -29,8 +29,6 @@ export class SharingModalComponent implements OnInit, OnChanges {
     this.link = '106.15.74.187/docs/' + this.docId;
     this.shareModalService.getPower(this.docId).subscribe(
       res => {
-        console.log(this.docId);
-        console.log(res);
         this.shareOption = res.shareProperty;
       }
     );
