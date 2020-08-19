@@ -110,7 +110,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
     // 自动保存
     this.activateAutoSave();
-    
+
   }
 
   ngOnDestroy() {
@@ -132,12 +132,20 @@ export class DocumentComponent implements OnInit, OnDestroy {
       statusbar: false,
       toolbar_sticky: true,
       theme: 'silver',
-      plugins: 'save tinycomments image',
-      tinycomments_mode: 'embedded',
-      tinycomments_author: 'Author',
-      toolbar1: 'image save | formatselect || bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
-      toolbar2: 'image',
-      image_advtab: true,
+      plugins: 'image imagetools quickbars codesample table autolink checklist',
+      toolbar1: 'undo redo | save | formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat | quickimage codesample table ',
+      codesample_languages: [
+        { text: 'HTML/XML', value: 'markup' },
+        { text: 'JavaScript', value: 'javascript' },
+        { text: 'CSS', value: 'css' },
+        { text: 'PHP', value: 'php' },
+        { text: 'Ruby', value: 'ruby' },
+        { text: 'Python', value: 'python' },
+        { text: 'Java', value: 'java' },
+        { text: 'C', value: 'c' },
+        { text: 'C#', value: 'csharp' },
+        { text: 'C++', value: 'cpp' }
+      ],
 
       init_instance_callback(editor) {
         console.log('editor initialized');

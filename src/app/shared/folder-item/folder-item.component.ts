@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {BreadcrumbService} from '../../core/services/breadcrumb.service';
-import {NzContextMenuService, NzDropdownMenuComponent} from 'ng-zorro-antd';
+import {NzContextMenuService, NzDropdownMenuComponent, NzMessageService} from 'ng-zorro-antd';
+import {FolderItemService} from "./folder-item.service";
 
 @Component({
   selector: 'app-folder-item',
@@ -26,6 +27,8 @@ export class FolderItemComponent implements OnInit {
     private router: Router,
     private breadService: BreadcrumbService,
     private nzContextMenuService: NzContextMenuService,
+    private foldItemService: FolderItemService,
+    private message: NzMessageService,
   ) { }
 
   ngOnInit(): void {
@@ -60,7 +63,19 @@ export class FolderItemComponent implements OnInit {
   }
 
   renameFolderConfirm() {
-    this.closeModal();
+    this.modalControls.loading = true;
+    this.foldItemService.renameFolder(this.folderId, this.modalInput).subscribe(
+      res => {
+        if (res.msg === 'true') {
+          this.message.success('修改成功');
+          this.closeModal();
+          this.notify.emit();
+        }
+      }, error => {
+        this.message.error('修改失败');
+        this.closeModal();
+      }
+    );
   }
 
   moveFolder() {
