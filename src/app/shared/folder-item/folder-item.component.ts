@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {BreadcrumbService} from '../../core/services/breadcrumb.service';
-import {NzContextMenuService, NzDropdownMenuComponent} from "ng-zorro-antd";
+import {NzContextMenuService, NzDropdownMenuComponent} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-folder-item',
@@ -11,6 +11,8 @@ import {NzContextMenuService, NzDropdownMenuComponent} from "ng-zorro-antd";
 export class FolderItemComponent implements OnInit {
   @Input() public folderName: string;
   @Input() public folderId: string;
+
+  @Output() public notify = new EventEmitter();
 
   public modalInput = '';
   public modalControls = {
