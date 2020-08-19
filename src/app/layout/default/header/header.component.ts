@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import { UserinfoService } from '../../../core/services/userinfo.service'
 import { PassportService } from '../../../routes/passport/passport.service'
@@ -23,6 +23,8 @@ export class HeaderComponent implements OnInit {
   public unreadmsgnum: number;
 
   private real_time_msg_timer: any;
+  public message_content: string;
+  @ViewChild("template") tref: TemplateRef<{}>;
 
   constructor(
     private router: Router,
@@ -100,13 +102,8 @@ export class HeaderComponent implements OnInit {
     this.sitemessage.getRealTimeMessage().subscribe(
       res => {
         if (res.mid !== '') {
-          this.notification.blank(
-            '新消息',
-            res.content
-          )
-          .onClick.subscribe(() => {
-            this.router.navigate(['messagebox']);
-          });
+          this.message_content = res.content;
+          this.notification.template(this.tref);
           this.getRealTimeMsg();
         }
         else {
@@ -117,6 +114,10 @@ export class HeaderComponent implements OnInit {
         console.log('拉取实时消息出错');
       }
     )
+  }
+
+  public navigate() {
+    this.router.navigate(['messagebox']);
   }
 
   freshMessageNum(): void {
