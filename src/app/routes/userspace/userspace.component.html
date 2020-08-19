@@ -58,9 +58,37 @@
       (nzOnOk)="changePwd()"
       [nzOkLoading]="isOkLoading"
     >
-      <input nz-input [(ngModel)]="currentpwd" placeholder="请输入当前密码" style="margin: 5px auto;">
+      <form nz-form [formGroup]="validateForm">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>当前密码</nz-form-label>
+          <nz-form-control [nzSpan]="12" nzDisableAutoTips nzErrorTip="请输入当前密码">
+            <input nz-input type="password" formControlName="current_password" placeholder="请输入当前密码" (ngModelChange)="validateConfirmPassword()" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>新密码</nz-form-label>
+          <nz-form-control [nzSpan]="12" nzDisableAutoTips nzErrorTip="请输入新密码">
+            <input nz-input type="password" formControlName="new_password" placeholder="请输入新密码" (ngModelChange)="validateConfirmPassword()" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>确认新密码</nz-form-label>
+          <nz-form-control [nzSpan]="12" nzDisableAutoTips [nzErrorTip]="passwordErrorTpl">
+            <input nz-input type="password" formControlName="confirm" placeholder="请确认新密码" />
+            <ng-template #passwordErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                请再输入一次新密码
+              </ng-container>
+              <ng-container *ngIf="control.hasError('confirm')">
+                密码不匹配，请核对
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+      <!-- <input nz-input [(ngModel)]="currentpwd" placeholder="请输入当前密码" style="margin: 5px auto;">
       <input nz-input [(ngModel)]="newpwd" placeholder="请输入新密码密码" style="margin: 5px auto;">
-      <input nz-input [(ngModel)]="confirmpwd" placeholder="请确认新密码" style="margin: 5px auto;">
+      <input nz-input [(ngModel)]="confirmpwd" placeholder="请确认新密码" style="margin: 5px auto;"> -->
     </nz-modal>
 
     <nz-modal

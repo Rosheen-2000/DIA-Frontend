@@ -5,6 +5,8 @@ import { UserInfo } from '../../entity/userinfo'
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, Observer } from 'rxjs';
+import { FormGroup, FormControl, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { NzSafeAny } from 'ng-zorro-antd';
 
 /*********table里的内容***********/
 interface information {
@@ -68,7 +70,15 @@ export class UserspaceComponent implements OnInit {
     private actroute: ActivatedRoute,
     private userservice: UserinfoService,
     private message: NzMessageService,
-  ) { }
+    private fb: FormBuilder,
+  ) { 
+    const { required } = Validators;
+    this.validateForm = this.fb.group({
+      current_password: ['', [required]],
+      new_password: ['', [required]],
+      confirm: ['', [this.confirmValidator]]
+    });
+   }
 
   ngOnInit(): void {
     // * 获取用户基本信息
@@ -92,12 +102,35 @@ export class UserspaceComponent implements OnInit {
   }
 
   public changePwd(): void {
-    if (this.newpwd!==this.confirmpwd) {
-      this.message.create('error', '两次输入的密码不匹配，请确认后再提交');
+    // if (this.newpwd!==this.confirmpwd) {
+    //   this.message.create('error', '两次输入的密码不匹配，请确认后再提交');
+    // }
+    // else {
+    //   this.isOkLoading = true;
+    //   this.userservice.changePwd(this.currentpwd, this.newpwd).subscribe(
+    //     res => {
+    //       console.log(res);
+    //       if (res.msg === 'true') {
+    //         this.message.create('success', '修改成功！');
+    //         this.isOkLoading = false;
+    //         this.changePwdVisible = false;
+    //         this.ngOnInit();
+    //       }
+    //       else {
+    //         this.message.create('error', '密码输入错误，请核对后再提交');
+    //         this.isOkLoading = false;
+    //         this.changePwdVisible = false;
+    //       }
+    //     }
+    //   );
+    // }
+    for (const key in this.validateForm.controls) {
+      this.validateForm.controls[key].markAsDirty();
+      this.validateForm.controls[key].updateValueAndValidity();
     }
-    else {
+    if (this.validateForm.valid) {
       this.isOkLoading = true;
-      this.userservice.changePwd(this.currentpwd, this.newpwd).subscribe(
+      this.userservice.changePwd(this.validateForm.value.current_password, this.validateForm.value.new_password).subscribe(
         res => {
           console.log(res);
           if (res.msg === 'true') {
@@ -112,8 +145,9 @@ export class UserspaceComponent implements OnInit {
             this.changePwdVisible = false;
           }
         }
-      );
+      )
     }
+    
   }
 
   public changeMail() {
@@ -249,7 +283,19 @@ export class UserspaceComponent implements OnInit {
     }
   }
 
+  validateForm: FormGroup;
+
+  validateConfirmPassword(): void {
+    setTimeout(() => this.validateForm.controls.confirm.updateValueAndValidity());
+  }
+
+  confirmValidator = (control: FormControl): { [s: string]: boolean } => {
+    if (!control.value) {
+      return { error: true, required: true };
+    } else if (control.value !== this.validateForm.controls.new_password.value) {
+      return { confirm: true, error: true };
+    }
+    return {};
+  };
+
 }
-
-
-
