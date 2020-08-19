@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { addDays, formatDistance } from 'date-fns';
-import { CommentService } from './comment.service';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { DocComment } from './doccomment';
+import {Component, OnInit, Input} from '@angular/core';
+import {addDays, formatDistance} from 'date-fns';
+import {CommentService} from './comment.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {DocComment} from './doccomment';
+import {NzModalService} from 'ng-zorro-antd';
+import {InfoModalComponent} from '../../../shared/info-modal/info-modal.component';
 
 @Component({
   selector: 'app-comments',
@@ -30,7 +32,9 @@ export class CommentsComponent implements OnInit {
   constructor(
     private commentService: CommentService,
     private message: NzMessageService,
-  ) { }
+    private modal: NzModalService,
+  ) {
+  }
 
   ngOnInit(): void {
     this.commentService.getComments(this.docid).subscribe(
@@ -68,8 +72,7 @@ export class CommentsComponent implements OnInit {
           this.submitting = false;
           this.message.create('success', '提交成功');
           this.ngOnInit();
-        }
-        else {
+        } else {
           console.log(res);
           this.submitting = false;
           this.message.create('error', '提交失败，请稍后再试');
@@ -90,8 +93,7 @@ export class CommentsComponent implements OnInit {
         if (res.msg === 'true') {
           this.message.create('success', '删除成功');
           this.ngOnInit();
-        }
-        else {
+        } else {
           console.log(res);
           this.message.create('error', '删除失败，请稍后再试');
         }
@@ -101,11 +103,15 @@ export class CommentsComponent implements OnInit {
       }
     );
   }
-  infoOk(): void {
-    this.infoVisible = false;
-  }
 
-  infoCancel(): void {
-    this.infoVisible = false;
+  openUserInfo(userId: string) {
+    console.log(userId);
+    this.modal.create({
+      nzTitle: '用户信息',
+      nzContent: InfoModalComponent,
+      nzComponentParams: {
+        userId
+      },
+    });
   }
 }

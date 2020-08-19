@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {InfoModalService} from './info-modal.service';
 
-interface information {
+interface Information {
   infoHead: string;
   infoBody: string;
   action: string;
@@ -11,9 +12,9 @@ interface information {
   templateUrl: './info-modal.component.html',
   styleUrls: ['./info-modal.component.scss']
 })
-export class InfoModalComponent implements OnInit {
-
-  listOfData: information[] = [
+export class InfoModalComponent implements OnInit, OnChanges {
+  @Input() userId: string;
+  listOfData: Information[] = [
     {
       infoHead: '用户名',
       infoBody: '',
@@ -31,9 +32,22 @@ export class InfoModalComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(
+    private infoModalService: InfoModalService,
+  ) { }
 
   ngOnInit(): void {
+    console.log('modal' + this.userId);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.initData();
+  }
+
+  initData(): void {
+    this.infoModalService.getAllInfo(this.userId).subscribe(
+      res => console.log(res)
+    );
   }
 
 }
