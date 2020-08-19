@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DocService} from '../../routes/document/doc.service'
+import {DocService} from '../../routes/document/doc.service';
 import {Router} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {error} from '@angular/compiler/src/util';
-import {TemplateService} from "./template.service";
-import {NzModalService} from "ng-zorro-antd";
-import {BreadcrumbService} from "../../core/services/breadcrumb.service";
+import {TemplateService} from './template.service';
+import {NzModalService} from 'ng-zorro-antd';
+import {BreadcrumbService} from '../../core/services/breadcrumb.service';
 
 @Component({
   selector: 'app-template-modal',
@@ -29,7 +29,7 @@ export class TemplateModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.templateService.getAllTemplate().subscribe(
-      res => { console.log(res); this.templates = res.templates;}
+      res => { console.log(res); this.templates = res.templates; }
     );
   }
 

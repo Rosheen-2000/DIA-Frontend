@@ -21,7 +21,6 @@ export class TemplateService {
     form.set('template', template);
     form.set('folderId', foldId);
     form.set('spaceId', spaceId);
-    console.log('new file at space' + spaceId + 'folder' + foldId);
     return this.http.post<{ msg: string, docid: string }>(environment.baseUrl + 'doc/newdoc/', form);
   }
 }
