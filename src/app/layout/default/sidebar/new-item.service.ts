@@ -17,6 +17,7 @@ export class NewItemService {
     form.set('folderName', foldName);
     form.set('folderId', folderId);
     form.set('spaceId', spaceId);
+    console.log({spaceId, folderId});
     return this.http.post<any>(environment.baseUrl + 'folder/new-folder/', form);
   }
 }

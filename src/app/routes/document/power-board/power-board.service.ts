@@ -30,8 +30,9 @@ export class PowerBoardService {
 
   public setShareOption(docid: string, shareOption: number): Observable<any> {
     const form = new FormData();
-    form.set('dodid', docid);
+    form.set('docid', docid);
     form.set('shareOption', shareOption + '');
+    console.log({docid, shareOption});
     return this.http.post(environment.baseUrl + 'doc/set-share-option/', form);
   }
 

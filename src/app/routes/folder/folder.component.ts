@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {FolderService} from './services/folder.service';
 import {BreadcrumbService} from '../../core/services/breadcrumb.service';
@@ -21,7 +21,7 @@ export class FolderComponent implements OnInit, OnChanges {
   @Input() spaceId: string;
 
   // folder
-  private folderId: string;
+  @Input() folderId: string;
 
   public loading = {
     file: false,
@@ -29,7 +29,7 @@ export class FolderComponent implements OnInit, OnChanges {
   };
 
 
-  public subFolders: {Id: string, Name: string}[] = [];
+  public subFolders: {id: string, name: string}[] = [];
   public subFiles: {id: string, name: string, starred: boolean}[] = [];
 
   constructor(
@@ -42,23 +42,22 @@ export class FolderComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    // this.route.params.subscribe((params: Params) => {
-    //   this.folderId = params.folderId;
-    //   if (this.folderId) {
-    //     this.type = 'folder';
-    //   }
-    //   this.initData();
-    // });
+    // console.log('ngoninit');
     // this.initData();
   }
 
-  ngOnChanges(): void {
-    console.log('ng on changed');
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    // if (changes.spaceId) {
+    //   if (!changes.spaceId.firstChange) {
+    //     this.initData();
+    //   }
+    // }
     this.initData();
   }
 
   onNotify(): void {
-    this.ngOnInit();
+    this.initData();
   }
 
   initData(): void {
@@ -78,18 +77,26 @@ export class FolderComponent implements OnInit, OnChanges {
         break;
       case 'folder':
         this.initFolder();
+        this.breadcrumbService.folder(this.folderId);
     }
   }
 
   initDesktop(): void {
+    console.log('init desktop');
     this.desktopService.getDesktopFile().subscribe(
       res => {
         this.subFiles = res.files;
       }
     );
+    this.desktopService.getDesktopFolder().subscribe(
+      res => {
+        this.subFolders = res.folders;
+      }
+    );
   }
 
   initDashboard(): void {
+    console.log('init dashboard');
     this.loading.file = true;
     this.dashboardServices.getFiles(this.rootType).subscribe(
       res => {
@@ -99,10 +106,11 @@ export class FolderComponent implements OnInit, OnChanges {
     );
   }
 
-  async initSpace() {
+  initSpace() {
     console.log('init space');
     this.loading.file = true;
-    const request = this.spaceService.getFiles(this.spaceId).subscribe(
+    this.loading.folder = true;
+    this.spaceService.getFiles(this.spaceId).subscribe(
       res => {
         console.log(res);
         this.subFiles = res.files;
@@ -114,13 +122,23 @@ export class FolderComponent implements OnInit, OnChanges {
         console.log('complete');
       }
     );
+    this.spaceService.getFolders(this.spaceId).subscribe(
+      res => {
+        this.subFolders = res.folders;
+        this.loading.folder = false;
+      }, error => {
+        console.log(error);
+        this.loading.folder = false;
+      }
+    );
   }
 
   initFolder(): void {
     this.loading.file = true;
-    this.folderService.getFiles(this.folderId).subscribe(
+    this.folderService.getSubFiles(this.folderId).subscribe(
       res => {
-        this.subFiles = res;
+        console.log(res);
+        this.subFiles = res.files;
         this.loading.file = false;
       }
     );

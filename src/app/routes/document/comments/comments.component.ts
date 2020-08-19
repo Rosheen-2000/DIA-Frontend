@@ -12,6 +12,7 @@ import { DocComment } from './doccomment';
 export class CommentsComponent implements OnInit {
 
   @Input() docid: string;
+  infoVisible = false;
 
   // 评论区drawer的变量和函数
   visible = false;
@@ -99,5 +100,12 @@ export class CommentsComponent implements OnInit {
         this.message.create('error', '奇怪的错误增加了，请稍后再试');
       }
     );
+  }
+  infoOk(): void {
+    this.infoVisible = false;
+  }
+
+  infoCancel(): void {
+    this.infoVisible = false;
   }
 }

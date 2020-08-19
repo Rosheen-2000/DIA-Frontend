@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 
 @Injectable({
@@ -19,8 +19,9 @@ export class SpaceService {
       environment.baseUrl + 'doc/space/file/', form);
   }
 
-  public getFolders(spaceId: string): Observable<{ name: string, id: string}[]> {
-    const params = new HttpParams().set('spaceId', spaceId);
-    return this.http.get<{ name: string, id: string}[]>(environment.baseUrl + 'doc/space/folder', {params});
+  public getFolders(spaceId: string): Observable<{folders: { name: string, id: string}[]}> {
+    const form = new FormData();
+    form.set('spaceId', spaceId);
+    return this.http.post<any>(environment.baseUrl + 'doc/space/folder/', form);
   }
 }

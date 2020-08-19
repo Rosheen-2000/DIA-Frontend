@@ -12,7 +12,7 @@ export class SpacesService {
   ) { }
 
   public getSpaces(): Observable<{ teamlist: {teamid: string, teamname: string}[]}> {
-    return this.http.get<{ teamlist: {teamid: string, teamname: string}[]}>(environment.baseUrl + 'team/getlist');
+    return this.http.post<{ teamlist: {teamid: string, teamname: string}[]}>(environment.baseUrl + 'team/getlist/', null);
   }
 
   public createTeam(teamname: string): Observable<{ msg: string, teamid: string }> {

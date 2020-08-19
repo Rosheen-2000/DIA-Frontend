@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 
 import {LogoComponent} from './logo/logo.component';
 import {DocItemComponent} from './doc-item/doc-item.component';
-import {FileSystemComponent} from './file-system/file-system.component';
 import {NgZorroAntdModule, NzButtonModule, NzIconModule} from 'ng-zorro-antd';
 import {RouterModule} from '@angular/router';
 import { FolderItemComponent } from './folder-item/folder-item.component';
@@ -16,22 +15,23 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { SharingModalComponent } from './sharing-modal/sharing-modal.component';
 import {QRCodeModule} from 'angularx-qrcode';
 import {ClipboardModule} from 'ngx-clipboard';
+import { InfoModalComponent } from './info-modal/info-modal.component';
 
 const Components = [
   LogoComponent,
   DocItemComponent,
-  FileSystemComponent,
   FolderItemComponent,
   TemplateModalComponent,
   TeamSettingComponent,
-  SharingModalComponent
+  SharingModalComponent,
+  InfoModalComponent
 ];
 
 @NgModule({
   exports: [
     ...Components
   ],
-  declarations: [...Components, TeamSettingComponent, SharingModalComponent],
+  declarations: [...Components, TeamSettingComponent, SharingModalComponent, InfoModalComponent],
   imports: [
     RouterModule,
     NzIconModule,

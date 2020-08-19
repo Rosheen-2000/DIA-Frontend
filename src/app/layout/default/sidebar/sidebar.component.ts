@@ -37,6 +37,9 @@ export class SidebarComponent implements OnInit {
   }
 
   initData(): void {
+    if (this.loading) {
+      return;
+    }
     this.loading = true;
     this.spacesService.getSpaces().subscribe(
       res => {

@@ -18,6 +18,7 @@ import { UnsaveGuard } from '../core/guards/unsave.guard'
 import { UserspaceComponent } from './userspace/userspace.component'
 import { MessageboxComponent } from './messagebox/messagebox.component'
 import { NewteamComponent } from './teamspace/newteam/newteam.component'
+import {FolderRouteComponent} from "./folder-route/folder-route.component";
 
 const routes: Routes = [
   {
@@ -37,7 +38,7 @@ const routes: Routes = [
       {path: 'trash', component: TrashComponent},
       {path: 'space/:id', component: SpaceComponent},
       {path: 'desktop', component: DesktopComponent},
-      {path: 'folder/:foldId', component: FolderComponent},
+      {path: 'folder/:id', component: FolderRouteComponent},
       {path: 'feedback', component: FeedbackComponent},
       {path: 'userspace', component: UserspaceComponent},
       {path: 'messagebox', component: MessageboxComponent},
