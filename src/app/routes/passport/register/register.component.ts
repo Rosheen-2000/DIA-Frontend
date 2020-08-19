@@ -4,6 +4,8 @@ import {PassportService} from '../passport.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router } from '@angular/router';
 import { StorageService } from '../../../core/services/storage.service'
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +17,9 @@ export class RegisterComponent implements OnInit {
   public form: FormGroup;
   public pwd_consist: boolean;
   public uname_valid: boolean;
+
+  private checkResult$ = new Observable<{ res: string }>();
+  private checkContent$ = new Subject<string>();
 
   constructor(
     private fb: FormBuilder,
@@ -30,6 +35,23 @@ export class RegisterComponent implements OnInit {
       password: '',
       pwd_confirm: ''
     });
+    this.checkResult$ = this.checkContent$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap( text => 
+        this.passwordService.checkUsernameValid(text)
+      ),
+    );
+    this.checkResult$.subscribe(
+      (res) => {
+        if (res.res === 'true') {
+          this.uname_valid = true;
+        }
+        else {
+          this.uname_valid = false;
+        }
+      }
+    );
   }
 
   onSubmit(): void {
@@ -59,16 +81,13 @@ export class RegisterComponent implements OnInit {
   }
 
   checkUnameValid(): void {
-    this.passwordService.checkUsernameValid(this.form.value.username).subscribe(
-      (res) => {
-        if (res.res === 'true') {
-          this.uname_valid = true;
-        }
-        else {
-          this.uname_valid = false;
-        }
-      }
-    )
+    const text = this.form.value.username;
+    if (text==='') {
+      this.uname_valid = undefined;
+    }
+    else {
+      this.checkContent$.next(text);
+    }
   }
 
   checkPwdConsist(event: any): void {

@@ -5,8 +5,8 @@
         </div>
       <nz-form-item style="margin-bottom: 10%;">
         <nz-form-control>
-            <input nz-input formControlName="username" placeholder="  用户名" (blur)="checkUnameValid()">
-            <div class="alert">
+            <input nz-input formControlName="username" placeholder="  用户名" (keyup)="checkUnameValid()">
+            <div class="alert" *ngIf="form.value.username!==''">
               <nz-alert nzType="success" nzMessage="用户名可用" *ngIf="uname_valid===true"></nz-alert>
               <nz-alert nzType="error" nzMessage="当前用户名已被使用" *ngIf="uname_valid===false"></nz-alert>
             </div>
@@ -19,7 +19,6 @@
       </nz-form-item>
       <nz-form-item style="margin-bottom: 10%;">
         <nz-form-control>
-          <!-- TODO 样式调整 -->
             <input nz-input formControlName="pwd_confirm" type="password" placeholder="  重复密码" (keyup)="checkPwdConsist($event)">
             <div class="alert">
               <nz-alert nzType="error" nzMessage="两次输入密码不一致" *ngIf="pwd_consist===false"></nz-alert>
