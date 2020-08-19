@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {BreadcrumbService} from '../../core/services/breadcrumb.service';
-import {NzContextMenuService, NzDropdownMenuComponent} from "ng-zorro-antd";
+import {NzContextMenuService, NzDropdownMenuComponent} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-folder-item',
@@ -12,9 +12,14 @@ export class FolderItemComponent implements OnInit {
   @Input() public folderName: string;
   @Input() public folderId: string;
 
+  @Output() public notify = new EventEmitter();
+
+  public modalInput = '';
   public modalControls = {
     loading: false,
     deleteFolder: false,
+    renameFolder: false,
+    moveFolder: false,
   };
 
   constructor(
@@ -37,9 +42,32 @@ export class FolderItemComponent implements OnInit {
   closeModal(): void {
     this.modalControls.loading = false;
     this.modalControls.deleteFolder = false;
+    this.modalControls.moveFolder = false;
+    this.modalControls.renameFolder = false;
   }
 
   deleteFolder() {
     this.modalControls.deleteFolder = true;
+  }
+
+  deleteFolderConfirm() {
+    this.closeModal();
+  }
+
+  renameFolder() {
+    this.modalInput = '';
+    this.modalControls.renameFolder = true;
+  }
+
+  renameFolderConfirm() {
+    this.closeModal();
+  }
+
+  moveFolder() {
+    this.modalControls.moveFolder = true;
+  }
+
+  moveFolderConfirm() {
+    this.closeModal();
   }
 }

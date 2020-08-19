@@ -30,4 +30,20 @@ export class SitemessageService {
     );
   }
 
+  public getRealTimeMessage(): Observable<{ 
+    basicmsg: number, mid: string, msgtype: number, content: string, 
+    teamid: string, docid: string, createtime: string,
+  }> {
+    console.log('拉取实时信息');   
+    return this.http.get<{
+      basicmsg: number, mid: string, msgtype: number, content: string, 
+      teamid: string, docid: string, createtime: string,
+    }>(environment.baseUrl + 'message/online-message/');
+  }
+
+  public getOfflineMsgNum(): Observable<{ basicmsg: number, num: number }> {
+    console.log('拉取下线期间消息数');    
+    return this.http.get<{ basicmsg: number, num: number }>(environment.baseUrl + 'message/offline-message/');
+  }
+
 }

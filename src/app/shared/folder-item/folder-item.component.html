@@ -8,8 +8,11 @@
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu>
-    <li nz-menu-item>
+    <li nz-menu-item (click)="renameFolder()">
       重命名
+    </li>
+    <li nz-menu-item (click)="moveFolder()">
+      移动
     </li>
     <li nz-menu-item style="color: red;" (click)="deleteFolder()">
       删除
@@ -18,7 +21,20 @@
 </nz-dropdown-menu>
 
 
-<nz-modal nzTitle="删除文件夹" (nzOnCancel)="closeModal()"
-          [(nzVisible)]="modalControls.deleteFolder">
+<nz-modal nzTitle="删除文件夹" [(nzVisible)]="modalControls.deleteFolder"
+          (nzOnCancel)="closeModal()" (nzOnOk)="renameFolderConfirm()"
+          [nzOkLoading]="modalControls.loading">
   您确定要删除该文件夹么，文件夹内的所有内容将被删除。
+</nz-modal>
+
+<nz-modal nzTitle="重命名文件夹" [(nzVisible)]="modalControls.renameFolder"
+          (nzOnCancel)="closeModal()" [nzOkLoading]="modalControls.loading"
+          [nzOkDisabled]="modalInput.length==0" (nzOnOk)="renameFolderConfirm()">
+  <input [(ngModel)]="modalInput">
+</nz-modal>
+
+<nz-modal nzTitle="移动文件夹" [(nzVisible)]="modalControls.moveFolder"
+          (nzOnCancel)="closeModal()" [nzOkLoading]="modalControls.loading"
+          (nzOnOk)="moveFolderConfirm()">
+  移动文件夹
 </nz-modal>

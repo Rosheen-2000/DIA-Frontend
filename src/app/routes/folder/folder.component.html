@@ -13,7 +13,9 @@
 <div *ngIf="!loading.file && !loading.folder">
   <div style="margin: 0 20px;">
     <app-folder-item *ngFor="let folder of subFolders"
-                     [folderId]="folder.id" [folderName]="folder.name"></app-folder-item>
+                     [folderId]="folder.id"
+                     [folderName]="folder.name"
+                     (notify)="onNotify()"></app-folder-item>
   </div>
 
   <div style="margin: 0 20px;">

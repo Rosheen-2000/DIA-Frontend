@@ -3,9 +3,11 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import { UserinfoService } from '../../../core/services/userinfo.service'
 import { PassportService } from '../../../routes/passport/passport.service'
 import { StorageService } from '../../../core/services/storage.service'
-import {WebsocketService} from '../../../core/services/websocket.service'
+// import {WebsocketService} from '../../../core/services/websocket.service'
 import { environment } from '../../../../environments/environment'
 import {HeaderService} from "./header.service";
+import { SitemessageService } from '../../../core/services/sitemessage.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-header',
@@ -20,14 +22,18 @@ export class HeaderComponent implements OnInit {
   public isVisible: boolean = false;
   public unreadmsgnum: number;
 
+  private real_time_msg_timer: any;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private userinfo_ser: UserinfoService,
     private passport: PassportService,
     private storage: StorageService,
-    public webSocketService: WebsocketService,
+    // public webSocketService: WebsocketService,
     private headerService: HeaderService,
+    private sitemessage: SitemessageService,
+    private notification: NzNotificationService,
   ) {
     this.wsBaseUrl = environment.wsBaseUrl;
   }
@@ -71,6 +77,48 @@ export class HeaderComponent implements OnInit {
     // );
   }
 
+  ngAfterViewInit() {
+    // this.sitemessage.getOfflineMsgNum().subscribe(
+    //   res => {
+    //     if (res.num > 0) {
+    //       this.notification.blank(
+    //         '请确认您的新消息',
+    //         '您在下线期间共收到${res.num}条新消息，点击查看'
+    //       )
+    //       .onClick.subscribe(() => {
+    //         this.router.navigate(['messagebox']);
+    //       });
+    //     }
+    //   }
+    // );
+    this.real_time_msg_timer = setInterval(() => {
+      this.getRealTimeMsg();
+    }, 15000);
+  }
+
+  private getRealTimeMsg() {
+    this.sitemessage.getRealTimeMessage().subscribe(
+      res => {
+        if (res.mid !== '') {
+          this.notification.blank(
+            '新消息',
+            res.content
+          )
+          .onClick.subscribe(() => {
+            this.router.navigate(['messagebox']);
+          });
+          this.getRealTimeMsg();
+        }
+        else {
+          console.log('无新的实时消息');
+        }
+      },
+      error => {
+        console.log('拉取实时消息出错');
+      }
+    )
+  }
+
   freshMessageNum(): void {
     this.headerService.getMessageNum().subscribe(
       res => this.unreadmsgnum = res.num
@@ -92,5 +140,9 @@ export class HeaderComponent implements OnInit {
   logout(): void {
     this.passport.logout();
     location.reload();
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.real_time_msg_timer);
   }
 }
