@@ -187,7 +187,7 @@ export class PowerBoardComponent implements OnInit, OnChanges {
   setTeamMemberEditable(index: number): void {
     this.modalControls.loading = true;
     let power = 2;
-    if (this.corporations[index].editable) {
+    if (this.teamMembers[index].editable) {
       power = 1;
     }
     this.powerBoardService.setPower(this.docId, this.teamMembers[index].username, power).subscribe(
