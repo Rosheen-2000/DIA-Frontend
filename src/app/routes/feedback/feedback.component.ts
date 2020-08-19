@@ -20,7 +20,12 @@ export class FeedbackComponent implements OnInit {
 
   support() {
     this.message.create('success', '感谢点击，我们已经收到您的支持！')
-    this.http.get<{ msg: string }>(environment.baseUrl + 'doc/checkstatus/');
+    this.http.get<{ msg: string }>(environment.baseUrl + 'doc/checkstatus/').subscribe(
+      res => {
+        console.log(res.msg);
+        
+      }
+    )
   }
 
 }

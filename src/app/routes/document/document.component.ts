@@ -192,7 +192,9 @@ export class DocumentComponent implements OnInit, OnDestroy {
         this.switchLoading = false;
         tinymce.activeEditor.setContent(res.Content);
         this.isTeamDoc = res.isTeamDoc;
-        tinymce.activeEditor.setMode('design');
+        if (this.can_edit === true) {
+          tinymce.activeEditor.setMode('design');
+        }
       }
     );
   }
