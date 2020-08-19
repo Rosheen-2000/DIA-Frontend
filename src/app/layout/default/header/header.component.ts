@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import { UserinfoService } from '../../../core/services/userinfo.service'
 import { PassportService } from '../../../routes/passport/passport.service'
@@ -8,6 +8,7 @@ import { environment } from '../../../../environments/environment'
 import {HeaderService} from "./header.service";
 import { SitemessageService } from '../../../core/services/sitemessage.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import {FreshFolderService} from "../../../core/services/fresh-folder.service";
 
 @Component({
   selector: 'app-header',
@@ -23,6 +24,8 @@ export class HeaderComponent implements OnInit {
   public unreadmsgnum: number;
 
   private real_time_msg_timer: any;
+  public message_content: string;
+  @ViewChild("template") tref: TemplateRef<{}>;
 
   constructor(
     private router: Router,
@@ -34,11 +37,19 @@ export class HeaderComponent implements OnInit {
     private headerService: HeaderService,
     private sitemessage: SitemessageService,
     private notification: NzNotificationService,
+    private freshService: FreshFolderService,
   ) {
     this.wsBaseUrl = environment.wsBaseUrl;
   }
 
   ngOnInit(): void {
+    this.freshService.messageSource.subscribe(
+      (p) => {
+        if (p === 'image') {
+          this.ngOnInit();
+        }
+      }
+    );
     if (this.storage.get('username') == null) {
       this.userinfo_ser.getBasicInfo('').subscribe (
         res => {
@@ -100,13 +111,8 @@ export class HeaderComponent implements OnInit {
     this.sitemessage.getRealTimeMessage().subscribe(
       res => {
         if (res.mid !== '') {
-          this.notification.blank(
-            '新消息',
-            res.content
-          )
-          .onClick.subscribe(() => {
-            this.router.navigate(['messagebox']);
-          });
+          this.message_content = res.content;
+          this.notification.template(this.tref);
           this.getRealTimeMsg();
         }
         else {
@@ -117,6 +123,10 @@ export class HeaderComponent implements OnInit {
         console.log('拉取实时消息出错');
       }
     )
+  }
+
+  public navigate() {
+    this.router.navigate(['messagebox']);
   }
 
   freshMessageNum(): void {
