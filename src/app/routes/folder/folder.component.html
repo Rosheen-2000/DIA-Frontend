@@ -1,4 +1,4 @@
-<div>
+<div style="margin: 20px 40px 0;">
   <nz-breadcrumb>
     <nz-breadcrumb-item *ngFor="let item of breadcrumbService.items">
       <a [routerLink]="item.url">{{item.name}}</a>
@@ -6,13 +6,17 @@
   </nz-breadcrumb>
 </div>
 
+<div style="margin: 0 40px;">
+  <hr>
+</div>
+
 <div *ngIf="!loading.file && !loading.folder">
-  <div style="margin: 20px 20px 0;">
+  <div style="margin: 0 20px;">
     <app-folder-item *ngFor="let folder of subFolders"
                      [folderId]="folder.id" [folderName]="folder.name"></app-folder-item>
   </div>
 
-  <div style="margin: 20px;">
+  <div style="margin: 0 20px;">
     <app-doc-item *ngFor="let file of subFiles"
                   [fileId]="file.id" [fileName]="file.name"
                   [isTrash]="rootType==='trash'"
