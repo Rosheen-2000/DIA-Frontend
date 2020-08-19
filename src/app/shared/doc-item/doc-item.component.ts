@@ -30,6 +30,15 @@ export class DocItemComponent implements OnInit {
   isOkLoading = false;
   public newfilename: string = this.fileName;
 
+  public doc_detail: {
+    title: string, 
+    creatorname: string, 
+    teamname: string, 
+    createtime: string,
+    modifytimes: string, 
+    lastmodify: string
+  };
+
   constructor(
     private router: Router,
     private nzContextMenuService: NzContextMenuService,
@@ -150,5 +159,29 @@ export class DocItemComponent implements OnInit {
 
   moveFileConfirm() {
     this.closeModal();
+  }
+
+  showDetail() {
+    this.infoVisible=true;
+    this.getDocDetailInfo();
+  }
+
+  getDocDetailInfo() {
+    // this.docItemService.getDetailInfo(this.fileId).subscribe(
+    //   res => {
+    //     this.doc_detail = res;
+    //   },
+    //   error => {
+    //     console.log('奇怪的错误');
+    //   }
+    // )
+    this.doc_detail = {
+      title: 'fake_title', 
+      creatorname: 'fake_creator', 
+      teamname: 'fake_team', 
+      createtime: 'fake_time',
+      modifytimes: '114514', 
+      lastmodify: 'fake_time'
+    };
   }
 }
