@@ -7,6 +7,7 @@ import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, Observer } from 'rxjs';
 import { FormGroup, FormControl, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { NzSafeAny } from 'ng-zorro-antd';
+import {FreshFolderService} from "../../core/services/fresh-folder.service";
 
 /*********table里的内容***********/
 interface information {
@@ -71,7 +72,8 @@ export class UserspaceComponent implements OnInit {
     private userservice: UserinfoService,
     private message: NzMessageService,
     private fb: FormBuilder,
-  ) { 
+    private freshService: FreshFolderService,
+  ) {
     const { required } = Validators;
     this.validateForm = this.fb.group({
       current_password: ['', [required]],
@@ -147,7 +149,7 @@ export class UserspaceComponent implements OnInit {
         }
       )
     }
-    
+
   }
 
   public changeMail() {
@@ -232,6 +234,8 @@ export class UserspaceComponent implements OnInit {
           this.message.create('success', '头像上传成功');
           this.isOkLoading = false;
           this.changeAvatarVisible = false;
+          this.ngOnInit();
+          this.freshService.changemessage('image');
         }
         else {
           this.message.create('error', '头像上传失败');

@@ -8,6 +8,7 @@ import { environment } from '../../../../environments/environment'
 import {HeaderService} from "./header.service";
 import { SitemessageService } from '../../../core/services/sitemessage.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import {FreshFolderService} from "../../../core/services/fresh-folder.service";
 
 @Component({
   selector: 'app-header',
@@ -36,11 +37,19 @@ export class HeaderComponent implements OnInit {
     private headerService: HeaderService,
     private sitemessage: SitemessageService,
     private notification: NzNotificationService,
+    private freshService: FreshFolderService,
   ) {
     this.wsBaseUrl = environment.wsBaseUrl;
   }
 
   ngOnInit(): void {
+    this.freshService.messageSource.subscribe(
+      (p) => {
+        if (p === 'image') {
+          this.ngOnInit();
+        }
+      }
+    );
     if (this.storage.get('username') == null) {
       this.userinfo_ser.getBasicInfo('').subscribe (
         res => {
