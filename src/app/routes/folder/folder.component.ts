@@ -42,20 +42,22 @@ export class FolderComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    console.log('ngoninit');
-    this.initData();
+    // console.log('ngoninit');
+    // this.initData();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.spaceId) {
-      if (!changes.spaceId.firstChange) {
-        this.initData();
-      }
-    }
+    console.log(changes);
+    // if (changes.spaceId) {
+    //   if (!changes.spaceId.firstChange) {
+    //     this.initData();
+    //   }
+    // }
+    this.initData();
   }
 
   onNotify(): void {
-    this.ngOnInit();
+    this.initData();
   }
 
   initData(): void {
@@ -75,10 +77,12 @@ export class FolderComponent implements OnInit, OnChanges {
         break;
       case 'folder':
         this.initFolder();
+        this.breadcrumbService.folder(this.folderId);
     }
   }
 
   initDesktop(): void {
+    console.log('init desktop');
     this.desktopService.getDesktopFile().subscribe(
       res => {
         this.subFiles = res.files;
@@ -92,6 +96,7 @@ export class FolderComponent implements OnInit, OnChanges {
   }
 
   initDashboard(): void {
+    console.log('init dashboard');
     this.loading.file = true;
     this.dashboardServices.getFiles(this.rootType).subscribe(
       res => {
@@ -120,9 +125,10 @@ export class FolderComponent implements OnInit, OnChanges {
 
   initFolder(): void {
     this.loading.file = true;
-    this.folderService.getFiles(this.folderId).subscribe(
+    this.folderService.getSubFiles(this.folderId).subscribe(
       res => {
-        this.subFiles = res;
+        console.log(res);
+        this.subFiles = res.files;
         this.loading.file = false;
       }
     );

@@ -13,10 +13,10 @@ export class DesktopService {
   ) { }
 
   public getDesktopFile(): Observable<{ files: { id: string, name: string, starred: boolean }[] }> {
-    return this.http.get<{ files: { id: string, name: string, starred: boolean }[] }>(environment.baseUrl + 'doc/desktop/file');
+    return this.http.post<{ files: { id: string, name: string, starred: boolean }[] }>(environment.baseUrl + 'doc/desktop/file/', null);
   }
 
   public getDesktopFolder(): Observable<{ folders: { name: string, id: string, }[]}> {
-    return this.http.get<any>(environment.baseUrl + 'doc/desktop/folder');
+    return this.http.post<any>(environment.baseUrl + 'doc/desktop/folder/', null);
   }
 }

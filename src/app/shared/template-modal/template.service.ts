@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../environments/environment";
+import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +19,9 @@ export class TemplateService {
     const form = new FormData();
     form.set('title', title);
     form.set('template', template);
-    form.set('foldId', foldId);
+    form.set('folderId', foldId);
     form.set('spaceId', spaceId);
+    console.log('new file at space' + spaceId + 'folder' + foldId);
     return this.http.post<{ msg: string, docid: string }>(environment.baseUrl + 'doc/newdoc/', form);
   }
 }

@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {BreadcrumbService} from '../../core/services/breadcrumb.service';
 
 @Component({
   selector: 'app-folder-item',
@@ -11,7 +12,8 @@ export class FolderItemComponent implements OnInit {
   @Input() public folderId: string;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private breadService: BreadcrumbService,
   ) { }
 
   ngOnInit(): void {
