@@ -25,7 +25,7 @@ export class MessageService {
     }[]
   }> {
     console.log('getting message');
-    return this.http.get<any>(environment.baseUrl + 'message/getall');
+    return this.http.get<any>(environment.baseUrl + 'message/getall/');
   }
 
   public changeStatus(mid: string, isread: boolean): Observable<{ msg: string }> {
