@@ -163,7 +163,6 @@ export class DocumentComponent implements OnInit, OnDestroy {
         { text: 'C#', value: 'csharp' },
         { text: 'C++', value: 'cpp' }
       ],
-
       init_instance_callback(editor) {
         console.log('editor initialized');
         window.MyEditor.component.initData();
@@ -185,6 +184,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   initData() {
+    tinymce.activeEditor.setMode('readonly');
     this.docService.getDocument(this.docId).subscribe(
       res => {
         console.log(res);
@@ -192,6 +192,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
         this.switchLoading = false;
         tinymce.activeEditor.setContent(res.Content);
         this.isTeamDoc = res.isTeamDoc;
+        tinymce.activeEditor.setMode('design');
       }
     );
   }
@@ -231,18 +232,18 @@ export class DocumentComponent implements OnInit, OnDestroy {
             }
             this.current_lock_status = undefined;
             console.log('文件无锁');
-            // TODO 设置编辑器允许编辑
+            tinymce.activeEditor.setMode('design');
             break;
           case 1:
             if (res.username === this.storage.get('username')) {
               this.current_lock_status = true;
               console.log('持有锁');
-              // TODO 设置编辑器允许编辑
+              tinymce.activeEditor.setMode('design');
             }
             else {
               this.current_lock_status = false;
               console.log('其他用户持有锁');
-              // TODO 设置编辑器不可编辑
+              tinymce.activeEditor.setMode('readonly');
             }
             break;
           default:
