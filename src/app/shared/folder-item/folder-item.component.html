@@ -7,17 +7,25 @@
 
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
-  <ul nz-menu>
-    <li nz-menu-item (click)="renameFolder()">
-      重命名
-    </li>
-    <li nz-menu-item (click)="moveFolder()">
-      移动
-    </li>
-    <li nz-menu-item style="color: red;" (click)="deleteFolder()">
-      删除
-    </li>
-  </ul>
+  <div *ngIf="!isTrash">
+    <ul nz-menu>
+      <li nz-menu-item (click)="renameFolder()">
+        重命名
+      </li>
+      <li nz-menu-item (click)="moveFolder()">
+        移动
+      </li>
+      <li nz-menu-item style="color: red;" (click)="deleteFolder()">
+        删除
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="isTrash">
+    <ul nz-menu>
+      <li nz-menu-item (click)="recovery()">恢复</li>
+      <li nz-menu-item style="color: red;" (click)="confirmDelete()">确认删除</li>
+    </ul>
+  </div>
 </nz-dropdown-menu>
 
 
@@ -37,4 +45,10 @@
           (nzOnCancel)="closeModal()" [nzOkLoading]="modalControls.loading"
           (nzOnOk)="moveFolderConfirm()">
   移动文件夹
+</nz-modal>
+
+<nz-modal nzTitle="彻底删除" [(nzVisible)]="modalControls.confirmDeleteFolder"
+          (nzOnCancel)="closeModal()" [nzOkLoading]="modalControls.loading"
+          (nzOnOk)="confirmDeleteConfirm()">
+  彻底删除之后将无法恢复文件夹及其内容
 </nz-modal>

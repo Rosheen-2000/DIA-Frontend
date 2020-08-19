@@ -13,6 +13,8 @@ export class FolderItemComponent implements OnInit {
   @Input() public folderName: string;
   @Input() public folderId: string;
 
+  @Input() public isTrash: boolean;
+
   @Output() public notify = new EventEmitter();
 
   public modalInput = '';
@@ -21,6 +23,8 @@ export class FolderItemComponent implements OnInit {
     deleteFolder: false,
     renameFolder: false,
     moveFolder: false,
+    recoveryFolder: false,
+    confirmDeleteFolder: false,
   };
 
   constructor(
@@ -47,6 +51,7 @@ export class FolderItemComponent implements OnInit {
     this.modalControls.deleteFolder = false;
     this.modalControls.moveFolder = false;
     this.modalControls.renameFolder = false;
+    this.modalControls.confirmDeleteFolder = false;
   }
 
   deleteFolder() {
@@ -100,5 +105,38 @@ export class FolderItemComponent implements OnInit {
 
   moveFolderConfirm() {
     this.closeModal();
+  }
+
+  confirmDelete() {
+    this.modalControls.confirmDeleteFolder = true;
+  }
+
+  recovery() {
+    this.foldItemService.recoveryFolder(this.folderId).subscribe(
+      res => {
+        if (res.msg === 'true') {
+          this.message.success('成功恢复');
+          this.notify.emit();
+        }
+      }, error => {
+        this.message.error('恢复失败');
+      }
+    );
+  }
+
+  confirmDeleteConfirm() {
+    this.modalControls.loading = true;
+    this.foldItemService.confirmDeleteFolder(this.folderId).subscribe(
+      res => {
+        if (res.msg === 'true') {
+          this.message.success('成功彻底删除');
+          this.closeModal();
+          this.notify.emit();
+        }
+      }, error => {
+        this.message.error('彻底删除失败');
+        this.closeModal();
+      }
+    );
   }
 }
