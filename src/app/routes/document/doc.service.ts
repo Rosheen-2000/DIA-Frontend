@@ -63,4 +63,25 @@ export class DocService {
     form.set('did', did);
     return this.http.post<{ msg: string }>(environment.baseUrl + 'doc/unfavordoc/', form);
   }
+
+  // 具有写权限的用户在打开文档后持续调用，更新锁状态
+  public checkLockStatus(docid: string): Observable<{ msg: string, status: number, uid: string }> {
+    const form = new FormData();
+    form.set('docid', docid);
+    return this.http.post<{ msg: string, status: number, uid: string }>(environment.baseUrl + 'doc/querystatus/', form);
+  }
+
+  // focus编辑器时调用，申请写锁
+  public askForEditLock(docid: string): Observable<{ msg: string, tag: number }> {
+    const form = new FormData();
+    form.set('docid', docid);
+    return this.http.post<{ msg: string, tag: number }>(environment.baseUrl + 'doc/requestmodify/', form);
+  }
+
+  // 持有写锁后持续调用以维持写锁
+  public maintainEditLock(tag: number): Observable<{ msg: string }> {
+    const form = new FormData();
+    form.set('tag', tag.toString());
+    return this.http.post<{ msg: string }>(environment.baseUrl + 'doc/updatestatus/', form);
+  }
 }

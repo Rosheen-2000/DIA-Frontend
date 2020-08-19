@@ -167,6 +167,12 @@ export class DocumentComponent implements OnInit, OnDestroy {
           console.log('KeyUp! But nothing happened...');
           window.MyEditor.component.autoSave();
         });
+        editor.on('focus', function(e) {
+          console.log('focus');
+        });
+        editor.on('blur', function(e) {
+          console.log('blur');
+        });
       }
     });
   }
