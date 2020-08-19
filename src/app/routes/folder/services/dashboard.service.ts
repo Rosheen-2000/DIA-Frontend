@@ -15,4 +15,8 @@ export class DashboardService {
   public getFiles(rootType: string): Observable<{ files: { id: string, name: string, starred: boolean }[]}> {
     return this.http.get<{ files: { id: string, name: string, starred: boolean }[]}>(environment.baseUrl + 'doc/' + rootType + '/file/');
   }
+
+  public getTrashFolder(): Observable<{ folders: {foldername: string, folderid: string}[]}> {
+    return this.http.post<any>(environment.baseUrl + 'folder/in-trash/', null);
+  }
 }
