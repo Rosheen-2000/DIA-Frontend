@@ -243,6 +243,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
             else {
               this.current_lock_status = false;
               console.log('其他用户持有锁');
+              console.log('持有者' + res.username);
               tinymce.activeEditor.setMode('readonly');
             }
             break;
