@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {SpacesService} from './spaces.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
-import {TemplateModalComponent} from '../../../shared/template-modal/template-modal.component';
 import {BreadcrumbService} from '../../../core/services/breadcrumb.service';
 import {NewItemService} from './new-item.service';
-import {FreshFolderService} from "../../../core/services/fresh-folder.service";
+import {FreshFolderService} from '../../../core/services/fresh-folder.service';
+import {TemplateService} from '../../../shared/template-modal/template.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,6 +16,11 @@ export class SidebarComponent implements OnInit {
   public loading = false;
   public spaceList: {teamid: string, teamname: string}[] = [];
 
+  // 新建模版
+  public title = '';
+  public templates: { name: string, id: string }[] = [];
+  public templateIndex = 0;
+
   public createTeamModal = false;
   public teamNameInput = '';
   public modalLoading = false;
@@ -22,7 +28,8 @@ export class SidebarComponent implements OnInit {
   public modalInput = '';
   public modalControls = {
     loading: false,
-    addFolder: false
+    addFolder: false,
+    addFile: false,
   };
 
   constructor(
@@ -32,6 +39,9 @@ export class SidebarComponent implements OnInit {
     private newItemService: NewItemService,
     private breadService: BreadcrumbService,
     private freshFolderService: FreshFolderService,
+    private templateService: TemplateService,
+    private router: Router,
+    private breadCrumbService: BreadcrumbService,
   ) { }
 
   ngOnInit(): void {
@@ -49,18 +59,13 @@ export class SidebarComponent implements OnInit {
         this.loading = false;
       }
     );
+    this.templateService.getAllTemplate().subscribe(
+      res => { this.templates = res.templates; }
+    );
   }
 
   chooseTemplate() {
-    const modal = this.modal.create({
-      nzTitle: '从模版新建文档',
-      nzContent: TemplateModalComponent,
-      nzGetContainer: () => document.body,
-      nzComponentParams: {
-        // modal: modal
-      },
-      nzFooter: [],
-    });
+    this.modalControls.addFile = true;
   }
 
   newTeam(): void {
@@ -115,5 +120,27 @@ export class SidebarComponent implements OnInit {
         this.message.error('创建失败');
       }
     );
+  }
+
+  choose(index: number) {
+    this.templateIndex = index;
+  }
+
+  addFileConfirm() {
+    if (this.title.length === 0) {
+      this.message.create('warning', '请设置文档名');
+    }
+    else {
+      this.templateService.newDoc(this.title, this.templates[this.templateIndex].id,
+        this.breadCrumbService.path.foldId, this.breadCrumbService.path.spaceId).subscribe(
+        res => {
+          console.log(res);
+          if (res.msg === 'true') {
+            this.router.navigate(['/docs/' + res.docid]).then();
+            this.modal.closeAll();
+          }
+        }
+      );
+    }
   }
 }
