@@ -265,7 +265,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
             console.log('成功取得锁');
             this.maintain_lock_timer = setInterval(() => {
               this.maintainLock();
-            }, 2000)
+            }, 1000)
           }
           else {
             // 取得锁失败
@@ -284,6 +284,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
   private maintainLock() {
     this.docService.maintainEditLock(this.tag).subscribe(
       res => {
+        console.log(res.msg);
         if (res.msg === 'true') {
           console.log('锁更新成功');
         }

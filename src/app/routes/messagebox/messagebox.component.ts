@@ -25,63 +25,63 @@ export class MessageboxComponent implements OnInit {
   // 样式用数据
   loading = false;
   switchloading = false;
-  // data: Message[] = [];
-  data: any[] = [
-    {
-      mid: '001',
-      type: 'normal',
-      isread: true,
-      content: '普通消息',
-      teamid: '',
-      docid: '',
-      createtime: 'now',
-    },
-    {
-      mid: '002',
-      type: 'normal',
-      isread: false,
-      content: '普通消息',
-      teamid: '',
-      docid: '',
-      createtime: 'now',
-    },
-    {
-      mid: '003',
-      type: 'invite',
-      isread: true,
-      content: '团队邀请消息',
-      teamid: '1',
-      docid: '',
-      createtime: 'now',
-    },
-    {
-      mid: '004',
-      type: 'invite',
-      isread: false,
-      content: '团队邀请消息',
-      teamid: '1',
-      docid: '1',
-      createtime: 'now',
-    },
-    {
-      mid: '005',
-      type: 'comment',
-      isread: true,
-      content: '文档评论消息',
-      teamid: '',
-      docid: '',
-      createtime: 'now',
-    },
-    {
-      mid: '006',
-      type: 'comment',
-      isread: false,
-      content: '文档评论消息',
-      teamid: '',
-      docid: '1',
-      createtime: 'now',
-    },
-  ];
+  data: Message[] = [];
+  // data: any[] = [
+  //   {
+  //     mid: '001',
+  //     type: 'normal',
+  //     isread: true,
+  //     content: '普通消息',
+  //     teamid: '',
+  //     docid: '',
+  //     createtime: 'now',
+  //   },
+  //   {
+  //     mid: '002',
+  //     type: 'normal',
+  //     isread: false,
+  //     content: '普通消息',
+  //     teamid: '',
+  //     docid: '',
+  //     createtime: 'now',
+  //   },
+  //   {
+  //     mid: '003',
+  //     type: 'invite',
+  //     isread: true,
+  //     content: '团队邀请消息',
+  //     teamid: '1',
+  //     docid: '',
+  //     createtime: 'now',
+  //   },
+  //   {
+  //     mid: '004',
+  //     type: 'invite',
+  //     isread: false,
+  //     content: '团队邀请消息',
+  //     teamid: '1',
+  //     docid: '1',
+  //     createtime: 'now',
+  //   },
+  //   {
+  //     mid: '005',
+  //     type: 'comment',
+  //     isread: true,
+  //     content: '文档评论消息',
+  //     teamid: '',
+  //     docid: '',
+  //     createtime: 'now',
+  //   },
+  //   {
+  //     mid: '006',
+  //     type: 'comment',
+  //     isread: false,
+  //     content: '文档评论消息',
+  //     teamid: '',
+  //     docid: '1',
+  //     createtime: 'now',
+  //   },
+  // ];
 
   constructor(
     private msg: NzMessageService,
@@ -100,25 +100,25 @@ export class MessageboxComponent implements OnInit {
     console.log('init messages');
     this.loading = true;
     const tempData: Message[] = [];
-    // this.messageService.getMessage().subscribe(
-    //   res => {
-    //     console.log(res);
-    //     res.msgs.forEach(
-    //       (p) => {
-    //         const t = ['normal', 'invite', 'comment'][p.msgtype];
-    //         tempData.push({
-    //           type: t, content: p.content,
-    //           docid: p.docid, teamid: p.teamid,
-    //           isread: p.isread, createtime: p.createtime
-    //         });
-    //       }
-    //     );
-    //     this.loading = false;
-    //     this.data = tempData;
-    //   }, error => {
-    //     console.log(error);
-    //   }
-    // );
+    this.messageService.getMessage().subscribe(
+      res => {
+        console.log(res);
+        res.msgs.forEach(
+          (p) => {
+            const t = ['normal', 'invite', 'comment'][p.msgtype];
+            tempData.push({
+              type: t, content: p.content,
+              docid: p.docid, teamid: p.teamid,
+              isread: p.isread, createtime: p.createtime
+            });
+          }
+        );
+        this.loading = false;
+        this.data = tempData;
+      }, error => {
+        console.log(error);
+      }
+    );
   }
 
   agree(target: any, index: number): void {
