@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 
 import {LogoComponent} from './logo/logo.component';
 import {DocItemComponent} from './doc-item/doc-item.component';
-import {FileSystemComponent} from './file-system/file-system.component';
 import {NgZorroAntdModule, NzButtonModule, NzIconModule} from 'ng-zorro-antd';
 import {RouterModule} from '@angular/router';
 import { FolderItemComponent } from './folder-item/folder-item.component';
@@ -20,7 +19,6 @@ import {ClipboardModule} from 'ngx-clipboard';
 const Components = [
   LogoComponent,
   DocItemComponent,
-  FileSystemComponent,
   FolderItemComponent,
   TemplateModalComponent,
   TeamSettingComponent,

@@ -43,7 +43,6 @@ export class SidebarComponent implements OnInit {
     this.loading = true;
     this.spacesService.getSpaces().subscribe(
       res => {
-        console.log(res);
         this.spaceList = res.teamlist;
         this.loading = false;
       }

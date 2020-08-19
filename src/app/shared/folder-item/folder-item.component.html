@@ -1,6 +1,24 @@
-<div class="folderButton">
+<div class="folderButton" (contextmenu)="createMenu($event, menu)">
   <button nz-button nzType="primary" (click)="navigate()">
     <i nz-icon nzType="folder"></i>
     <p class="folderName">{{folderName}}</p>
   </button>
 </div>
+
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item>
+      重命名
+    </li>
+    <li nz-menu-item style="color: red;" (click)="deleteFolder()">
+      删除
+    </li>
+  </ul>
+</nz-dropdown-menu>
+
+
+<nz-modal nzTitle="删除文件夹" (nzOnCancel)="closeModal()"
+          [(nzVisible)]="modalControls.deleteFolder">
+  您确定要删除该文件夹么，文件夹内的所有内容将被删除。
+</nz-modal>
