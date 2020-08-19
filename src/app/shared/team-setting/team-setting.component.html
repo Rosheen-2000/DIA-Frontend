@@ -78,23 +78,6 @@
         </nz-list-item>
       </nz-list>
     </div>
-
-    <nz-list nzItemLayout="horizontal" [nzLoading]="loading">
-      <nz-list-item *ngFor="let item of selected_list">
-        <nz-list-item-meta
-          [nzAvatar]="item.avatar"
-          nzDescription=""
-        >
-          <nz-list-item-meta-title>
-            <a href="https://ng.ant.design">{{ item.username }}</a>
-          </nz-list-item-meta-title>
-        </nz-list-item-meta>
-        <ul nz-list-item-actions>
-          <nz-list-item-action><a (click)="remove(0)" style="text-decoration: underline;">移除</a></nz-list-item-action>
-        </ul>
-      </nz-list-item>
-      <nz-list-empty *ngIf="selected_list.length === 0"></nz-list-empty>
-    </nz-list>
   </div>
 </nz-modal>
 
