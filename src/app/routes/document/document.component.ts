@@ -12,6 +12,7 @@ import { DocItemService } from '../../shared/doc-item/doc-item.service';
 import {SharingModalComponent} from "../../shared/sharing-modal/sharing-modal.component";
 import { StorageService } from '../../core/services/storage.service';
 import { PowerBoardService } from './power-board/power-board.service';
+import { environment } from '../../../environments/environment'
 
 declare const tinymce: any;
 declare const window: any;
@@ -22,6 +23,15 @@ declare const window: any;
   styleUrls: ['./document.component.scss']
 })
 export class DocumentComponent implements OnInit, OnDestroy {
+
+  @HostListener('window:unload', [`$event`])
+  private handleUnload() {
+    if (this.tag !== undefined) {
+      const form = new FormData();
+      form.set('tag', this.tag.toString());
+      navigator.sendBeacon(environment.baseUrl + 'doc/directquit/', form);
+    }
+  }
 
   docId: string;
   public isTeamDoc = false;
@@ -95,12 +105,15 @@ export class DocumentComponent implements OnInit, OnDestroy {
     });
 
     this.initEditor();
+    console.log('拿到id'+this.docId);
 
     // 启动查询锁状体的计时器
     this.powerservice.getPower(this.docId).subscribe(
       res => {
         if (res.userPower > 1) {
           this.can_edit = true;
+          console.log('开始计时');
+          
           this.get_status_timer = setInterval(() => {
             this.getLockStatus();
           }, 5000)
@@ -204,6 +217,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   getLockStatus(): void {
+    console.log('get lock status');
     this.docService.checkLockStatus(this.docId).subscribe(
       res => {
         if (res.msg === 'true') {
@@ -231,6 +245,9 @@ export class DocumentComponent implements OnInit, OnDestroy {
           }
         }
         else {
+          console.log(res.msg);
+          console.log(res.status);
+          console.log(res.username);
           console.log('查询出错');
         }
       }
