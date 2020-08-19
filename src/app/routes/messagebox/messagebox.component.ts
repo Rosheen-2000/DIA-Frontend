@@ -4,7 +4,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {SitemessageService} from '../../core/services/sitemessage.service';
 // import {WebsocketService} from '../../core/services/websocket.service';
 import {MessageService} from "./message.service";
-import { TeamService } from '../teamspace/team.service'
+import {TeamService} from '../teamspace/team.service'
 
 
 interface Message {
@@ -101,23 +101,46 @@ export class MessageboxComponent implements OnInit {
     console.log('init messages');
     this.loading = true;
     const tempData: Message[] = [];
+    let tempRead: Message[] = [];
+    let tempUnread: Message[] = [];
+
     this.messageService.getMessage().subscribe(
       res => {
         console.log(res);
         res.msgs.forEach(
           (p) => {
             const t = ['normal', 'invite', 'comment'][p.msgtype];
-            tempData.push({
-              type: t, content: p.content, mid: p.mid,
-              docid: p.docid, teamid: p.teamid,
-              isread: p.isread, createtime: p.createtime
-            });
+            if (p.isread) {
+              tempRead.push({
+                type: t, content: p.content, mid: p.mid,
+                docid: p.docid, teamid: p.teamid,
+                isread: p.isread, createtime: p.createtime
+              });
+            } else {
+              tempUnread.push({
+                type: t, content: p.content, mid: p.mid,
+                docid: p.docid, teamid: p.teamid,
+                isread: p.isread, createtime: p.createtime
+              });
+            }
           }
         );
+        tempRead = tempRead.sort(function (a, b) {
+          return b.createtime.localeCompare(a.createtime);
+        });
+        tempUnread = tempUnread.sort(function (a, b) {
+          return b.createtime.localeCompare(a.createtime);
+        });
+        tempUnread.forEach(
+          p => tempData.push(p)
+        );
+        tempRead.forEach(
+          p => tempData.push(p)
+        );
+        this.data = tempData;
         this.loading = false;
         this.data = tempData;
-        console.log('data: ' + this.data);
-        
+
       }, error => {
         console.log(error);
       }
@@ -130,8 +153,7 @@ export class MessageboxComponent implements OnInit {
         if (res.msg === 'true') {
           this.message.create('success', '成功加入团队');
           this.data[index].isread = true;
-        }
-        else {
+        } else {
           this.message.create('error', '加入团队失败，请稍后再试');
         }
       },
@@ -147,8 +169,7 @@ export class MessageboxComponent implements OnInit {
         if (res.msg === 'true') {
           this.message.create('success', '成功拒绝邀请');
           this.data[index].isread = true;
-        }
-        else {
+        } else {
           this.message.create('error', '拒绝邀请失败，请稍后再试');
         }
       },
@@ -165,15 +186,14 @@ export class MessageboxComponent implements OnInit {
         if (res.msg === 'true') {
           this.data[index].isread = !target.isread;
           this.switchloading = false;
-        }
-        else {
+        } else {
           this.message.create('error', '设置失败，请稍后再试');
           this.switchloading = false;
         }
       },
       error => {
         this.message.create('error', '奇怪的错误增加了，请稍后再试');
-          this.switchloading = false;
+        this.switchloading = false;
       }
     )
   }

@@ -46,7 +46,14 @@ export class HeaderComponent implements OnInit {
     this.freshService.messageSource.subscribe(
       (p) => {
         if (p === 'image') {
-          this.ngOnInit();
+          this.userinfo_ser.getBasicInfo('').subscribe (
+            res => {
+              if (res.msg === 'true') {
+                this.avatar = res.avatar;
+                this.storage.set('avatar', res.avatar);
+              }
+            }
+          );
         }
       }
     );
