@@ -12,9 +12,12 @@ export class FolderItemComponent implements OnInit {
   @Input() public folderName: string;
   @Input() public folderId: string;
 
+  public modalInput = '';
   public modalControls = {
     loading: false,
     deleteFolder: false,
+    renameFolder: false,
+    moveFolder: false,
   };
 
   constructor(
@@ -37,9 +40,32 @@ export class FolderItemComponent implements OnInit {
   closeModal(): void {
     this.modalControls.loading = false;
     this.modalControls.deleteFolder = false;
+    this.modalControls.moveFolder = false;
+    this.modalControls.renameFolder = false;
   }
 
   deleteFolder() {
     this.modalControls.deleteFolder = true;
+  }
+
+  deleteFolderConfirm() {
+    this.closeModal();
+  }
+
+  renameFolder() {
+    this.modalInput = '';
+    this.modalControls.renameFolder = true;
+  }
+
+  renameFolderConfirm() {
+    this.closeModal();
+  }
+
+  moveFolder() {
+    this.modalControls.moveFolder = true;
+  }
+
+  moveFolderConfirm() {
+    this.closeModal();
   }
 }
