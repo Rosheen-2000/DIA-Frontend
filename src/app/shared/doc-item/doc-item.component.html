@@ -60,15 +60,15 @@
   (nzOnCancel)="infoCancel()"
   (nzOnOk)="infoOk()"
 >
-<div *ngIf="doc_detail">
-  <nz-descriptions [(nzTitle)]="doc_detail.title" nzColumn="300">
+<div *ngIf="docDetail">
+  <nz-descriptions [nzTitle]="docDetail.title" nzColumn="300">
   </nz-descriptions>
   <div class="content-left">
-    <p>创建者：{{ doc_detail.creatorname }}</p>
-    <p>所属团队：{{ doc_detail.teamname }}</p>
-    <p>创建时间：{{ doc_detail.createtime }}</p>
-    <p>修改次数：{{ doc_detail.modifytimes }}</p>
-    <p>最后修改：{{ doc_detail.lastmodify }}</p>
+    <p>创建者：{{ docDetail.creatorname }}</p>
+    <p *ngIf="docDetail.teamname">所属团队：{{ docDetail.teamname }}</p>
+    <p>创建时间：{{ docDetail.createtime }}</p>
+    <p>修改次数：{{ docDetail.modifytimes }}</p>
+    <p>最后修改：{{ docDetail.lastmodify }}</p>
   </div>
 </div>
 </nz-modal>

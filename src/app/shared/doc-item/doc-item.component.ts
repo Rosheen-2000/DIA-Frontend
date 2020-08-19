@@ -30,13 +30,14 @@ export class DocItemComponent implements OnInit {
   isOkLoading = false;
   public newfilename: string = this.fileName;
 
-  public doc_detail: {
-    title: string, 
-    creatorname: string, 
-    teamname: string, 
-    createtime: string,
-    modifytimes: string, 
-    lastmodify: string
+
+  public docDetail = {
+    title: '',
+    creatorname: '',
+    teamname: '',
+    createtime: '',
+    modifytimes: '',
+    lastmodify: ''
   };
 
   constructor(
@@ -162,26 +163,18 @@ export class DocItemComponent implements OnInit {
   }
 
   showDetail() {
-    this.infoVisible=true;
+    this.infoVisible = true;
     this.getDocDetailInfo();
   }
 
   getDocDetailInfo() {
-    // this.docItemService.getDetailInfo(this.fileId).subscribe(
-    //   res => {
-    //     this.doc_detail = res;
-    //   },
-    //   error => {
-    //     console.log('奇怪的错误');
-    //   }
-    // )
-    this.doc_detail = {
-      title: 'fake_title', 
-      creatorname: 'fake_creator', 
-      teamname: 'fake_team', 
-      createtime: 'fake_time',
-      modifytimes: '114514', 
-      lastmodify: 'fake_time'
-    };
+    this.docItemService.getDetailInfo(this.fileId).subscribe(
+      res => {
+        this.docDetail = res;
+      },
+      error => {
+        console.log('奇怪的错误');
+      }
+    );
   }
 }
