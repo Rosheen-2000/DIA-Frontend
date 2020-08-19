@@ -3,7 +3,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import { UserinfoService } from '../../../core/services/userinfo.service'
 import { PassportService } from '../../../routes/passport/passport.service'
 import { StorageService } from '../../../core/services/storage.service'
-import {WebsocketService} from '../../../core/services/websocket.service'
+// import {WebsocketService} from '../../../core/services/websocket.service'
 import { environment } from '../../../../environments/environment'
 import {HeaderService} from "./header.service";
 
@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
     private userinfo_ser: UserinfoService,
     private passport: PassportService,
     private storage: StorageService,
-    public webSocketService: WebsocketService,
+    // public webSocketService: WebsocketService,
     private headerService: HeaderService,
   ) {
     this.wsBaseUrl = environment.wsBaseUrl;
