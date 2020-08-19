@@ -24,6 +24,7 @@ export class MessageService {
       createtime: string,
     }[]
   }> {
+    console.log('getting message');
     return this.http.get<any>(environment.baseUrl + 'message/getall');
   }
 
