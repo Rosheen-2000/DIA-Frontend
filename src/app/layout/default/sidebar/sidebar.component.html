@@ -61,9 +61,18 @@
 <nz-modal nzTitle="选择模版" [(nzVisible)]="modalControls.addFile"
           (nzOnOk)="addFileConfirm()" (nzOnCancel)="modalClose()">
   <div class="outer">
-    <nz-row>
+    <!-- <nz-row>
       <nz-col nzSpan="16" style="height: 100px">
-        文档标题： <input [(ngModel)]="title"/>
+        
+      </nz-col>
+      <nz-col nzSpan="8">
+        <nz-row>
+          <div class="preview" style="width: 160px; height: 200px; background: black"></div>
+        </nz-row>
+      </nz-col>
+    </nz-row> -->
+    <div style="width: 55%; margin: 0 auto;">
+      文档标题： <input [(ngModel)]="title"/>
         <div class="alert" style="width: 240px;">
           <nz-alert nzType="error" nzMessage="文档标题不能为空" *ngIf="title==''"></nz-alert>
         </div>
@@ -73,7 +82,9 @@
           </nz-list-item>
         </nz-list> -->
         <div style="margin: 5px auto">
-          选择模板：
+          <div>
+            选择模板：
+          </div>
           <div style="display: inline;">
             <nz-radio-group ngModel="A">
               <!-- (ngModelChange)	选中变化时回调 -->
@@ -81,12 +92,6 @@
             </nz-radio-group>
           </div>
         </div>
-      </nz-col>
-      <nz-col nzSpan="8">
-        <nz-row>
-          <div class="preview" style="width: 160px; height: 200px; background: black"></div>
-        </nz-row>
-      </nz-col>
-    </nz-row>
+    </div>
   </div>
 </nz-modal>
