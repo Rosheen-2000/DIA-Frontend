@@ -4,6 +4,7 @@ import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {TemplateModalComponent} from '../../../shared/template-modal/template-modal.component';
 import {BreadcrumbService} from '../../../core/services/breadcrumb.service';
 import {NewItemService} from './new-item.service';
+import {FreshFolderService} from "../../../core/services/fresh-folder.service";
 
 @Component({
   selector: 'app-sidebar',
@@ -30,6 +31,7 @@ export class SidebarComponent implements OnInit {
     private message: NzMessageService,
     private newItemService: NewItemService,
     private breadService: BreadcrumbService,
+    private freshFolderService: FreshFolderService,
   ) { }
 
   ngOnInit(): void {
@@ -106,6 +108,7 @@ export class SidebarComponent implements OnInit {
           this.modalControls.loading = false;
           this.modalControls.addFolder = false;
           this.message.success('创建成功');
+          this.freshFolderService.changemessage('fresh');
         }
         }, error => {
         this.modalControls.loading = false;

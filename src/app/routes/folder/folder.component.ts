@@ -5,6 +5,7 @@ import {BreadcrumbService} from '../../core/services/breadcrumb.service';
 import {DesktopService} from './services/desktop.service';
 import {SpaceService} from './services/space.service';
 import {DashboardService} from './services/dashboard.service';
+import {FreshFolderService} from "../../core/services/fresh-folder.service";
 
 @Component({
   selector: 'app-folder',
@@ -39,11 +40,17 @@ export class FolderComponent implements OnInit, OnChanges {
     private desktopService: DesktopService,
     private spaceService: SpaceService,
     private dashboardServices: DashboardService,
+    private freshFolderService: FreshFolderService,
   ) { }
 
   ngOnInit(): void {
-    // console.log('ngoninit');
-    // this.initData();
+    this.freshFolderService.messageSource.subscribe(
+      Message => {
+        if (Message === 'fresh') {
+          this.initData();
+        }
+      }
+    );
   }
 
   ngOnChanges(changes: SimpleChanges) {
