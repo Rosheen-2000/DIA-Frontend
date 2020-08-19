@@ -15,6 +15,7 @@
     <app-folder-item *ngFor="let folder of subFolders"
                      [folderId]="folder.id"
                      [folderName]="folder.name"
+                     [isTrash]="rootType==='trash'"
                      (notify)="onNotify()"></app-folder-item>
   </div>
 

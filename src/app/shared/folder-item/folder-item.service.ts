@@ -24,4 +24,16 @@ export class FolderItemService {
     form.set('folderId', folderId);
     return this.http.post<any>(environment.baseUrl + 'folder/delete/', form);
   }
+
+  public recoveryFolder(folderId: string): Observable<{ msg: string }> {
+    const form = new FormData();
+    form.set('folderId', folderId);
+    return this.http.post<any>(environment.baseUrl + 'folder/recovery-detele/', form);
+  }
+
+  public confirmDeleteFolder(folderId: string): Observable<{ msg: string }> {
+    const form = new FormData();
+    form.set('folderId', folderId);
+    return this.http.post<any>(environment.baseUrl + 'folder/confirm-detele/', form);
+  }
 }
