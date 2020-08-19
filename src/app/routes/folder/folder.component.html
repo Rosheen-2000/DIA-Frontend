@@ -26,8 +26,9 @@
                   (notify)="onNotify()"></app-doc-item>
   </div>
 
-  <div *ngIf="subFiles.length==0 && subFolders.length==0">
-    空空如也
+  <div class="no-list" *ngIf="subFiles.length==0 && subFolders.length==0">
+    <img src="/assets/no-list.png" alt="">
+    <p>空空如也</p>
   </div>
 </div>
 
