@@ -24,4 +24,10 @@ export class SpaceService {
     form.set('spaceId', spaceId);
     return this.http.post<any>(environment.baseUrl + 'doc/space/folder/', form);
   }
+
+  public getSpaceName(spaceId: string): Observable<{ spaceName: string }> {
+    const form = new FormData();
+    form.set('spaceId', spaceId);
+    return this.http.post<any>(environment.baseUrl + 'team/get-basic-info/', form);
+  }
 }
