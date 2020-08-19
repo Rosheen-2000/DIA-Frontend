@@ -103,7 +103,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
           this.can_edit = true;
           this.get_status_timer = setInterval(() => {
             this.getLockStatus();
-          }, 5000)
+          }, 5000);
         }
       }
     );
@@ -114,6 +114,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    tinymce.activeEditor.setContent('');
     tinymce.remove();
     window.MyEditor = null;
     clearInterval(this.get_status_timer);
