@@ -80,7 +80,11 @@ export class FolderComponent implements OnInit, OnChanges {
         break;
       case 'space':
         this.initSpace();
-        this.breadcrumbService.space(this.spaceId, 'xxx');
+        this.spaceService.getSpaceName(this.spaceId).subscribe(
+          res => {
+            this.breadcrumbService.space(this.spaceId, res.spaceName);
+          }
+        );
         break;
       case 'folder':
         this.initFolder();
