@@ -11,7 +11,6 @@ import {NzMessageService} from "ng-zorro-antd";
 })
 export class SharingModalComponent implements OnInit, OnChanges {
   @Input() docId: string;
-  @Input() fresh: boolean;
 
   public link: string;
 

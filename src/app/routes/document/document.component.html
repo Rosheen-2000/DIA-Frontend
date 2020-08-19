@@ -11,7 +11,7 @@
       <nz-alert nzType="success" nzMessage="编辑权限"></nz-alert>
     </div>
 
-    <button nz-button nzType="primary" (click)="sharingVisible=true;sharingFresh=!sharingFresh" class="shareButton">分享</button>
+    <button nz-button nzType="primary" (click)="share()" class="shareButton">分享</button>
     <nz-switch [(ngModel)]="isFavored" nzCheckedChildren="已收藏" nzUnCheckedChildren="未收藏" (ngModelChange)="clickSwitch()"
                [nzLoading]="switchLoading" class="starButton"></nz-switch>
   </div>
@@ -29,5 +29,5 @@
   (nzOnCancel)="sharingCancel()"
   (nzOnOk)="sharingOk()"
 >
-  <app-sharing-modal [docId]="docId" [fresh]="sharingFresh"></app-sharing-modal>
+  <app-sharing-modal [docId]="docId" #shareModal></app-sharing-modal>
 </nz-modal>

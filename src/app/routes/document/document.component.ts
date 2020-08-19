@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, HostListener, NgZone} from '@angular/core';
+import {Component, OnDestroy, OnInit, HostListener, NgZone, ViewChild} from '@angular/core';
 import {Form, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {DocService} from './doc.service';
 import {ActivatedRoute, Params, Router, Routes} from '@angular/router';
@@ -9,39 +9,10 @@ import {NzCascaderOption} from 'ng-zorro-antd/cascader';
 import {DialogService} from '../../core/services/dialog.service';
 import { addDays, formatDistance } from 'date-fns';
 import { DocItemService } from '../../shared/doc-item/doc-item.service';
+import {SharingModalComponent} from "../../shared/sharing-modal/sharing-modal.component";
 
 declare const tinymce: any;
 declare const window: any;
-
-const belongOptions = [
-  {
-    value: 'personal',
-    label: '个人',
-    isLeaf: true
-  },
-  {
-    value: 'team',
-    label: '团队',
-    children: [
-      {
-        value: '1',
-        label: '团队1',
-        isLeaf: true
-      },
-      {
-        value: '2',
-        label: '团队2',
-        isLeaf: true
-      },
-      {
-        value: '3',
-        label: '团队3',
-        isLeaf: true
-      }
-    ]
-  }
-];
-
 
 @Component({
   selector: 'app-document',
@@ -67,7 +38,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
   // 分享
   sharingVisible = false;
-  sharingFresh = false;
+  @ViewChild('shareModal') shareModal: SharingModalComponent;
 
   sharingCancel(): void {
     this.sharingVisible = false;
@@ -246,6 +217,11 @@ export class DocumentComponent implements OnInit, OnDestroy {
   autoSave() {
     this.modified_mark = true;
     this.updateContent$.next(tinymce.activeEditor.getContent());
+  }
+
+  share() {
+    this.sharingVisible = true;
+    this.shareModal.ngOnInit();
   }
 }
 
