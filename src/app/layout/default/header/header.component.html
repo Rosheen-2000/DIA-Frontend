@@ -30,3 +30,19 @@
         <span>确认退出登录？</span>
       </nz-modal>
 </nz-header>
+
+<ng-template #template let-notification>
+  <div class="ant-notification-notice-content">
+    <div>
+      <div class="ant-notification-notice-message">新消息</div>
+      <div class="ant-notification-notice-description">
+        {{message_content}}
+      </div>
+      <span class="ant-notification-notice-btn">
+        <button nz-button nzType="primary" nzSize="small" (click)="navigate()">
+          <span>前去查看</span>
+        </button>
+      </span>
+    </div>
+  </div>
+</ng-template>
