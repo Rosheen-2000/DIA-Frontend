@@ -9,6 +9,7 @@ import { TeamService } from '../teamspace/team.service'
 
 interface Message {
   type: 'normal' | 'invite' | 'comment' | string;
+  mid: string;
   isread: boolean;
   content: string;
   docid: string;
@@ -107,7 +108,7 @@ export class MessageboxComponent implements OnInit {
           (p) => {
             const t = ['normal', 'invite', 'comment'][p.msgtype];
             tempData.push({
-              type: t, content: p.content,
+              type: t, content: p.content, mid: p.mid,
               docid: p.docid, teamid: p.teamid,
               isread: p.isread, createtime: p.createtime
             });
