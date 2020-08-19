@@ -10,6 +10,8 @@ import {DialogService} from '../../core/services/dialog.service';
 import { addDays, formatDistance } from 'date-fns';
 import { DocItemService } from '../../shared/doc-item/doc-item.service';
 import {SharingModalComponent} from "../../shared/sharing-modal/sharing-modal.component";
+import { StorageService } from '../../core/services/storage.service';
+import { PowerBoardService } from './power-board/power-board.service';
 
 declare const tinymce: any;
 declare const window: any;
@@ -56,11 +58,21 @@ export class DocumentComponent implements OnInit, OnDestroy {
     this.visible = false;
   }
 
-  // 防抖 保存文本内容
+  // * 防抖 保存文本内容
   updateResult$ = new Observable<{ msg: string }>();
   private updateContent$ = new Subject<string>();
 
   public modified_mark: boolean = false;
+
+  // * 文档锁相关
+  private can_edit: boolean = false;
+  private get_status_timer: any;
+  private maintain_lock_timer: any;
+
+  public current_lock_status: boolean;
+  // undifined: 无锁    true: 持有锁    false: 其他用户持有锁
+  private tag: number;  // 用于保持锁
+  public once_blocked: boolean = false;
 
   constructor(
     private docService: DocService,
@@ -69,6 +81,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
     public dialogService: DialogService,
     private formBuilder: FormBuilder,
     private router: Router,
+    private storage: StorageService,
+    private powerservice: PowerBoardService,
   ) {
   }
 
@@ -82,33 +96,28 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
     this.initEditor();
 
-    // 自动保存
-    this.updateResult$ = this.updateContent$.pipe(
-      debounceTime(2000),
-      distinctUntilChanged(),
-      switchMap( text => {
-        this.modified_mark = false;
-        return this.docService.modifyContent(this.docId, text);
-      }),
-    );
-    this.updateResult$.subscribe(
+    // 启动查询锁状体的计时器
+    this.powerservice.getPower(this.docId).subscribe(
       res => {
-        if (res.msg === 'true') {
-          console.log('自动保存成功');
+        if (res.userPower > 1) {
+          this.can_edit = true;
+          this.get_status_timer = setInterval(() => {
+            this.getLockStatus();
+          }, 5000)
         }
-        else {
-          console.log('自动保存失败');
-        }
-      },
-      error => {
-        console.log('自动保存时发生了奇怪的错误');
       }
     );
+
+    // 自动保存
+    this.activateAutoSave();
+    
   }
 
   ngOnDestroy() {
     tinymce.remove();
     window.MyEditor = null;
+    clearInterval(this.get_status_timer);
+    clearInterval(this.maintain_lock_timer);
   }
 
   initEditor() {
@@ -141,6 +150,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
         });
         editor.on('focus', function(e) {
           console.log('focus');
+          window.MyEditor.component.onFocusEditor();
         });
         editor.on('blur', function(e) {
           console.log('blur');
@@ -159,6 +169,105 @@ export class DocumentComponent implements OnInit, OnDestroy {
         this.isTeamDoc = res.isTeamDoc;
       }
     );
+  }
+
+  activateAutoSave() {
+    this.updateResult$ = this.updateContent$.pipe(
+      debounceTime(2000),
+      distinctUntilChanged(),
+      switchMap( text => {
+        this.modified_mark = false;
+        return this.docService.modifyContent(this.docId, text);
+      }),
+    );
+    this.updateResult$.subscribe(
+      res => {
+        if (res.msg === 'true') {
+          console.log('自动保存成功');
+        }
+        else {
+          console.log('自动保存失败');
+        }
+      },
+      error => {
+        console.log('自动保存时发生了奇怪的错误');
+      }
+    );
+  }
+
+  getLockStatus(): void {
+    this.docService.checkLockStatus(this.docId).subscribe(
+      res => {
+        if (res.msg === 'true') {
+          switch(res.status) {
+            case 0:
+              this.current_lock_status = undefined;
+              console.log('文件无锁');
+              // TODO 设置编辑器允许编辑
+              break;
+            case 1:
+              if (res.username === this.storage.get('username')) {
+                this.current_lock_status = true;
+                console.log('持有锁');
+                // TODO 设置编辑器允许编辑
+              }
+              else {
+                this.current_lock_status = false;
+                this.once_blocked = true;
+                console.log('其他用户持有锁');
+                // TODO 设置编辑器不可编辑
+              }
+              break;
+            default:
+              console.log('返回信息有误');
+          }
+        }
+        else {
+          console.log('查询出错');
+        }
+      }
+    )
+  }
+
+  onFocusEditor() {
+    if (this.can_edit && this.current_lock_status===undefined) {
+      // 文件无锁，可以申请锁
+      this.docService.askForEditLock(this.docId).subscribe(
+        res => {
+          if (res.msg === 'true') {
+            // 成功获得锁
+            this.current_lock_status = true;
+            this.tag = res.tag;
+            console.log('成功取得锁');
+            this.maintain_lock_timer = setInterval(() => {
+              this.maintainLock();
+            }, 2000)
+          }
+          else {
+            // 取得锁失败
+            this.message.create('warning', '获得文件锁失败，您的编辑内容将无法保存')
+            console.log('获取锁失败');
+          }
+        },
+        error => {
+          this.message.create('error', '奇怪的错误增加了');
+          this.message.create('warning', '获得文件锁失败，您的编辑内容将无法保存');
+        }
+      )
+    }
+  }
+
+  private maintainLock() {
+    this.docService.maintainEditLock(this.tag).subscribe(
+      res => {
+        if (res.msg === 'true') {
+          console.log('锁更新成功');
+        }
+        else {
+          console.log('锁更新失败');
+        }
+      }
+    )
   }
 
   clickSave(): void {
@@ -222,7 +331,10 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
   autoSave() {
     this.modified_mark = true;
-    this.updateContent$.next(tinymce.activeEditor.getContent());
+    // 仅在取得锁的情况下启动自动保存
+    if (this.current_lock_status && !this.once_blocked) {
+      this.updateContent$.next(tinymce.activeEditor.getContent());
+    }
   }
 
   share() {

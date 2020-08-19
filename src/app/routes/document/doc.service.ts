@@ -65,10 +65,10 @@ export class DocService {
   }
 
   // 具有写权限的用户在打开文档后持续调用，更新锁状态
-  public checkLockStatus(docid: string): Observable<{ msg: string, status: number, uid: string }> {
+  public checkLockStatus(docid: string): Observable<{ msg: string, status: number, username: string }> {
     const form = new FormData();
     form.set('docid', docid);
-    return this.http.post<{ msg: string, status: number, uid: string }>(environment.baseUrl + 'doc/querystatus/', form);
+    return this.http.post<{ msg: string, status: number, username: string }>(environment.baseUrl + 'doc/querystatus/', form);
   }
 
   // focus编辑器时调用，申请写锁
