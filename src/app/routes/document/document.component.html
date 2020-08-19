@@ -10,24 +10,10 @@
          nz-popover nzPopoverContent="您拥有编辑权限，可编辑本文档" nzPopoverPlacement="right">
       <nz-alert nzType="success" nzMessage="编辑权限"></nz-alert>
     </div>
-    
-    <button nz-button nzType="primary" (click)="sharingVisible=true" class="shareButton">分享</button>
+
+    <button nz-button nzType="primary" (click)="sharingVisible=true;sharingFresh=!sharingFresh" class="shareButton">分享</button>
     <nz-switch [(ngModel)]="isFavored" nzCheckedChildren="已收藏" nzUnCheckedChildren="未收藏" (ngModelChange)="clickSwitch()"
                [nzLoading]="switchLoading" class="starButton"></nz-switch>
-
-
-    <!-- <table>
-      <tr>
-        <td>文档名称：</td>
-        <td><input nz-input placeholder="Basic usage" ngModel="value" /></td>
-      </tr>
-      <tr>
-        <td>所属：</td>
-        <td>
-          <nz-cascader [nzOptions]="nzBelongOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)"></nz-cascader>
-        </td>
-      </tr>
-    </table> -->
   </div>
   <div class="editor">
     <textarea id="tiny"></textarea>
@@ -43,5 +29,5 @@
   (nzOnCancel)="sharingCancel()"
   (nzOnOk)="sharingOk()"
 >
-  <app-sharing-modal></app-sharing-modal>
+  <app-sharing-modal [docId]="docId" [fresh]="sharingFresh"></app-sharing-modal>
 </nz-modal>

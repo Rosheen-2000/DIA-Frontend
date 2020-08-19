@@ -67,6 +67,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
   // 分享
   sharingVisible = false;
+  sharingFresh = false;
 
   sharingCancel(): void {
     this.sharingVisible = false;
