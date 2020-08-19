@@ -19,6 +19,11 @@ export class DocItemComponent implements OnInit {
 
   @Output() notify = new EventEmitter();
 
+  public modalControls = {
+    loading: false,
+    moveFile: false,
+  };
+
   sharingVisible = false;
   renameVisible = false;
   infoVisible = false;
@@ -132,5 +137,18 @@ export class DocItemComponent implements OnInit {
 
   infoOk(): void {
     this.infoVisible = false;
+  }
+
+  closeModal() {
+    this.modalControls.loading = false;
+    this.modalControls.moveFile = false;
+  }
+
+  moveFile() {
+    this.modalControls.moveFile = true;
+  }
+
+  moveFileConfirm() {
+    this.closeModal();
   }
 }

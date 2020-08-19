@@ -17,6 +17,9 @@
     <li nz-menu-item (click)="renameVisible=true">
       重命名
     </li>
+    <li nz-menu-item (click)="moveFile()">
+      移动
+    </li>
     <li nz-menu-item (click)="infoVisible=true">
       文档信息
     </li>
@@ -67,4 +70,10 @@
     <p>最后修改：yyyy-mm-dd</p>
   </div>
 </div>
+</nz-modal>
+
+<nz-modal nzTitle="移动文件夹" [(nzVisible)]="modalControls.moveFile"
+          (nzOnCancel)="closeModal()" [nzOkLoading]="modalControls.loading"
+          (nzOnOk)="moveFileConfirm()">
+  移动文件夹
 </nz-modal>
