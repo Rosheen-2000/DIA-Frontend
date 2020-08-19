@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {BreadcrumbService} from '../../core/services/breadcrumb.service';
 import {NzContextMenuService, NzDropdownMenuComponent, NzMessageService} from 'ng-zorro-antd';
 import {FolderItemService} from "./folder-item.service";
+import {FreshFolderService} from "../../core/services/fresh-folder.service";
 
 @Component({
   selector: 'app-folder-item',
