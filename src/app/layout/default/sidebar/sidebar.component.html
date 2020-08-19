@@ -59,7 +59,8 @@
 </nz-modal>
 
 <nz-modal nzTitle="选择模版" [(nzVisible)]="modalControls.addFile"
-          (nzOnOk)="addFileConfirm()" (nzOnCancel)="modalClose()">
+          (nzOnOk)="addFileConfirm()" (nzOnCancel)="modalClose()"
+          [nzOkLoading]="modalControls.loading">
   <div class="outer">
     <nz-row>
       <nz-col nzSpan="16" style="height: 100px">

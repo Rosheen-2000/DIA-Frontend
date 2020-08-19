@@ -103,6 +103,7 @@ export class SidebarComponent implements OnInit {
   modalClose() {
     this.modalControls.loading = false;
     this.modalControls.addFolder = false;
+    this.modalControls.addFile = false;
   }
 
   newFolderConfirm() {
@@ -131,14 +132,19 @@ export class SidebarComponent implements OnInit {
       this.message.create('warning', '请设置文档名');
     }
     else {
+      this.modalControls.loading = true;
       this.templateService.newDoc(this.title, this.templates[this.templateIndex].id,
         this.breadCrumbService.path.foldId, this.breadCrumbService.path.spaceId).subscribe(
         res => {
           console.log(res);
           if (res.msg === 'true') {
-            this.router.navigate(['/docs/' + res.docid]).then();
-            this.modal.closeAll();
+            this.message.success('新建成功')
+            this.freshFolderService.changemessage('fresh');
+            this.modalClose();
           }
+        }, error => {
+          this.message.error('新建失败');
+          this.modalClose();
         }
       );
     }
