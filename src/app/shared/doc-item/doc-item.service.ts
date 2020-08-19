@@ -35,4 +35,16 @@ export class DocItemService {
     form.set('did', did);
     return this.http.post<{ msg: string }>(environment.baseUrl + 'doc/deletedocconfirm/', form);
   }
+
+  public getDetailInfo(docid: string): Observable<{
+    title: string, creatorname: string, teamname: string, createtime: string,
+    modifytimes: string, lastmodify: string
+  }> {
+    const form = new FormData();
+    form.set('docid', docid);
+    return this.http.post<{
+      title: string, creatorname: string, teamname: string, createtime: string,
+      modifytimes: string, lastmodify: string
+    }>(environment.baseUrl + 'doc/getdetailinfo/', form);
+  }
 }
