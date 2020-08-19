@@ -138,11 +138,12 @@ export class SidebarComponent implements OnInit {
         res => {
           console.log(res);
           if (res.msg === 'true') {
-            this.message.success('新建成功')
+            this.message.success('新建成功');
             this.freshFolderService.changemessage('fresh');
             this.modalClose();
           }
         }, error => {
+          console.log(error);
           this.message.error('新建失败');
           this.modalClose();
         }
