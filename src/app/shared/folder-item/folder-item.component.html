@@ -30,7 +30,7 @@
 <nz-modal nzTitle="重命名文件夹" [(nzVisible)]="modalControls.renameFolder"
           (nzOnCancel)="closeModal()" [nzOkLoading]="modalControls.loading"
           [nzOkDisabled]="modalInput.length==0" (nzOnOk)="renameFolderConfirm()">
-  <input [(ngModel)]="modalInput">
+  <input [(ngModel)]="modalInput" placeholder="请输入新的文件夹名" style="width: 100%;">
 </nz-modal>
 
 <nz-modal nzTitle="移动文件夹" [(nzVisible)]="modalControls.moveFolder"
