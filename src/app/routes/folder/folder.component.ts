@@ -108,6 +108,22 @@ export class FolderComponent implements OnInit, OnChanges {
         this.loading.file = false;
       }
     );
+    if (this.rootType === 'trash') {
+      this.loading.folder = true;
+      this.dashboardServices.getTrashFolder().subscribe(
+        res => {
+          console.log(res);
+          const resFolder: {id: string, name: string, starred: boolean}[] = [];
+          res.folders.forEach(
+            (p) => {
+              resFolder.push({id: p.folderid, name: p.foldername, starred: false});
+            }
+          );
+          this.subFolders = resFolder;
+          this.loading.folder = false;
+        }
+      );
+    }
   }
 
   initSpace() {

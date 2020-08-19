@@ -22,7 +22,7 @@
 
 
 <nz-modal nzTitle="删除文件夹" [(nzVisible)]="modalControls.deleteFolder"
-          (nzOnCancel)="closeModal()" (nzOnOk)="renameFolderConfirm()"
+          (nzOnCancel)="closeModal()" (nzOnOk)="deleteFolderConfirm()"
           [nzOkLoading]="modalControls.loading">
   您确定要删除该文件夹么，文件夹内的所有内容将被删除。
 </nz-modal>

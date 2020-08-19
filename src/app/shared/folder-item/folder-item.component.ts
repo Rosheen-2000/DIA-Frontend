@@ -54,7 +54,23 @@ export class FolderItemComponent implements OnInit {
   }
 
   deleteFolderConfirm() {
-    this.closeModal();
+    this.modalControls.loading = true;
+    this.foldItemService.deleteFolder(this.folderId).subscribe(
+      res => {
+        if (res.msg === 'true') {
+          this.message.success('删除成功');
+          this.closeModal();
+          this.notify.emit();
+        } else {
+          console.log(res.msg);
+          this.message.error('您的权限不足');
+          this.closeModal();
+        }
+      }, error => {
+        this.message.error('删除失败');
+        this.closeModal();
+      }
+    );
   }
 
   renameFolder() {
