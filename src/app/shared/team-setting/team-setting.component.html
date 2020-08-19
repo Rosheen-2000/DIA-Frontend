@@ -82,7 +82,7 @@
     <nz-list nzItemLayout="horizontal" [nzLoading]="loading">
       <nz-list-item *ngFor="let item of selected_list">
         <nz-list-item-meta
-          nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          [nzAvatar]="item.avatar"
           nzDescription=""
         >
           <nz-list-item-meta-title>
