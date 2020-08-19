@@ -15,6 +15,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { SharingModalComponent } from './sharing-modal/sharing-modal.component';
 import {QRCodeModule} from 'angularx-qrcode';
 import {ClipboardModule} from 'ngx-clipboard';
+import { InfoModalComponent } from './info-modal/info-modal.component';
 
 const Components = [
   LogoComponent,
@@ -22,14 +23,15 @@ const Components = [
   FolderItemComponent,
   TemplateModalComponent,
   TeamSettingComponent,
-  SharingModalComponent
+  SharingModalComponent,
+  InfoModalComponent
 ];
 
 @NgModule({
   exports: [
     ...Components
   ],
-  declarations: [...Components, TeamSettingComponent, SharingModalComponent],
+  declarations: [...Components, TeamSettingComponent, SharingModalComponent, InfoModalComponent],
   imports: [
     RouterModule,
     NzIconModule,
