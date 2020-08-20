@@ -26,7 +26,7 @@
         <td *ngIf="data.uname == creator">队长</td>
         <td *ngIf="data.uname != creator">成员</td>
         <td style="font-size: 12px;">
-          <button nz-button *ngIf="data.uname != creator" [disabled]="userPower < 2" nzType="danger" (click)="removeMember(data.uid)">移除</button>
+          <button nz-button *ngIf="data.uname != creator" [disabled]="userPower < 2" nzType="danger" (click)="removeMember(data.uid, data.uname)">移除</button>
         </td>
       </tr>
       </tbody>

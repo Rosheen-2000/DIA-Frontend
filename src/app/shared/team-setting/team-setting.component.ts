@@ -22,6 +22,7 @@ export class TeamSettingComponent implements OnInit, OnChanges {
 
   drawerVisible = false;
   selectedUsername: string;
+  selectedUserid: string;
   searchResult: { username: string, useravatar: string, userId: string };
 
   createdTime: string;
@@ -178,14 +179,15 @@ export class TeamSettingComponent implements OnInit, OnChanges {
     );
   }
 
-  removeMember(userId: string): void {
-    this.selectedUsername = userId;
+  removeMember(userId: string, username): void {
+    this.selectedUsername = username;
+    this.selectedUserid = userId;
     this.modalControls.removeMember = true;
   }
 
   removeMemberConfirm(): void {
     this.modalControls.loading = true;
-    this.teamSettingService.removeMember(this.teamId, this.selectedUsername).subscribe(
+    this.teamSettingService.removeMember(this.teamId, this.selectedUserid).subscribe(
       res => {
         console.log(res);
         this.modalControls.loading = false;
