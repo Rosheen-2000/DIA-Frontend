@@ -304,6 +304,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
       res => {
         if (res.msg === 'true') {
           this.message.create('success', '保存成功');
+          this.modified_mark = false;   // 手动保存吼修改状态标识
           // 手动保存后不再维持写锁
           clearInterval(this.maintain_lock_timer);
         } else {
