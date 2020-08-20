@@ -111,7 +111,7 @@ export class HeaderComponent implements OnInit {
     // );
     this.real_time_msg_timer = setInterval(() => {
       this.getRealTimeMsg();
-    }, 15000);
+    }, 5000);
   }
 
   private getRealTimeMsg() {
