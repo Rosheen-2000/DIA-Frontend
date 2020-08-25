@@ -8,7 +8,7 @@
         nzPopconfirmPlacement="right">保存</button>
     
     <button nz-button nzType="default" (click)="clickBack()" class="backButton">返回</button>
-    <div class="lock_info" style="width: 60px;" *ngIf="current_lock_status===false && !once_blocked"
+    <!-- <div class="lock_info" style="width: 60px;" *ngIf="current_lock_status===false && !once_blocked"
          nz-popover nzPopoverContent="其他用户正在编辑中，文档仅可浏览" nzPopoverPlacement="right">
       <nz-alert nzType="error" nzMessage="不可编辑"></nz-alert>
     </div>
@@ -19,7 +19,7 @@
     <div class="conflict_info" style="width: 60px;" *ngIf="once_blocked"
          nz-popover nzPopoverContent="其他用户进行过编辑，请刷新页面更新" nzPopoverPlacement="right">
       <nz-alert nzType="warning" nzMessage="内容冲突"></nz-alert>
-    </div>
+    </div> -->
 
     <button nz-button nzType="primary" (click)="share()" class="shareButton">分享</button>
     <nz-switch [(ngModel)]="isFavored" nzCheckedChildren="已收藏" nzUnCheckedChildren="未收藏" (ngModelChange)="clickSwitch()"

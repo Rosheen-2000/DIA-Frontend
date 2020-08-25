@@ -102,8 +102,8 @@ export class DocumentComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((params: Params) => {
       this.docId = params.id;
       console.log(this.docId);
-      // 启动查询锁状体的计时器
-      this.startTimer();
+      // // 启动查询锁状体的计时器
+      // this.startTimer();
     });
 
     this.initEditor();
@@ -121,21 +121,21 @@ export class DocumentComponent implements OnInit, OnDestroy {
     clearInterval(this.maintain_lock_timer);
   }
 
-  startTimer() {
-    this.powerservice.getPower(this.docId).subscribe(
-      res => {
-        console.log('即将开始计时');
-        console.log(res.userPower);
-        if (res.userPower > 1) {
-          this.can_edit = true;
-          console.log('开始计时');
-          this.get_status_timer = setInterval(() => {
-            this.getLockStatus();
-          }, 5000);
-        }
-      }
-    );
-  }
+  // startTimer() {
+  //   this.powerservice.getPower(this.docId).subscribe(
+  //     res => {
+  //       console.log('即将开始计时');
+  //       console.log(res.userPower);
+  //       if (res.userPower > 1) {
+  //         this.can_edit = true;
+  //         console.log('开始计时');
+  //         this.get_status_timer = setInterval(() => {
+  //           this.getLockStatus();
+  //         }, 5000);
+  //       }
+  //     }
+  //   );
+  // }
 
   initEditor() {
     // tinyMCE配置
@@ -172,13 +172,13 @@ export class DocumentComponent implements OnInit, OnDestroy {
           console.log('KeyUp! But nothing happened...');
           window.MyEditor.component.autoSave();
         });
-        editor.on('focus', function(e) {
-          console.log('focus');
-          window.MyEditor.component.onFocusEditor();
-        });
-        editor.on('blur', function(e) {
-          console.log('blur');
-        });
+        // editor.on('focus', function(e) {
+        //   console.log('focus');
+        //   window.MyEditor.component.onFocusEditor();
+        // });
+        // editor.on('blur', function(e) {
+        //   console.log('blur');
+        // });
       }
     });
   }
@@ -223,80 +223,80 @@ export class DocumentComponent implements OnInit, OnDestroy {
     );
   }
 
-  getLockStatus(): void {
-    console.log('get lock status');
-    this.docService.checkLockStatus(this.docId).subscribe(
-      res => {
-        switch(res.status) {
-          case 0:
-            if (this.current_lock_status===false) {
-              this.once_blocked = true;
-            }
-            this.current_lock_status = undefined;
-            console.log('文件无锁');
-            tinymce.activeEditor.setMode('design');
-            break;
-          case 1:
-            if (res.name === this.storage.get('username')) {
-              this.current_lock_status = true;
-              console.log('持有锁');
-              tinymce.activeEditor.setMode('design');
-            }
-            else {
-              this.current_lock_status = false;
-              console.log('其他用户持有锁');
-              console.log('持有者' + res.name);
-              tinymce.activeEditor.setMode('readonly');
-            }
-            break;
-          default:
-            console.log('返回信息有误');
-        }
-      }
-    )
-  }
+  // getLockStatus(): void {
+  //   console.log('get lock status');
+  //   this.docService.checkLockStatus(this.docId).subscribe(
+  //     res => {
+  //       switch(res.status) {
+  //         case 0:
+  //           if (this.current_lock_status===false) {
+  //             this.once_blocked = true;
+  //           }
+  //           this.current_lock_status = undefined;
+  //           console.log('文件无锁');
+  //           tinymce.activeEditor.setMode('design');
+  //           break;
+  //         case 1:
+  //           if (res.name === this.storage.get('username')) {
+  //             this.current_lock_status = true;
+  //             console.log('持有锁');
+  //             tinymce.activeEditor.setMode('design');
+  //           }
+  //           else {
+  //             this.current_lock_status = false;
+  //             console.log('其他用户持有锁');
+  //             console.log('持有者' + res.name);
+  //             tinymce.activeEditor.setMode('readonly');
+  //           }
+  //           break;
+  //         default:
+  //           console.log('返回信息有误');
+  //       }
+  //     }
+  //   )
+  // }
 
-  onFocusEditor() {
-    if (this.can_edit && this.current_lock_status===undefined) {
-      // 文件无锁，可以申请锁
-      this.docService.askForEditLock(this.docId).subscribe(
-        res => {
-          if (res.msg === 'true') {
-            // 成功获得锁
-            this.current_lock_status = true;
-            this.tag = res.tag;
-            console.log('成功取得锁');
-            this.maintain_lock_timer = setInterval(() => {
-              this.maintainLock();
-            }, 1000)
-          }
-          else {
-            // 取得锁失败
-            this.message.create('warning', '获得文件锁失败，您的编辑内容将无法保存')
-            console.log('获取锁失败');
-          }
-        },
-        error => {
-          this.message.create('error', '奇怪的错误增加了');
-          this.message.create('warning', '获得文件锁失败，您的编辑内容将无法保存');
-        }
-      )
-    }
-  }
+  // onFocusEditor() {
+  //   if (this.can_edit && this.current_lock_status===undefined) {
+  //     // 文件无锁，可以申请锁
+  //     this.docService.askForEditLock(this.docId).subscribe(
+  //       res => {
+  //         if (res.msg === 'true') {
+  //           // 成功获得锁
+  //           this.current_lock_status = true;
+  //           this.tag = res.tag;
+  //           console.log('成功取得锁');
+  //           this.maintain_lock_timer = setInterval(() => {
+  //             this.maintainLock();
+  //           }, 1000)
+  //         }
+  //         else {
+  //           // 取得锁失败
+  //           this.message.create('warning', '获得文件锁失败，您的编辑内容将无法保存')
+  //           console.log('获取锁失败');
+  //         }
+  //       },
+  //       error => {
+  //         this.message.create('error', '奇怪的错误增加了');
+  //         this.message.create('warning', '获得文件锁失败，您的编辑内容将无法保存');
+  //       }
+  //     )
+  //   }
+  // }
 
-  private maintainLock() {
-    this.docService.maintainEditLock(this.tag).subscribe(
-      res => {
-        console.log(res.msg);
-        if (res.msg === 'true') {
-          console.log('锁更新成功');
-        }
-        else {
-          console.log('锁更新失败');
-        }
-      }
-    )
-  }
+  // private maintainLock() {
+  //   this.docService.maintainEditLock(this.tag).subscribe(
+  //     res => {
+  //       console.log(res.msg);
+  //       if (res.msg === 'true') {
+  //         console.log('锁更新成功');
+  //       }
+  //       else {
+  //         console.log('锁更新失败');
+  //       }
+  //     }
+  //   )
+  // }
 
   clickSave(): void {
     console.log(tinymce.activeEditor.getContent());
